@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Routes untuk Dashboard pada Halaman trader
+Route::group(['middleware'=>'revalidate'], function() {
+    Route::group(['middleware'=>'auth:trader'], function() {
+    
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
+    // Login untuk trader
+    Route::get('/login', [\App\Http\Controllers\LoginController::class, 'formLogin'])->name('login');
+    Route::post('/login', [\App\Http\Controllers\LoginController::class, 'login'])->name('login');
+    Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
 });

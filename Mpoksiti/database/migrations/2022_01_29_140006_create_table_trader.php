@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Trader extends Migration
+class CreateTableTrader extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class Trader extends Migration
      */
     public function up()
     {
-        Schema::create('trader', function (Blueprint $table) {
+        Schema::create('traders', function (Blueprint $table) {
             $table->integer('id_trader');
             $table->primary('id_trader');
             $table->string('nm_trader', 50);
@@ -23,7 +23,7 @@ class Trader extends Migration
             $table->string('no_ktp', 20);
             $table->string('no_izin', 20);
             $table->string('email', 50);
-            $table->string('password', 50);
+            $table->string('password', 100);
         });
     }
 
@@ -34,6 +34,7 @@ class Trader extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trader');
+        Schema::dropIfExists('traders');
     }
+
 }

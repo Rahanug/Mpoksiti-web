@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Dokumen extends Migration
+class CreateTableDokumen extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class Dokumen extends Migration
      */
     public function up()
     {
-        Schema::create('dokumen', function (Blueprint $table) {
+        Schema::create('dokumens', function (Blueprint $table) {
             $table->integer('id_dokumen');
             $table->primary('id_dokumen');
             $table->string('kategori_dokumen', 100);
@@ -32,6 +32,7 @@ class Dokumen extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dokumen');
+        Schema::dropIfExists('dokumens');
     }
+
 }

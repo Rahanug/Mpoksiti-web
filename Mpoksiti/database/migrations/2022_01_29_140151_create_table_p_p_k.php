@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Ppk extends Migration
+class CreateTablePPK extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class Ppk extends Migration
      */
     public function up()
     {
-        Schema::create('ppk', function (Blueprint $table) {
+        Schema::create('ppks', function (Blueprint $table) {
             $table->integer('id_ppk');
             $table->primary('id_ppk');
             $table->string('no_ppk', 100);
@@ -24,7 +24,7 @@ class Ppk extends Migration
             $table->string('status', 50);
             $table->string('nm_penerima', 50);
             $table->integer('id_trader');
-            $table->foreign('id_trader')->references('id_trader')->on('trader');
+            $table->foreign('id_trader')->references('id_trader')->on('traders');
             
         });
     }
@@ -36,6 +36,7 @@ class Ppk extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ppk');
+        Schema::dropIfExists('ppks');
     }
+
 }
