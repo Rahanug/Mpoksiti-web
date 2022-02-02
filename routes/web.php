@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware'=>'revalidate'], function() {
     Route::group(['middleware'=>'auth:trader'], function() {
     
-        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('trader.home');
 });
     // Login untuk trader
     Route::get('/login', [\App\Http\Controllers\LoginController::class, 'formLogin'])->name('login');

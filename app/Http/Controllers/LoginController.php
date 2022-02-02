@@ -20,7 +20,7 @@ class LoginController extends Controller
     public function login(Request $request) { 
         // dd([$request->email, $request->password]);
         if(Auth::guard('trader')->attempt(['email'=>$request->email, "password" => $request->password])) {
-            return redirect()->intended(route('home'));
+            return redirect()->intended(route('trader.home'));
         }
         return back()->with('error', 'Email atau Password salah!');
     }

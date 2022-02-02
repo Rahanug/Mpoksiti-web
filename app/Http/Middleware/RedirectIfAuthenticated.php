@@ -22,7 +22,7 @@ class RedirectIfAuthenticated
         switch ($guard) {
             case "trader":   
               if (Auth::guard("trader")->check()) { 
-                return redirect()->route('home');
+                return redirect()->route('trader.home');
               } 
               break;
             default: 
