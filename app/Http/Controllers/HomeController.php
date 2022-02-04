@@ -9,20 +9,7 @@ class HomeController extends Controller
     public function index(Request $request) {
         $trader = array();
         foreach(Trader::all() as $item) {
-            $traders[$item->id_trader] = $item->nm_trader;
-        }
-        $ppks = new PpkController(); 
-        return view('trader.home',[
-            "title" => "Upload Dokumen", 
-            "ppks" => $ppks->all(),
-            "trader" => $trader,
-        ]); 
-    }
-
-    public function ppks(){
-        $trader = array();
-        foreach(Trader::all() as $item) {
-            $traders[$item->id_trader] = $item->nm_trader;
+            $trader[$item->id_trader] = $item->nm_trader;
         }
         $ppks = new PpkController(); 
         return view('trader.home',[

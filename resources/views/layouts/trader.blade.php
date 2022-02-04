@@ -28,7 +28,8 @@
         </style>
 
     <!-- Favicon -->
-    <link href="{{ asset('img/favicon.png') }}" rel="icon" type="image/png">
+    
+    @yield('css')
 </head>
 <body id="page-top">
 
@@ -114,5 +115,7 @@
 <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+
+@stack('scripts')
 </body>
 </html>
