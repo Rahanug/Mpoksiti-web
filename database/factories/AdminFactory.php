@@ -14,9 +14,9 @@ class AdminFactory extends Factory
     public function definition()
     {
         return [
-            'email' => 'affannovian@gmail.com',
-            'password' => '$2y$10$fVmfaQc/iQTCoAWL5U0v8u/3aX26e.Gipp444gr2oND/XFmZHkOrO',
-            'jenis_admin' => 'Admin Mobile',
+            'email' => 'Admin@gmail.com',
+            'password' => '$2y$10$wMPua3iytghAjW3nmM.U2u0hUigj80FreoSCzuzBfKhRnDErUHAdO',
+            'jenis_admin' => 'Admin',
         ];
     }
 }
