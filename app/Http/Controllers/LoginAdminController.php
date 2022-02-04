@@ -21,7 +21,7 @@ class LoginAdminController extends Controller
     public function loginAdmin(Request $request)
     {
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect()->intended(route('admin.home'));
+            return redirect()->intended(route('admin.manage'));
         }
         return back()->with('error', 'Email atau Password Salah!');
     }

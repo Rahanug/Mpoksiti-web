@@ -10,19 +10,19 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Halaman Trader') }}</title>
+    <title>{{ config('app.name', 'Halaman Admin') }}</title>
 
     <!-- Fonts -->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/styleAdmin.css') }}">
     <style >
         .nav-item .nav-link.active {
-        color: #c5ac58;
-        background-color: #2d3339;
+        color: #2E2A61;
+        background-color: rgba(196, 196, 196, 0.3);
         font-weight: bold;
         }
         </style>
@@ -31,6 +31,37 @@
     <link href="{{ asset('img/mpoksiti.png') }}" rel="icon" type="image/png">
 </head>
 <body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+    <!-- Sidebar -->
+    <ul style="background-color:#3C5C94" class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center">
+            <div class="sidebar-brand-text mx-3" style="font-size:28px">Mpok Siti</div>
+        </a>
+    </br></br></br></br>
+
+        <!-- Nav Item - Management User -->
+        <li class="nav-item">
+            <a class="nav-link {{ $title==='Management'? 'active' : '' }}" href="{{ route('admin.manage') }}">
+                <div class="d-flex align-items-center justify-content-center" style="font-weight:700; font-size:15px;">Management User</div></a>
+        </li>
+
+        <!-- Nav Item - Menu -->
+        <li class="nav-item">
+            <a class="nav-link" href="">
+                <div class="d-flex align-items-center justify-content-center" style="font-weight:700; font-size:15px;">Menu</div></a>
+        </li>
+
+        <!-- Nav Item - Publikasi -->
+        <li class="nav-item">
+            <a class="nav-link" href="">
+                <div class="d-flex align-items-center justify-content-center" style="font-weight:700; font-size:15px;">Publikasi</div></a>
+        </li>
+    </ul>
+    <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -48,8 +79,8 @@
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <figure class="img-profile rounded-circle avatar font-weight-bold" data-initial="{{ Auth::user()->email[0] }}"></figure>
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->email }}</span>
+                            <figure class="mr-3 img-profile rounded-circle avatar font-weight-bold" data-initial="{{ strtoupper(Auth::user()->email[0]) }}"></figure>
+                            <span class="mr-3 d-none d-lg-inline" style="color:#2E2A61;font-weight:bold;font-size:18px">{{ Auth::user()->email }}</span>
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
