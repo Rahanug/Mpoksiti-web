@@ -10,6 +10,7 @@ class Ppk extends Model
     use HasFactory;
     protected $table ="ppks";
     protected $primaryKey='id_ppk';
+    public $timestamps = false;
     protected $fillable = [
         'no_ppk',
         'no_aju_ppk', 
@@ -17,6 +18,6 @@ class Ppk extends Model
         'satuan',
         'status',
         'nm_penerima',
-        'id_penerima',
+        'id_trader',
     ];
 }
