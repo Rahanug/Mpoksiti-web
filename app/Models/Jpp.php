@@ -10,6 +10,7 @@ class Jpp extends Model
     use HasFactory;
     protected $table ="jpps";
     protected $primaryKey='id';
+    public $timestamps = false;
     protected $fillable = [
         'kodeCounter',
         'jenisJasper',
