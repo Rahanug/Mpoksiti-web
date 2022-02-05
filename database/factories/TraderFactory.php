@@ -14,7 +14,6 @@ class TraderFactory extends Factory
     public function definition()
     {
         return [
-            'id_trader' => $this->faker->randomDigit,
             'nm_trader' => $this->faker->name,
             'al_trader' => $this->faker->address,
             'kt_trader' => $this->faker->city,
@@ -23,7 +22,7 @@ class TraderFactory extends Factory
             'no_izin' => $this->faker->randomDigit,
             'no_hp' => $this->faker->e164PhoneNumber,
             'email' => $this->faker->email,
-            'password' => '$2y$10$nc3oRB2v0zPVerRW7Peaiu.KwvBgFn1IulhUND0V2piB9d2MbVQue',
+            'password' => '$2y$10$yzLwDat6kIhj/9XF7TDKG.hskg8RMnOiLGoBQyJyG6Txh5SO6n5LG',
         ];
     }
 }

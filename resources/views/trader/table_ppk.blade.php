@@ -20,6 +20,9 @@
             <td>{{ $ppk->no_aju_ppk }}</td>
             <td style="font-weight: bold">{{ ucfirst($ppk->status)}}</td>
             <td>
+            @if (session()->has('info'))
+              <a style="margin: 0 3px" class="btn btn-sm btn-outline-dark">Detail</a>  
+            @endif
               <a style="margin: 0 3px" class="btn btn-sm btn-outline-dark">Detail</a>
             </td>
           </tr>
