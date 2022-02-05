@@ -26,7 +26,7 @@ class RedirectIfAuthenticated
                 break;
             case "admin":
                 if (Auth::guard("admin")->check()) {
-                    return redirect()->route('admin.home');
+                    return redirect()->route('admin.manage');
                 }
                 break;
             default:
