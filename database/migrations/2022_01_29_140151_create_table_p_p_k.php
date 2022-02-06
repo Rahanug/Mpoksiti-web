@@ -14,8 +14,7 @@ class CreateTablePPK extends Migration
     public function up()
     {
         Schema::create('ppks', function (Blueprint $table) {
-            $table->integer('id_ppk');
-            $table->primary('id_ppk');
+            $table->increments('id_ppk');
             $table->string('no_ppk', 100);
             $table->string('no_aju_ppk', 100);
             $table->string('nm_trader', 100);
@@ -23,9 +22,9 @@ class CreateTablePPK extends Migration
             $table->integer('satuan');
             $table->string('status', 50);
             $table->string('nm_penerima', 50);
-            $table->integer('id_trader');
+            $table->integer('id_trader')->unsigned();
             $table->foreign('id_trader')->references('id_trader')->on('traders');
-            
+
         });
     }
 

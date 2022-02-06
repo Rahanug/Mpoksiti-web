@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\ManagementUserController;
+use App\Models\Trader;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -18,12 +19,14 @@ class AdminController extends Controller
         ]);
     }
 
-    public function traderByNpwp(Request $request)
+    public function searchUser(Request $request)
     {
-        $manages = new ManagementUserController();
-        return view('admin.manage', [
-            "title" => "Management",
-            "traders" => $manages->getTraderByNpwp($request->npwp),
+        $manages = Trader::all();
+        if ($request->keyword != '') {
+            $manages = Trader::where('npwp', 'LIKE', '%' . $request->keyword . '%')->orWhere('nm_trader', 'LIKE', '%' . $request->keyword . '%')->get();
+        }
+        return response()->json([
+            'traders' => $manages,
         ]);
     }
 }
