@@ -26,8 +26,8 @@ Route::group(['middleware' => 'revalidate'], function () {
 
     //login untuk admin
     Route::group(['middleware' => 'auth:admin'], function () {
-        Route::get('/manage', [App\Http\Controllers\AdminController::class, 'manage'])->name('admin.manage');
-        Route::get('/npwp', [App\Http\Controllers\AdminController::class, 'traderByNpwp'])->name('admin.npwp');
+        Route::get('/admin/manage', [App\Http\Controllers\AdminController::class, 'manage'])->name('admin.manage');
+        Route::post('/admin/search', [App\Http\Controllers\AdminController::class, 'searchUser'])->name('admin.search');
 
     });
     Route::get('/loginadmin', [\App\Http\Controllers\LoginAdminController::class, 'formLogin'])->name('loginadmin');

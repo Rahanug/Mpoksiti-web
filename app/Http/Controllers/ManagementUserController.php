@@ -17,11 +17,4 @@ class ManagementUserController extends Controller
         $manage = DB::select("SELECT * FROM $this->table");
         return $manage;
     }
-
-    public function getTraderByNpwp($npwp)
-    {
-        $npwp = strtolower($npwp);
-        $manage = DB::select("SELECT * FROM $this->table WHERE npwp='$npwp' OR nm_trader like '%$npwp%'");
-        return $manage;
-    }
 }

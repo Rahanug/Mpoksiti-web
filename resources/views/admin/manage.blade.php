@@ -32,10 +32,9 @@
     <div class="btn-toolbar mb-2 mb-md-0">
       <div class="btn-group me-2">
         <!--Here is spot for put the button -->
-        <form action="/npwp" method="get" class="row row-cols-lg-auto g-3 align-items-center">
+        <form class="row row-cols-lg-auto g-3 align-items-center">
           <div class="input-group mb-3">
-            <input type="text" class="placeholder" name="npwp" placeholder="Nama atau NPWP" aria-label="Recipient's username" aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" name="submit" value="cari" type="submit" id="button-addon2" style="font-weight:bold; color:rgba(46, 42, 97, 0.69);">Cari</button>
+            <input type="text" id="search"class="placeholder" name="npwp" placeholder="Nama atau NPWP" aria-label="Recipient's username" >
           </div>
         </form>
       </div>
@@ -83,18 +82,7 @@
           </tr>
         </thead>
         <tbody>
-          <?php $no = 0;?>
-          @foreach ($traders as $user)
-          <tr>
-            <td style="font-weight:regular; color:#2E2A61;">{{ ++$no; }}</td>
-            <td style="font-weight:regular; color:#2E2A61;">{{ $user->nm_trader }}</td>
-            <td style="font-weight:regular; color:#2E2A61;">{{ $user->npwp }}</td>
-            <td style="font-weight:regular; color:#2E2A61;">{{ $user->no_hp }}</td>
-            <td>
-              <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Delete</a>
-            </td>
-          </tr>
-          @endforeach
+
         </tbody>
       </table>
     </div>
@@ -102,3 +90,43 @@
 
 </main>
 @endsection
+
+@push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script>
+    $('#search').on('keyup', function(){
+      search();
+    });
+    search();
+    function search(){
+      var keyword = $('#search').val();
+
+      $.post('{{ route("admin.search") }}',{
+        _token: $('meta[name="csrf-token"]').attr('content'),
+        keyword:keyword
+      },
+      function(data){
+        table_post_row(data);
+        console.log(data);
+      });
+    }
+    function table_post_row(res){
+      let htmlView = '';
+      if(res.traders.length <= 0){
+        htmlView += '<tr><td colspan = "4" style="font-weight:regular; color:#2E2A61;">No data.</td></tr>';
+      }
+      for(let i=0; i<res.traders.length; i++){
+        htmlView += `<tr>
+            <td style="font-weight:regular; color:#2E2A61;">`+ (i+1) +`</td>
+            <td style="font-weight:regular; color:#2E2A61;">`+ res.traders[i].nm_trader +`</td>
+            <td style="font-weight:regular; color:#2E2A61;">`+ res.traders[i].npwp +`</td>
+            <td style="font-weight:regular; color:#2E2A61;">`+ res.traders[i].no_hp +`</td>
+            <td>
+              <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Delete</a>
+            </td>
+          </tr>`;
+      }
+      $('tbody').html(htmlView);
+    }
+  </script>
+@endpush
