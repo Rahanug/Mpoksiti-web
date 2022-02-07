@@ -20,6 +20,7 @@ class HomeController extends Controller
             "title" => "Upload Dokumen", 
             "ppks" => $ppkModel->where("id_trader", Auth::user()->id_trader)->get(),
             "trader" => $trader,
+            "status1"=> $ppkModel->where("status", "lPengajuan"),
         ]); 
     }
 }

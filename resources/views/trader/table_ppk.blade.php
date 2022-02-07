@@ -1,5 +1,5 @@
 <div class="table-responsive">
-      <table class="dataTables_wrapper dt-bootstrap4" id="tablePpk">
+      <table class="table table-striped" id="tablePpk">
         <thead>
           <tr>
             <th scope="col">No</th>
@@ -20,9 +20,18 @@
             <td>{{ $ppk->no_aju_ppk }}</td>
             <td style="font-weight: bold">{{ ucfirst($ppk->status)}}</td>
             <td>
-            @if (session()->has('info'))
-              <a style="margin: 0 3px" class="btn btn-sm btn-outline-dark">Detail</a>  
+            @if ($ppk->status == "Pengajuan - Disetujui")
+              <a style="margin: 0 3px" class="btn btn-sm btn-outline-dark">Upload Dokumen</a>  
             @endif
+
+            @if ($ppk->status == "Dokumen - Terverifikasi")
+              <a style="margin: 0 3px" class="btn btn-sm btn-outline-dark">Stuffing Virtual</a>  
+            @endif
+
+            @if ($ppk->status == "Selesai")
+              <a style="margin: 0 3px" class="btn btn-sm btn-outline-dark">Cetak HC</a>  
+            @endif
+
               <a style="margin: 0 3px" class="btn btn-sm btn-outline-dark">Detail</a>
             </td>
           </tr>
