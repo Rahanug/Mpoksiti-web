@@ -53,7 +53,7 @@
 
         <!-- Nav Item - Menu -->
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link {{ $title==='Menu'? 'active' : '' }}" href="{{ route('admin.menu') }}">
                 <div class="d-flex align-items-center justify-content-center" style="font-weight:700; font-size:15px;">Menu</div></a>
         </li>
 

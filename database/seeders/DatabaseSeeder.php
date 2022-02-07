@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
-use App\Models\Trader;
 use App\Models\Jpp;
+use App\Models\Menu;
+use App\Models\Trader;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,5 +22,6 @@ class DatabaseSeeder extends Seeder
         Admin::factory(1)->create();
         Trader::factory(5)->create();
         Jpp::factory(10)->create();
+        Menu::factory(8)->create();
     }
 }
