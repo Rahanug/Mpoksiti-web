@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use App\Models\Jpp;
+use App\Models\JenisKurir;
 
-class JPPController extends Controller
+class JenisKurirController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +16,9 @@ class JPPController extends Controller
     public function index()
     {
         //
-        $jpps = Jpp::all();
+        $kurirs= JenisKurir::all();
 
-        return response()->json($jpps);
+        return response()->json($kurirs);
     }
 
     /**

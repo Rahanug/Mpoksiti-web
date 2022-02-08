@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api\JenisKurirController;
+use App\Http\Controllers\api\JPPController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('/jpps', 'App\Http\Controllers\JPPController');
+Route::apiResource('/jpps', 'App\Http\Controllers\api\JPPController');
+Route::apiResource('/kurirs', 'App\Http\Controllers\api\JenisKurirController');

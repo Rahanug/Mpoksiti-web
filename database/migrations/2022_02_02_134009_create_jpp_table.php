@@ -16,7 +16,7 @@ class CreateJppTable extends Migration
         Schema::create('jpps', function (Blueprint $table) {
             $table->id();
             $table->string('kodeCounter');
-            $table->string('jenisJasper');
+            $table->string('id_kurir')->references('id')->on('kurir');
             $table->string('latitude');
             $table->string('longtitude');
             $table->string('penanggungJawab');

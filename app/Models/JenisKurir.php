@@ -5,17 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Jpp extends Model
+class JenisKurir extends Model
 {
     use HasFactory;
-    protected $table ="jpps";
+    protected $table ="kurir";
     protected $primaryKey='id';
     public $timestamps = false;
     protected $fillable = [
-        'kodeCounter',
-        'id_kurir',
-        'latitude',
-        'longtitude',
-        'penanggungJawab'  
+        'namaKurir' 
     ];
 }
