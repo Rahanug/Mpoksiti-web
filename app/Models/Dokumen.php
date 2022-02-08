@@ -11,11 +11,12 @@ class Dokumen extends Model
     protected $table ="dokumens";
     protected $primaryKey='id_dokumen';
     protected $fillable = [
-        'kategori_dokumen',
         'no_dokumen', 
         'tgl_dokumen',
         'tgl_berlaku',
         'tgl_lulus',
-        'status_dokumen',
+        'id_trader',
+        'id_kategori',
     ];
+    public $timestamps = false;
 }

@@ -21,7 +21,7 @@
             <td style="font-weight: bold">{{ ucfirst($ppk->status)}}</td>
             <td>
             @if ($ppk->status == "Pengajuan - Disetujui")
-              <a style="margin: 0 3px" class="btn btn-sm btn-outline-dark">Upload Dokumen</a>  
+              <a style="margin: 0 3px" class="btn btn-sm btn-outline-dark" href="/home/{{$ppk->id_ppk}}">Upload Dokumen</a>  
             @endif
 
             @if ($ppk->status == "Dokumen - Terverifikasi")

@@ -7,6 +7,8 @@ use App\Models\Jpp;
 use App\Models\JenisKurir;
 use App\Models\Menu;
 use App\Models\Trader;
+use App\Models\Ppk;
+use App\Models\KategoriDokumen;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -25,5 +27,7 @@ class DatabaseSeeder extends Seeder
         JenisKurir::factory(4)->create();
         Jpp::factory(10)->create();
         Menu::factory(8)->create();
+        Ppk::factory(20)->create();
+        KategoriDokumen::factory(1)->create();
     }
 }

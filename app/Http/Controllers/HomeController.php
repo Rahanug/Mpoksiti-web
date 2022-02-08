@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Trader;
 use App\Models\Ppk;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -17,10 +18,19 @@ class HomeController extends Controller
         $ppks = new PpkController();
         $ppkModel = new Ppk(); 
         return view('trader.home',[
-            "title" => "Upload Dokumen", 
+            "title" => "Proses Stuffing", 
             "ppks" => $ppkModel->where("id_trader", Auth::user()->id_trader)->get(),
             "trader" => $trader,
-            "status1"=> $ppkModel->where("status", "lPengajuan"),
         ]); 
+    }
+
+    public function dokumen($id_ppk){
+        
+        $ppks = new PpkController();
+        $ppk = $ppks->getIf($id_ppk)[0];
+        return view('trader.document',[
+            "title"=>"Unggah Dokumen",
+            "ppk"=> $ppk,
+        ]);
     }
 }

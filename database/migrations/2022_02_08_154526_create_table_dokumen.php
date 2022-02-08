@@ -14,14 +14,17 @@ class CreateTableDokumen extends Migration
     public function up()
     {
         Schema::create('dokumens', function (Blueprint $table) {
-            $table->integer('id_dokumen');
-            $table->primary('id_dokumen');
-            $table->string('kategori_dokumen', 100);
+            $table->increments('id_dokumen');
             $table->integer('no_dokumen');
             $table->dateTime('tgl_dokumen');
             $table->dateTime('tgl_berlaku');
             $table->dateTime('tgl_lulus');
-            $table->string('status_dokumen', 50);
+            $table->integer('id_trader')->unsigned();
+            $table->foreign('id_trader')->references('id_trader')->on('traders');
+            $table->integer('id_ppk')->unsigned();
+            $table->foreign('id_ppk')->references('id_ppk')->on('ppks');
+            $table->integer('id_kategori')->unsigned();
+            $table->foreign('id_kategori')->references('id_kategori')->on('kategori_dokumens');
         });
     }
 

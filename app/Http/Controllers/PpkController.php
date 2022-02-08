@@ -14,7 +14,7 @@ class PpkController extends Controller
     }
 
     public function getIf($id_ppk){
-        $ppk = DB::select("SELECT * FROM $this->table WHERE id_ppk='$id_ppk' LIMIT 1");
+        $ppk = DB::select("SELECT * FROM $this->table WHERE id_ppk='$id_ppk'");
         return $ppk;
     }
 

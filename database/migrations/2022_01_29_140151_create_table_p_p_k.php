@@ -17,7 +17,6 @@ class CreateTablePPK extends Migration
             $table->increments('id_ppk');
             $table->string('no_ppk', 100);
             $table->string('no_aju_ppk', 100);
-            $table->string('nm_trader', 100);
             $table->integer('jumlah');
             $table->integer('satuan');
             $table->string('status', 50);
