@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\ManagementUserController;
 use App\Models\Menu;
+use App\Models\Publikasi;
 use App\Models\Trader;
 use Illuminate\Http\Request;
 
@@ -72,4 +73,55 @@ class AdminController extends Controller
         ]);
         return redirect('/admin/menu')->with('info', 'Menu has been changed');
     }
+
+    //Method Untuk Pemanggilan Halaman Publikasi
+    public function allGambar()
+    {
+        return view('admin.publikasi', [
+            "title" => "Publikasi",
+            "allGambar" => Publikasi::all(),
+        ]);
+    }
+
+    public function tambahGambar()
+    {
+        return view('admin.addGambar', [
+            "title" => "Tambah Gambar",
+        ]);
+    }
+
+    public function storeGambar(Request $request)
+    {
+        $file_gambar = $request->file('file_gambar');
+
+        $nama_file = $file_gambar->getClientOriginalName();
+
+        $tujuan_upload = 'img';
+        $file_gambar->move($tujuan_upload, $nama_file);
+
+        Publikasi::create([
+            'nm_gambar' => $request->nm_gambar,
+            'file_gambar' => $nama_file,
+        ]);
+
+        return redirect('/admin/publikasi')->with('success', 'New Picture has been added');
+    }
+
+    public function searchGambar(Request $request)
+    {
+        $gambar = Publikasi::all();
+        if ($request->keyword != '') {
+            $gambar = Publikasi::where('nm_gambar', 'LIKE', '%' . $request->keyword . '%')->get();
+        }
+        return response()->json([
+            'publikasi' => $gambar,
+        ]);
+    }
+
+    public function deleteGambar($id_gambar)
+    {
+        Publikasi::where('id_gambar', $id_gambar)->delete();
+        return redirect('/admin/publikasi')->with('error', 'Picture has been removed');
+    }
+
 }

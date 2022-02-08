@@ -59,7 +59,7 @@
 
         <!-- Nav Item - Publikasi -->
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link {{ $title==='Publikasi'? 'active' : '' }}" href="{{ route('admin.publikasi') }}" href="">
                 <div class="d-flex align-items-center justify-content-center" style="font-weight:700; font-size:15px;">Publikasi</div></a>
         </li>
     </ul>
