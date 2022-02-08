@@ -25,16 +25,17 @@
 @extends('layouts.admin')
 
 @section('content')
-<script>document.title = "Management User - Mpok Siti"</script>
+<script>document.title = "Publikasi - Mpok Siti"</script>
 <main class="col-md-9 ms-sm-auto col-lg-12 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h1" style="font-weight:bold; color:#2E2A61;">Management User</h1>
+    <h1 class="h1" style="font-weight:bold; color:#2E2A61;">Publikasi</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
       <div class="btn-group me-2">
         <!--Here is spot for put the button -->
         <form class="row row-cols-lg-auto g-3 align-items-center">
           <div class="input-group mb-3">
-            <input type="text" id="search"class="placeholder" name="npwp" placeholder="Nama atau NPWP" aria-label="Recipient's username" >
+            <input type="text" id="search" class="placeholder" name="gambar" placeholder="Nama File Gambar" >
+            <button type="button" class="btn btn-secondary" style="font-weight: bold; background-color: #3C5C94" onclick="location.href='/admin/publikasi/addGambar'">ADD</button>
           </div>
         </form>
       </div>
@@ -69,24 +70,15 @@
   </div>
   @endif
 
-  <div id="taro">
-    <div class="table-responsive">
-      <table class="table table-striped table-sm">
-        <thead>
-          <tr>
-            <th scope="col" style="font-weight:semibold; color:#2E2A61;">No</th>
-            <th scope="col" style="font-weight:semibold; color:#2E2A61;">Nama</th>
-            <th scope="col" style="font-weight:semibold; color:#2E2A61;">NPWP</th>
-            <th scope="col" style="font-weight:semibold; color:#2E2A61;">Nomor Telfon</th>
-            <th scope="col" style="font-weight:semibold; color:#2E2A61;">Action</th>
-          </tr>
-        </thead>
-        <tbody>
 
-        </tbody>
-      </table>
+    <div class="d-flex">
+        <div class="row mt-3" style="margin: 2%;">
+            <div class="d-flex row d-inline-block" id="divcol">
+
+            </div>
+        </div>
     </div>
-  </div>
+
 
 </main>
 @endsection
@@ -101,7 +93,7 @@
     function search(){
       var keyword = $('#search').val();
 
-      $.post('{{ route("admin.search") }}',{
+      $.post('{{ route("admin.searchGambar") }}',{
         _token: $('meta[name="csrf-token"]').attr('content'),
         keyword:keyword
       },
@@ -112,21 +104,28 @@
     }
     function table_post_row(res){
       let htmlView = '';
-      if(res.traders.length <= 0){
+      if(res.publikasi.length <= 0){
         htmlView += '<tr><td colspan = "4" style="font-weight:regular; color:#2E2A61;">No data.</td></tr>';
       }
-      for(let i=0; i<res.traders.length; i++){
-        htmlView += `<tr>
-            <td style="font-weight:regular; color:#2E2A61;">`+ (i+1) +`</td>
-            <td style="font-weight:regular; color:#2E2A61;">`+ res.traders[i].nm_trader +`</td>
-            <td style="font-weight:regular; color:#2E2A61;">`+ res.traders[i].npwp +`</td>
-            <td style="font-weight:regular; color:#2E2A61;">`+ res.traders[i].no_hp +`</td>
-            <td>
-              <a href="/admin/manage/delete/${res.traders[i].id_trader}" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Delete</a>
-            </td>
-          </tr>`;
+      for(let i=0; i<res.publikasi.length; i++){
+        htmlView += `<div class="mx-0 col-lg-3 col-md-4 mb-3" >
+                        <div style="max-width: 300px;">
+                            <div class="card mb-2 shadow-sm" >
+                                    <img class="card-img-top img-fluid" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]"
+                                    style="max-height: 400px; display: block; object-fit: cover;" src="/img/${res.publikasi[i].file_gambar}" data-holder-rendered="true">
+                                    <div class="card-body">
+                                        <p class="card-text"><b>${res.publikasi[i].nm_gambar}</b></p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-primary" onclick="location.href='/admin/publikasi/delete/${res.publikasi[i].id_gambar}'">Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
       }
-      $('tbody').html(htmlView);
+      $('#divcol').html(htmlView);
     }
   </script>
 @endpush
