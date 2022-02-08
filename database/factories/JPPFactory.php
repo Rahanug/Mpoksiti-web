@@ -15,7 +15,7 @@ class JPPFactory extends Factory
     {
         return [
             'kodeCounter' => $this->faker->unique()->randomDigit,
-            'jenisJasper' => $this->faker->randomElement(['JNE', 'JNT', 'TIKI', 'SiCepat']),
+            'id_kurir' => $this->faker->randomElement([0, 1, 2, 3]),
             'latitude' => $this->faker->latitude(),
             'longtitude' => $this->faker->longitude(),
             'penanggungJawab' => $this->faker->name

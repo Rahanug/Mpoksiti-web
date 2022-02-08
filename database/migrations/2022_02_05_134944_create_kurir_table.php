@@ -13,9 +13,9 @@ class CreateKurirTable extends Migration
      */
     public function up()
     {
-        Schema::create('kurir_table', function (Blueprint $table) {
+        Schema::create('kurir', function (Blueprint $table) {
             $table->id();
-            $table->string('namaKurir');
+            $table->string('namaKurir')->unique();
         });
     }
 
@@ -26,6 +26,6 @@ class CreateKurirTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kurir_table');
+        Schema::dropIfExists('kurir');
     }
 }
