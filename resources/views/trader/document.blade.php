@@ -11,9 +11,16 @@
   <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
     <h1 class="h2">Unggah Dokumen</h1> 
   </div>
+  
+<div class="container">
+    <div class="d-flex justify-content-left flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+        <a type="text" href="/home" style="font-weight: bold">
+            Kembali
+        </a>
+  </div>  
   <div class="row">
         <!-- Kartu Pendapatan -->
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-6 col-md-4 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -27,7 +34,7 @@
         </div>
 
         <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-6 col-md-4 mb-4">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -41,7 +48,7 @@
         </div>
 
         <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-6 col-md-4 mb-4">
             <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -58,13 +65,17 @@
             </div>
         </div>
     </div>
+    </div>
     </div>  
 
-    <div class="card shadow" style="margin: top 10px;">
-      <div class="card-body" style="margin: top 10px;">
-        
-      </div>
+    <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <div class="card shadow w-75 responsive" style="margin: top 10px;">
+        <div class="card-body" style="margin: top 10px;">
+        @include('trader.table_dokumen')
+        </div>
     </div>
+  </div>
+  
 </main>
 @endsection
 
@@ -74,11 +85,13 @@
   <script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
   <script src="//cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
   <script>
-    $(document).ready( function () {
-      $('#tablePpk').DataTable({
-        ordering: false,
-      });
+    // $(document).ready( function () {
+    //   $('#tableDokumen').DataTable({
+    //     ordering: false,
+    //     searching: false,
+    //     pagination: false,
+    //   });
       
-    } );
+    // } );
   </script>
 @endpush

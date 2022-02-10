@@ -8,46 +8,20 @@
 @section('content')
 <script>document.title = "Proses Stuffing Virtual"</script>
 <main class="justify-content-md-center-lg-10 px-md-2"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-  <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-    <h1 class="h2">Proses Stuffing Virtual</h1> 
+  <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3"> 
+  <h2 class="h2">Proses Stuffing Virtual</h2> 
   </div>
   <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-    <img src="img/Proses.png" style="width:500px;height:75px;">
+    <img src="img/Proses.png"  srcset="img/Proses.png 10000w 7000h" sizes="(min-width: 200px, min-height: 50px)">
   </div>
-  <!-- Session ketika berhasil -->
-  @if (session()->has('success'))
-    <div class="alert alert-primary alert-dismissible fade show" role="alert">
-      {{ session('success') }}
-      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <div class="card shadow w-75 responsive" style="margin: top 10px;">
+        <div class="card-body" style="margin: top 10px;">
+          @include('trader.table_ppk')
+        </div>
     </div>
-    @endif
-  
-    @if (session()->has('accept'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      {{ session('accept') }}
-      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    </div>
-    @endif
-
-  @if (session()->has('error'))
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    {{ session('error') }}
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
   </div>
-  @endif
-
-  @if (session()->has('info'))
-  <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    {{ session('info') }}
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  </div>
-  @endif
-
-    <div class="card shadow" style="margin: top 10px;">
-      <div class="card-body" style="margin: top 10px;">
-        @include('trader.table_ppk')
-      </div>
-    </div>
+    
 </main>
 @endsection
 
@@ -56,10 +30,12 @@
   <script src="//code.jquery.com/jquery-3.5.1.js"></script>
   <script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
   <script src="//cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="//cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
   <script>
     $(document).ready( function () {
       $('#tablePpk').DataTable({
         ordering: false,
+        responsive: true,
       });
       
     } );
