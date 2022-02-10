@@ -108,11 +108,11 @@
         htmlView += '<tr><td colspan = "4" style="font-weight:regular; color:#2E2A61;">No data.</td></tr>';
       }
       for(let i=0; i<res.publikasi.length; i++){
-        htmlView += `<div class="mx-0 col-lg-3 col-md-4 mb-3" >
-                        <div style="max-width: 300px;">
+        htmlView += `<div class="mx-4 col-lg-3 col-md-4 mb-3" >
+                        <div style="width: 250px;" class="mx-2">
                             <div class="card mb-2 shadow-sm" >
                                     <img class="card-img-top img-fluid" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]"
-                                    style="max-height: 400px; display: block; object-fit: cover;" src="/img/${res.publikasi[i].file_gambar}" data-holder-rendered="true">
+                                    style="height: 400px; display: block; object-fit: cover;" src="/img/${res.publikasi[i].file_gambar}" data-holder-rendered="true">
                                     <div class="card-body">
                                         <p class="card-text"><b>${res.publikasi[i].nm_gambar}</b></p>
                                         <div class="d-flex justify-content-between align-items-center">

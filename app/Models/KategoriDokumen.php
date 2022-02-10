@@ -13,6 +13,7 @@ class KategoriDokumen extends Model
     protected $fillable = [
         'nama_dokumen', 
         'status',
+        'id_ppk',
     ];
     public $timestamps = false;
 }

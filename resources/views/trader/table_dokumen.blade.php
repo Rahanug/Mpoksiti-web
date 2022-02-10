@@ -1,33 +1,42 @@
 <div class="table-responsive">
-      <table class="table" id="tableDokumen">
-        <thead>
-          <tr>
+  <table class="table" id="tableDokumen">
+    <thead>
+      <tr>
+        <style>
+          #col-aksi {
+            text-align: right;
+            padding-right: 85pt;
+          }
+        </style>
+        <th scope="col">Kategori Dokumen</th>
+        <th scope="col">Nama Dokumen</th>
+        <th scope="col" id="col-aksi">Aksi</th>       
+      </tr>
+    </thead>
+    <tbody>
+      <form method="POST" enctype="multipart/form-data" id="upload-file" action="/home/{id_ppk}/store">
+        @csrf
+        @foreach ($dokumens as $dokumen)
+        <?php $no = 0; ?>
+        <tr>
+          <td>{{$dokumen->nama_dokumen}}</td>
           <style>
-              #col-aksi{
-                text-align : right;
-                padding-right: 85pt;
-              }
+            #button-aksi {
+              text-align: right;
+            }
           </style>
-            <th scope="col">Kategori Dokumen</th>
-            <th scope="col" id="col-aksi">Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php $no = 0; ?>
-          @foreach ($dokumens as $dokumen) 
-          <tr>
-            <td>{{$dokumen->nama_dokumen}}</td>
-            <style>
-              #button-aksi{
-                text-align : right;
-              }
-          </style>
-            <td id="button-aksi">
-              <a style="margin: 0 3px" class="btn btn-sm btn-outline-dark" href="">Unggah</a>
-              <a style="margin: 0 3px" class="btn btn-sm btn-outline-dark" href="">Unduh</a>    
-            </td>
-          </tr>
-          @endforeach
-        </tbody>
-      </table>
+          <td>
+            {{$dokumen->nm_dokumen}}
+          </td>
+          <td id="button-aksi">
+            <input type="file" name="nm_dokumen" placeholder="Choose file" id="nm_dokumen">
+          </td>
+        </tr>
+        @endforeach
+    </tbody>
+    </form>
+  </table>
+  <div class="col-md-12">
+    <button form="upload-file" type="submit" class="btn btn-primary" id="submit">Submit</button>
+  </div>
 </div>
