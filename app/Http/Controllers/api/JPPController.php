@@ -42,7 +42,7 @@ class JPPController extends Controller
     {
         //
         /*$request->validate([
-            'kodeCounter'=>'required',
+            'kode_counter'=>'required',
             'jenisJasper'=>'required',
             'latitude'=>'required',
             'longitude'=>'required',
@@ -50,7 +50,7 @@ class JPPController extends Controller
         ]);
 
         $jpp = new Jpp([
-            'kodeCounter'=>$request->get('kodeCounter'),
+            'kode_counter'=>$request->get('kode_counter'),
             'jenisJasper'=>$request->get('jenisJasper'),
             'latitude'=>$request->get('latitude'),
             'longitude'=>$request->get('longitude'),
