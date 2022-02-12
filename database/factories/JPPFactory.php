@@ -14,11 +14,12 @@ class JPPFactory extends Factory
     public function definition()
     {
         return [
-            'kodeCounter' => $this->faker->unique()->randomDigit,
-            'id_kurir' => $this->faker->randomElement([0, 1, 2]),
+            'kode_counter' => $this->faker->unique()->randomNumber(8, true),
+            'nama_counter' => $this->faker->unique()->numerify('Jasper-#########'),
             'latitude' => $this->faker->latitude(),
-            'longtitude' => $this->faker->longitude(),
-            'penanggungJawab' => $this->faker->name
+            'longitude' => $this->faker->longitude(),
+            'penanggungJawab' => $this->faker->name,
+            'id_kurir' => $this->faker->randomElement([0, 1, 2, 3]),
         ];
     }
 }
