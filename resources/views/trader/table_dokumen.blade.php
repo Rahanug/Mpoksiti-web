@@ -16,17 +16,17 @@
     <tbody>
       <form method="POST" enctype="multipart/form-data" id="upload-file" action="/home/{id_ppk}/store">
         @csrf
-        @foreach ($dokumens as $dokumen)
+        @foreach ($kategoris as $kategori)
         <?php $no = 0; ?>
         <tr>
-          <td>{{$dokumen->nama_dokumen}}</td>
+          <td>{{$kategori->nama_dokumen}}</td>
           <style>
             #button-aksi {
               text-align: right;
             }
           </style>
           <td>
-            {{$dokumen->nm_dokumen}}
+            {{$dokumens[$kategori['id_kategori']]['nm_dokumen'] ?? ''}}
           </td>
           <td id="button-aksi">
             <input type="file" name="nm_dokumen" placeholder="Choose file" id="nm_dokumen">

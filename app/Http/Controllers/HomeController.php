@@ -30,17 +30,44 @@ class HomeController extends Controller
     public function dokumen($id_ppk){
         $ppks = new PpkController();
         $ppk = $ppks->getIf($id_ppk)[0];
-        $dokumens = new DokumenController();
-        $kategoriJoinDokumen = KategoriDokumen::leftJoin('dokumens','kategori_dokumens.id_kategori','=','dokumens.id_kategori')
-        ->where('kategori_dokumens.status', 1)
-        ->get(['dokumens.nm_dokumen','kategori_dokumens.id_kategori', 'kategori_dokumens.nama_dokumen']);
-                            
+        $dokumens = new Dokumen();
+        $kategoriModel = new KategoriDokumen();
+        // $kategoriJoinDokumen = KategoriDokumen::leftJoin('dokumens','kategori_dokumens.id_kategori','=','dokumens.id_kategori')
+        // ->where('kategori_dokumens.status', 1)
+        // ->get(['dokumens.nm_dokumen','kategori_dokumens.id_kategori', 'kategori_dokumens.nama_dokumen', 'dokumens.no_dokumen']);
+        // $filter = $this->filterDocumentByIdPPK($kategoriJoinDokumen, $id_ppk);
+           
         return view('trader.document',[
             "title"=>"Unggah Dokumen",
             "ppk"=> $ppk,
-            "dokumens"=>$kategoriJoinDokumen,
+            "kategoris"=> $kategoriModel->all(),
+            "dokumens"=>$this->getNamaDokumen($id_ppk),
         ]);
+        // echo json_encode($this->getNamaDokumen($id_ppk));
     }
+
+    private function getNamaDokumen($id_ppk){
+        $dokumens = new Dokumen();
+        $list_dokumen = $dokumens->where('no_dokumen',$id_ppk)->get();
+        $result = array();
+        foreach($list_dokumen as $dokumen){
+            $result[$dokumen['id_kategori']] = array();
+        }
+        foreach($list_dokumen as $dokumen){
+            $result[$dokumen['id_kategori']] = array('nm_dokumen' => $dokumen['nm_dokumen']);
+        }
+        return $result;
+    }
+
+    // private function filterDocumentByIdPPK($list_dokumen, $id_ppk){
+    //     $result = array();
+    //     foreach($list_dokumen as $dokumen){
+    //         if ($dokumen['no_dokumen'] == $id_ppk) {
+    //             array_push($result, $dokumen);
+    //         }
+    //     }
+    //     return $result; 
+    // }
 
     public function store(Request $request){
         // $validatedData = $request->validate([
