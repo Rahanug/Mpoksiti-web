@@ -12,10 +12,11 @@ class Jpp extends Model
     protected $primaryKey='id';
     public $timestamps = false;
     protected $fillable = [
-        'kodeCounter',
-        'id_kurir',
+        'kode_counter',
+        'nama_counter',
         'latitude',
-        'longtitude',
-        'penanggungJawab'  
+        'longitude',
+        'penanggungJawab',
+        'id_kurir',
     ];
 }

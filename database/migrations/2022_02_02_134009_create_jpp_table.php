@@ -15,11 +15,12 @@ class CreateJppTable extends Migration
     {
         Schema::create('jpps', function (Blueprint $table) {
             $table->id();
-            $table->string('kodeCounter');
-            $table->string('id_kurir')->references('id')->on('kurir');
+            $table->string('kode_counter');
+            $table->string('nama_counter');
             $table->string('latitude');
-            $table->string('longtitude');
+            $table->string('longitude');
             $table->string('penanggungJawab');
+            $table->string('id_kurir')->references('id')->on('kurir');
         });
     }
 
