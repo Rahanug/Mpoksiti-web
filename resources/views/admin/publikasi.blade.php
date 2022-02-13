@@ -99,7 +99,6 @@
       },
       function(data){
         table_post_row(data);
-        console.log(data);
       });
     }
     function table_post_row(res){

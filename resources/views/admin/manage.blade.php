@@ -35,6 +35,7 @@
         <form class="row row-cols-lg-auto g-3 align-items-center">
           <div class="input-group mb-3">
             <input type="text" id="search"class="placeholder" name="npwp" placeholder="Nama atau NPWP" aria-label="Recipient's username" >
+            <button type="button" class="btn btn-secondary" style="font-weight: bold; background-color: #3C5C94" onclick="location.href='/admin/manage/addUser'">ADD</button>
           </div>
         </form>
       </div>
@@ -107,7 +108,6 @@
       },
       function(data){
         table_post_row(data);
-        console.log(data);
       });
     }
     function table_post_row(res){

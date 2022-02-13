@@ -20,7 +20,7 @@ class CreateTableTrader extends Migration
             $table->string('kt_trader', 100);
             $table->string('npwp', 20);
             $table->string('no_ktp', 20);
-            $table->string('no_izin', 20);
+            $table->string('no_izin', 20)->nullable();
             $table->string('no_hp', 20);
             $table->string('email', 50);
             $table->string('password', 100);
