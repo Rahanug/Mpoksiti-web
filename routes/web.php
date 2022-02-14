@@ -29,6 +29,7 @@ Route::group(['middleware' => 'revalidate'], function () {
     //login untuk admin
     Route::group(['middleware' => 'auth:admin'], function () {
         Route::get('/admin/manage', [App\Http\Controllers\AdminController::class, 'manage'])->name('admin.manage');
+        Route::get('/admin/manage/addUser', [App\Http\Controllers\AdminController::class, 'tambahUser'])->name('admin.addUser');
         Route::get('/admin/manage/delete/{id_trader}', [App\Http\Controllers\AdminController::class, 'deleteUser'])->name('admin.deleteUser');
         Route::get('/admin/menu', [App\Http\Controllers\AdminController::class, 'allMenu'])->name('admin.menu');
         Route::get('/admin/menu/editMenu/{id_menu}', [App\Http\Controllers\AdminController::class, 'editMenu'])->name('admin.editMenu');
@@ -38,6 +39,7 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::post('/admin/search', [App\Http\Controllers\AdminController::class, 'searchUser'])->name('admin.search');
         Route::post('/admin/menu/update', [App\Http\Controllers\AdminController::class, 'updateMenu'])->name('admin.updateMenu');
         Route::post('/admin/publikasi/addGambar/sukses', [App\Http\Controllers\AdminController::class, 'storeGambar'])->name('admin.storeGambar');
+        Route::post('/admin/manage/addUser/sukses', [App\Http\Controllers\AdminController::class, 'storeUser'])->name('admin.storeUser');
         Route::post('/admin/search/gambar', [App\Http\Controllers\AdminController::class, 'searchGambar'])->name('admin.searchGambar');
 
     });

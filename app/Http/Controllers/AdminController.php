@@ -7,6 +7,7 @@ use App\Models\Menu;
 use App\Models\Publikasi;
 use App\Models\Trader;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -30,6 +31,46 @@ class AdminController extends Controller
         return response()->json([
             'traders' => $manages,
         ]);
+    }
+
+    public function tambahUser()
+    {
+        return view('admin.addUser', [
+            "title" => "Tambah User",
+        ]);
+    }
+
+    public function storeUser(Request $request)
+    {
+        $messages = [
+            'required' => ':attribute wajib diisi',
+        ];
+
+        $this->validate($request, [
+            'nm_trader' => 'required',
+            'al_trader' => 'required',
+            'kt_trader' => 'required',
+            'npwp' => 'required',
+            'no_ktp' => 'required',
+            'no_izin' => 'required',
+            'no_hp' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+        ], $messages);
+
+        Trader::insert([
+            'nm_trader' => $request->nm_trader,
+            'al_trader' => $request->al_trader,
+            'kt_trader' => $request->kt_trader,
+            'npwp' => $request->npwp,
+            'no_ktp' => $request->no_ktp,
+            'no_izin' => $request->no_izin,
+            'no_hp' => $request->no_hp,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect('/admin/manage')->with('success', 'New user has been added');
     }
 
     public function deleteUser($id_trader)
