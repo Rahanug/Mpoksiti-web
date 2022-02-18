@@ -16,6 +16,7 @@ class Dokumen extends Model
         'tgl_dokumen',
         'tgl_berlaku',
         'tgl_lulus',
+        'id_ppk',
         'id_kategori',
     ];
     public $timestamps = false;

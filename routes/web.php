@@ -20,6 +20,7 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('trader.home');
         Route::get('/home/{id_ppk}', [App\Http\Controllers\HomeController::class, 'dokumen'])->name('trader.document');
         Route::post('/home/{id_ppk}/store', [App\Http\Controllers\HomeController::class, 'store'])->name('store');
+        Route::get('/home/{id_ppk}/delete/{id_dokumen}', [App\Http\Controllers\HomeController::class, 'deleteDokumen'])->name('deleteDokumen');
     });
     // Login untuk trader
     Route::get('/login', [\App\Http\Controllers\LoginController::class, 'formLogin'])->name('login');

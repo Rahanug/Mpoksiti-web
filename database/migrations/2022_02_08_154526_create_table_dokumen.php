@@ -24,8 +24,8 @@ class CreateTableDokumen extends Migration
             $table->dateTime('tgl_lulus');
             // $table->integer('id_trader')->unsigned();
             // $table->foreign('id_trader')->references('id_trader')->on('traders');
-            // $table->integer('id_ppk')->unsigned();
-            // $table->foreign('id_ppk')->references('id_ppk')->on('ppks');
+            $table->integer('id_ppk')->unsigned();
+            $table->foreign('id_ppk')->references('id_ppk')->on('ppks');
             $table->integer('id_kategori')->unsigned();
             $table->foreign('id_kategori')->references('id_kategori')->on('kategori_dokumens');
         });
