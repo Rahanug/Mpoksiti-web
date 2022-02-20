@@ -29,6 +29,11 @@ class RedirectIfAuthenticated
                     return redirect()->route('admin.manage');
                 }
                 break;
+            case "jpp":
+                if (Auth::guard("jpp")->check()) {
+                    return redirect()->route('jpp.home'); //TODO
+                }
+                break;
             default:
                 if (Auth::guard($guard)->check()) {
                     return redirect('/');

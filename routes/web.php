@@ -52,4 +52,13 @@ Route::group(['middleware' => 'revalidate'], function () {
     Route::post('/loginadmin', [\App\Http\Controllers\LoginAdminController::class, 'loginAdmin'])->name('loginadmin');
     Route::get('/logoutadmin', [\App\Http\Controllers\LoginAdminController::class, 'logoutadmin'])->name('logoutadmin');
 
+    //Login untuk jasper
+    Route::group(['middleware' => 'auth:jpp'], function () {
+        Route::get('/jpp/home', [App\Http\Controllers\JPPController::class, 'index'])->name('jpp.home');
+        Route::get('/jpp/pemeriksaan', [App\Http\Controllers\JPPController::class, 'pemeriksaan'])->name('jpp.pemeriksaan');
+
+    });
+    Route::get('/loginjpp', [\App\Http\Controllers\LoginJPPController::class, 'formLogin'])->name('loginjpp');
+    Route::post('/loginjpp', [\App\Http\Controllers\LoginJPPController::class, 'login'])->name('loginjpp');
+    Route::get('/logoutjpp', [\App\Http\Controllers\LoginJPPController::class, 'logout'])->name('logoutjpp');
 });

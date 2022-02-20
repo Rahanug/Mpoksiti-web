@@ -20,6 +20,7 @@ class JPPFactory extends Factory
             'longitude' => $this->faker->longitude(),
             'penanggungJawab' => $this->faker->name,
             'id_kurir' => $this->faker->randomElement([0, 1, 2, 3]),
+            'password' => '$2y$10$wMPua3iytghAjW3nmM.U2u0hUigj80FreoSCzuzBfKhRnDErUHAdO',
         ];
     }
 }

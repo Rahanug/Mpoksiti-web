@@ -19,5 +19,6 @@ class Ppk extends Model
         'status',
         'nm_penerima',
         'id_trader',
+        'kode_counter_jpp'
     ];
 }
