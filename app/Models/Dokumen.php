@@ -13,11 +13,11 @@ class Dokumen extends Model
     protected $fillable = [
         'no_dokumen',
         'nm_dokumen',
-        'tgl_dokumen',
-        'tgl_berlaku',
-        'tgl_lulus',
+        // 'tgl_dokumen',
+        // 'tgl_berlaku',
+        // 'tgl_lulus',
         'id_ppk',
-        'id_kategori',
+        'id_master',
     ];
     public $timestamps = false;
 }

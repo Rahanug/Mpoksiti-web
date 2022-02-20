@@ -14,7 +14,7 @@ class KategoriDokumenFactory extends Factory
     public function definition()
     {
         return [
-            'nama_dokumen' => ('Dokumen HACCP'),
+            'nama_kategori' => ('Dokumen HACCP'),
             "status" => ('1'),
         ];
     }

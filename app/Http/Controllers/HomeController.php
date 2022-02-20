@@ -87,9 +87,9 @@ class HomeController extends Controller
                 Dokumen::create([
                     "no_dokumen" => "1",
                     "nm_dokumen" => $name,
-                    "tgl_dokumen" => $now,
-                    "tgl_berlaku" => $now,
-                    "tgl_lulus" => $now,
+                    // "tgl_dokumen" => $now,
+                    // "tgl_berlaku" => $now,
+                    // "tgl_lulus" => $now,
                     "id_ppk" => $ppk->id_ppk,
                     "id_kategori" => $idKategori,
                 ]);

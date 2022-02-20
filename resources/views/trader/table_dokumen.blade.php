@@ -16,7 +16,7 @@
         @foreach ($kategoris as $kategori)
         <?php $no = 0; ?>
         <tr>
-          <td>{{$kategori->nama_dokumen}}</td>
+          <td>{{$kategori->nama_kategori}}</td>
           <td>
             {{$dokumens[$kategori['id_kategori']]['nm_dokumen'] ?? ''}}
           </td>

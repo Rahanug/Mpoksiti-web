@@ -15,7 +15,7 @@ class CreateKategoriDokumen extends Migration
     {
         Schema::create('kategori_dokumens', function (Blueprint $table) {
             $table->increments('id_kategori');
-            $table->string('nama_dokumen', 100);
+            $table->string('nama_kategori', 100);
             $table->unsignedTinyInteger('status');
         });
     }

@@ -33,6 +33,45 @@
 </head>
 <body id="page-top">
 
+    
+    <!-- Page Wrapper -->
+<div id="wrapper">
+    <!-- Sidebar -->
+    <ul style="background-color:#14171A" class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('trader.home') }}">
+            <div class="sidebar-brand-text mx-3">MpokSiti</div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item">
+            <a class="nav-link {{ $title==='Dashboard'? 'active' : '' }}" href="{{ route('trader.home') }}">
+                <span>Dashboard</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Nav Item - About -->
+        <li class="nav-item">
+            <a class="nav-link {{ $title==='Orders'? 'active' : '' }}" href="{{ route('trader.master_dokumen') }}">
+                <span>Dokumen</span>
+            </a>
+        </li>
+
+        <!-- Nav Item - Profile -->
+        <li class="nav-item ">
+            <a class="nav-link {{ $title==='Packet'? 'active' : '' }}" href="">
+                <span>Paket</span>
+            </a>
+        </li>
+    </ul>
+    <!-- End of Sidebar -->
+
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 

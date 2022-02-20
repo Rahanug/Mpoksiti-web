@@ -5,15 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class KategoriDokumen extends Model
+class MasterDokumen extends Model
 {
     use HasFactory;
-    protected $table ="Kategori_dokumens";
-    protected $primaryKey='id_kategori';
+    protected $table ="master_dokumens";
+    protected $primaryKey='id_master';
     protected $fillable = [
-        'nama_kategori', 
-        'status',
-        'id_ppk',
+        'no_dokumen', 
+        'tgl_terbit',
+        'id_kategori',
+        'id_trader',
     ];
     public $timestamps = false;
+
 }
