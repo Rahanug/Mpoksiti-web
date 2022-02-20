@@ -48,6 +48,10 @@ return [
             'driver' => 'session',
             'provider' => 'admin',
         ],
+        'jpp' => [
+            'driver' => 'session',
+            'provider' => 'jpp',
+        ],
     ],
 
     /*
@@ -81,6 +85,10 @@ return [
         'admin' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
+        ],
+        'jpp' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Jpp::class,
         ],
         // 'users' => [
         //     'driver' => 'database',

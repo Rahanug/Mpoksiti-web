@@ -22,10 +22,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Admin::factory(1)->create();
+        Admin::factory(2)->create();
         Trader::factory(5)->create();
         JenisKurir::factory(4)->create();
-        Jpp::factory(100)->create();
+        Jpp::factory(50)->create();
         Menu::factory(8)->create();
         Ppk::factory(20)->create();
         KategoriDokumen::factory(1)->create();

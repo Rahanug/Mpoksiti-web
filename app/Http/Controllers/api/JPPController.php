@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\Jpp;
+use Illuminate\Support\Facades\DB;
 
 class JPPController extends Controller
 {
@@ -16,7 +17,9 @@ class JPPController extends Controller
     public function index()
     {
         //
-        $jpps = Jpp::all();
+        $jpps = DB::table('jpps')
+                ->select('id', 'kode_counter', 'nama_counter', 'latitude', 'longitude', 'penanggungJawab', 'id_kurir')
+                ->get();
 
         return response()->json($jpps);
     }
