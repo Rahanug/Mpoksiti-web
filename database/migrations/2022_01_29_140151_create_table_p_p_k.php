@@ -23,7 +23,7 @@ class CreateTablePPK extends Migration
             $table->string('nm_penerima', 50);
             $table->integer('id_trader')->unsigned();
             $table->foreign('id_trader')->references('id_trader')->on('traders');
-
+            $table->integer('kode_counter_jpp')->unsigned()->nullable();
         });
     }
 

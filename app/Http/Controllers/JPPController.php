@@ -14,34 +14,14 @@ class JPPController extends Controller
         return view('jpp.home', [
             "title" => "dashboard",
         ]);
-        /*$trader = array();
-        foreach(Trader::all() as $item) {
-            $trader[$item->id_trader] = $item->nm_trader;
-        }
-        $ppks = new PpkController();
-        $ppkModel = new Ppk(); 
-        return view('trader.home',[
-            "title" => "Proses Stuffing", 
-            "ppks" => $ppkModel->where("id_trader", Auth::user()->id_trader)->get(),
-            "trader" => $trader,
-        ]);*/
     }
 
-    public function pemeriksaan(Request $request) {
+    public function pemeriksaan(String $kode_counter) {
+        $list_ppk = DB::select("SELECT * FROM ppks WHERE kode_counter_jpp = ".$kode_counter);
         return view('jpp.pemeriksaan', [
             "title" => "pemeriksaan",
+            "list_ppk" => $list_ppk
         ]);
-        /*$trader = array();
-        foreach(Trader::all() as $item) {
-            $trader[$item->id_trader] = $item->nm_trader;
-        }
-        $ppks = new PpkController();
-        $ppkModel = new Ppk(); 
-        return view('trader.home',[
-            "title" => "Proses Stuffing", 
-            "ppks" => $ppkModel->where("id_trader", Auth::user()->id_trader)->get(),
-            "trader" => $trader,
-        ]);*/
     }
     
 }
