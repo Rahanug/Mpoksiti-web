@@ -31,7 +31,7 @@
                                                 <select class="form-control" id="nm_dokumen" name="nm_dokumen" required>
                                                 <option value="none" onclick="pushData('id_kategori')">-- Pilih Kategori --</option>
                                                   @foreach ($kategori as $item)
-                                                      <option value="{{ $item->id_kategori }}" onclick="pushData({{ $item->id_kategori }})">{{ $item->nama_kategori }}</option>
+                                                      <option value="{{ $item->id_kategori }}">{{ $item->nama_kategori }}</option>
                                                   @endforeach
                                                 </select>
                                             </div>

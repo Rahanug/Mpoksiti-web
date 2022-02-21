@@ -9,29 +9,25 @@
 <script>document.title = "Proses Stuffing Virtual"</script>
 <main class="justify-content-md-center-lg-10 px-md-2"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
   <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3"> 
-  <h2 class="h2">Master Dokumen Trader</h2> 
+    <h2 class="h2">Master Dokumen Trader</h2> 
   </div>
   
 
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-left pt-3 pb-2 mb-3">
-        <style>
-          .btn-group {
-            padding-left: 10;
-          }
-      </style>
-      <div class="btn-group me-2">
+  <div class="container">
+  <div class="d-flex justify-content-left flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3" >
+      <div class="btn-group">
         <button type="button" class="btn btn-sm btn btn-outline-primary" onclick="location.href='/master/addMaster'">Tambah Dokumen</button>
       </div>
-    </div>
+  </div>
     
   <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-    <div class="card shadow w-75 responsive" style="margin: top 10px;">
+    <div class="card shadow w-100 responsive" style="margin: top 10px;">
         <div class="card-body" style="margin: top 10px;">
           @include('trader.table_master_dokumen')
         </div>
     </div>
   </div>
-    
+  </div> 
 </main>
 @endsection
 

@@ -15,7 +15,7 @@
     <img src="img/Proses.png"  srcset="img/Proses.png 10000w 7000h" sizes="(min-width: 200px, min-height: 50px)">
   </div>
   <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-    <div class="card shadow w-75 responsive" style="margin: top 10px;">
+    <div class="card shadow w-100 responsive" style="margin: top 10px;">
         <div class="card-body" style="margin: top 10px;">
           @include('trader.table_ppk')
         </div>
