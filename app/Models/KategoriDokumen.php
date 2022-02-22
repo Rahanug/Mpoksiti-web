@@ -13,7 +13,7 @@ class KategoriDokumen extends Model
     protected $fillable = [
         'nama_kategori', 
         'status',
-        'id_ppk',
+        'instansi_penerbit',
     ];
     public $timestamps = false;
 }

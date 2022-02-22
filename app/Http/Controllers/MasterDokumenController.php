@@ -9,6 +9,7 @@ use App\Models\KategoriDokumen;
 use App\Models\MasterDokumen;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 class MasterDokumenController extends Controller
 {
@@ -34,9 +35,12 @@ class MasterDokumenController extends Controller
     }
 
     public function storeMaster(Request $request){
+        
         MasterDokumen::create([
             'no_dokumen' => $request->no_dokumen,
             "tgl_terbit" => $request->tgl_terbit,
+            "tgl_expired" =>Carbon::createFromFormat('Y-m-d', $request->tgl_terbit)->addMonth(),
+            "status" => "non-Aktif",
             "id_kategori" => $request->nm_dokumen,
             "id_trader" => Auth::user()->id_trader,
         ]);

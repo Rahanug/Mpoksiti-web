@@ -17,6 +17,7 @@ class CreateKategoriDokumen extends Migration
             $table->increments('id_kategori');
             $table->string('nama_kategori', 100);
             $table->unsignedTinyInteger('status');
+            $table->string('instansi_penerbit', 100);
         });
     }
 

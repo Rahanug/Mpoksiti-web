@@ -17,6 +17,8 @@ class CreateTableMasterDokumen extends Migration
             $table->increments('id_master');
             $table->string('no_dokumen');
             $table->datetime('tgl_terbit');
+            $table->datetime('tgl_expired');
+            $table->string('status');
             $table->integer('id_kategori')->unsigned();
             $table->foreign('id_kategori')->references('id_kategori')->on('kategori_dokumens');
             $table->integer('id_trader')->unsigned();

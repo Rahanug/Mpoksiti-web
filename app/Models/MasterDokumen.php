@@ -12,10 +12,13 @@ class MasterDokumen extends Model
     protected $primaryKey='id_master';
     protected $fillable = [
         'no_dokumen', 
+        'status',
         'tgl_terbit',
+        'tgl_expired',
         'id_kategori',
         'id_trader',
     ];
+    protected $dates = ['tgl_terbit','tgl_expired',];
     public $timestamps = false;
 
 }

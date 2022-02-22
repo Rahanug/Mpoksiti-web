@@ -28,6 +28,6 @@ class DatabaseSeeder extends Seeder
         Jpp::factory(50)->create();
         Menu::factory(8)->create();
         Ppk::factory(20)->create();
-        KategoriDokumen::factory(1)->create();
+        KategoriDokumen::factory(4)->create();
     }
 }

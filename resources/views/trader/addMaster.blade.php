@@ -43,7 +43,7 @@
                                             </div>
 
                                             <div class="form-group" >
-                                              <label for="time" style="font-weight: bold">Tanggal Terbit</label>
+                                              <label for="time" style="font-weight:500; color:#2E2A61; font-size: 18px;">Tanggal Terbit</label>
                                               <input type="date" id="tgl_terbit" class="form-control @error('tgl_terbit')
                                                   is-invalid
                                               @enderror" placeholder="tgl_terbit" name="tgl_terbit" value="{{ old('tgl_terbit') }}" required>
