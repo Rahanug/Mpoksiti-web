@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Jpp;
 
 class PpkFactory extends Factory
 {
@@ -21,6 +22,7 @@ class PpkFactory extends Factory
             'status' => ('Pengajuan - Disetujui'),
             'nm_penerima' => $this->faker->name,
             'id_trader' => ('1'),
+            'kode_counter_jpp'=> $this->faker->randomElement(Jpp::all())['kode_counter']
         ];
     }
 }
