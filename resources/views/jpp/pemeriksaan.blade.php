@@ -34,8 +34,8 @@
         <!--Here is spot for put the button -->
         <form class="row row-cols-lg-auto g-3 align-items-center">
           <div class="input-group mb-3">
-            <!--<input type="text" id="search"class="placeholder" name="npwp" placeholder="Nama atau NPWP" aria-label="Recipient's username" >
-            <button type="button" class="btn btn-secondary" style="font-weight: bold; background-color: #3C5C94" onclick="//location.href='/admin/manage/addUser'">ADD</button>-->
+            <!--<input type="text" id="search"class="placeholder" name="npwp" placeholder="NO PPK" aria-label="Recipient's username" >
+            <button type="button" class="btn btn-secondary" style="font-weight: bold; background-color: #3C5C94" onclick="//location.href='/admin/manage/addUser'">Search</button>-->
           </div>
         </form>
       </div>
@@ -86,7 +86,26 @@
           </tr>
         </thead>
         <tbody>
-
+          <?php 
+          $count = 0;
+          foreach ($list_ppk as $ppk){
+            $count++;
+            $html = '<tr>';
+            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$count.'</td>';
+            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_aju_ppk.'</td>';
+            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_ppk.'</td>';
+            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$count.'</td>';
+            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->nm_penerima.'</td>';
+            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$count.'</td>';
+            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$count.'</td>';
+            $html .= 
+            '<td>
+              <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Delete</a>
+            </td>';
+            $html .= '</tr>';
+            echo $html;
+          }
+          ?>
         </tbody>
       </table>
     </div>
@@ -115,15 +134,15 @@
     }
     function table_post_row(res){
       let htmlView = '';
-      if(res.traders.length <= 0){
+      if(res.list_ppk.length <= 0){
         htmlView += '<tr><td colspan = "4" style="font-weight:regular; color:#2E2A61;">No data.</td></tr>';
       }
-      for(let i=0; i<res.traders.length; i++){
+      for(let i=0; i<res.list_ppk.length; i++){
         htmlView += `<tr>
             <td style="font-weight:regular; color:#2E2A61;">`+ (i+1) +`</td>
-            <td style="font-weight:regular; color:#2E2A61;">`+ res.traders[i].nm_trader +`</td>
-            <td style="font-weight:regular; color:#2E2A61;">`+ res.traders[i].npwp +`</td>
-            <td style="font-weight:regular; color:#2E2A61;">`+ res.traders[i].no_hp +`</td>
+            <td style="font-weight:regular; color:#2E2A61;">`+ res.list_ppk.no_aju_ppk +`</td>
+            <td style="font-weight:regular; color:#2E2A61;">`+ res.list_ppk.no_ppk +`</td>
+            <td style="font-weight:regular; color:#2E2A61;">`+ res.list_ppk.id_trader +`</td>
             <td>
               <a href="`/*/admin/manage/delete/${res.traders[i].id_trader}*/`" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Delete</a>
             </td>
