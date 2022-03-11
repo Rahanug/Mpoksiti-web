@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Jpp;
+use App\Models\Trader;
 
 class PpkFactory extends Factory
 {
@@ -19,9 +20,9 @@ class PpkFactory extends Factory
             'no_aju_ppk' => $this->faker->numerify('E/E/######'), 
             'jumlah' => $this->faker->numerify('##'),
             'satuan' => $this->faker->randomDigit,
-            'status' => ('Pengajuan - Disetujui'),
+            'status' => null,
             'nm_penerima' => $this->faker->name,
-            'id_trader' => ('1'),
+            'id_trader' => $this->faker->randomElement(Trader::all())['id_trader'],
             'kode_counter_jpp'=> $this->faker->randomElement(Jpp::all())['kode_counter']
         ];
     }

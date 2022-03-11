@@ -19,7 +19,7 @@ class CreateTablePPK extends Migration
             $table->string('no_aju_ppk', 100);
             $table->integer('jumlah');
             $table->integer('satuan');
-            $table->string('status', 50);
+            $table->integer('status')->nullable();  //TODO sementara null=belum disetujui, 1=diproses, 2=disetujui 
             $table->string('nm_penerima', 50);
             $table->integer('id_trader')->unsigned();
             $table->foreign('id_trader')->references('id_trader')->on('traders');
