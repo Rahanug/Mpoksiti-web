@@ -1,4 +1,5 @@
 GIT WORKFLOW
+
 Commit ke new branch, di pull req nanti setelah merged baru new branch di delete
 
 1. git pull
