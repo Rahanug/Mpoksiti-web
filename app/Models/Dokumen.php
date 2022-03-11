@@ -11,8 +11,8 @@ class Dokumen extends Model
     protected $table ="dokumens";
     protected $primaryKey='id_dokumen';
     protected $fillable = [
-        'no_dokumen',
-        'nm_dokumen',
+        // 'no_dokumen',
+        // 'nm_dokumen',
         // 'tgl_dokumen',
         // 'tgl_berlaku',
         // 'tgl_lulus',

@@ -16,9 +16,11 @@ class CreateTableMasterDokumen extends Migration
         Schema::create('master_dokumens', function (Blueprint $table) {
             $table->increments('id_master');
             $table->string('no_dokumen');
+            $table->string('nm_dokumen');
             $table->datetime('tgl_terbit');
             $table->datetime('tgl_expired');
             $table->string('status');
+            $table->integer('tipe_dokumen');
             $table->integer('id_kategori')->unsigned();
             $table->foreign('id_kategori')->references('id_kategori')->on('kategori_dokumens');
             $table->integer('id_trader')->unsigned();

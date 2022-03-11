@@ -93,5 +93,23 @@
     //   });
       
     // } );
+    function chooseMaster(id_master) {
+      $.ajax({
+        type: "POST",
+        url: "<?php echo url('/home/dokumen/pilihMaster') ?>",
+        data: {
+          'id_ppk': <?php echo $id_ppk ?>,
+          'id_master': id_master
+        },
+        success: function(response) {
+          response = JSON.parse(response)
+          if (response['error']) {
+            console.log(response['id_ppk'] + response['id_master'])
+          }else{
+              location.reload()
+          }
+        }
+      });
+    }
   </script>
 @endpush

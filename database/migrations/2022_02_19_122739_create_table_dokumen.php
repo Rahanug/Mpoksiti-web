@@ -15,7 +15,7 @@ class CreateTableDokumen extends Migration
     {
         Schema::create('dokumens', function (Blueprint $table) {
             $table->increments('id_dokumen');
-            $table->string('nm_dokumen');
+            // $table->string('nm_dokumen');
             // $table->string('path');
             // $table->dateTime('tgl_dokumen');
             // $table->dateTime('tgl_berlaku');

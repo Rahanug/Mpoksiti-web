@@ -22,7 +22,7 @@ class MasterDokumenController extends Controller
         $masterDokumenModel = new MasterDokumen();
         return view('trader.master_dokumen', [
             "title" => "Master Dokumen",
-            "masters" => $masterDokumenModel->where("id_trader", Auth::user()->id_trader)->get(),
+            "masters" => $masterDokumenModel->where("id_trader", Auth::user()->id_trader)->where("tipe_dokumen", 1)->get(),
             "kategori" => $kategori,
         ]);
     }
@@ -36,12 +36,33 @@ class MasterDokumenController extends Controller
 
     public function storeMaster(Request $request){
         
+        $messages = [
+            'required' => ':attribute wajib diisi ',
+            'min' => ':attribute harus diisi minimal :min karakter !!!',
+            'max' => ':attribute harus diisi maksimal :max karakter !!!',
+            'numeric' => ':attribute harus diisi angka !!!',
+            'email' => ':attribute harus diisi dalam bentuk email !!!',
+        ];
+
+        $this->validate($request,[
+            "id_kategori" => 'required',
+            'no_dokumen' => 'required',
+            "tgl_terbit" => 'required',
+        ],$messages);
+
+        $nm_dokumen = $request->file('nm_dokumen');
+        $name = $nm_dokumen->getClientOriginalName();
+        $path = 'files';
+        $nm_dokumen->move($path, $name);
+                
         MasterDokumen::create([
             'no_dokumen' => $request->no_dokumen,
+            'nm_dokumen'=> $name,
             "tgl_terbit" => $request->tgl_terbit,
             "tgl_expired" =>Carbon::createFromFormat('Y-m-d', $request->tgl_terbit)->addMonth(),
             "status" => "non-Aktif",
-            "id_kategori" => $request->nm_dokumen,
+            "tipe_dokumen" => 1,
+            "id_kategori" => $request->id_kategori,
             "id_trader" => Auth::user()->id_trader,
         ]);
         
@@ -52,5 +73,10 @@ class MasterDokumenController extends Controller
         // $master->id_trader = Auth::user()->id_trader;
 
         return redirect('/master');
+    }
+
+    public function getIf($id_master){
+        $master = DB::select("SELECT * FROM $this->table WHERE id_master='$id_master'");
+        return $master;
     }
 }

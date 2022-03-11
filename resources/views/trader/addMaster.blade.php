@@ -27,30 +27,29 @@
                                             </div>
                                             @endif
                                             <div class="form-group">
-                                                <label for="nm_dokumen" style="font-weight:500; color:#2E2A61; font-size: 18px;">Kategori Dokumen</label>
-                                                <select class="form-control" id="nm_dokumen" name="nm_dokumen" required>
-                                                <option value="none" onclick="pushData('id_kategori')">-- Pilih Kategori --</option>
-                                                  @foreach ($kategori as $item)
-                                                      <option value="{{ $item->id_kategori }}">{{ $item->nama_kategori }}</option>
-                                                  @endforeach
+                                                <label for="id_kategori" style="font-weight:500; color:#2E2A61; font-size: 18px;">Kategori Dokumen</label>
+                                                <select class="form-control" id="id_kategori" name="id_kategori" >
+                                                    <option value="" onclick="pushData('id_kategori')">-- Pilih Kategori --</option>
+                                                    @foreach ($kategori as $item)
+                                                        <option value="{{ $item->id_kategori }}">{{ $item->nama_kategori }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             
                                             <div class="form-group">
                                             <label for="no_dokumen" style="font-weight:500; color:#2E2A61; font-size: 18px;">Nomor Dokumen</label>
-                                                <input type="text" id="no_dokumen" class="form-control"
-                                                    placeholder="Nomor dokumen" name="no_dokumen">
+                                                <input type="text" id="no_dokumen" value="{{ old('no_dokumen') }}" class="form-control"
+                                                    placeholder="Nomor dokumen" name="no_dokumen" >
                                             </div>
 
                                             <div class="form-group" >
                                               <label for="time" style="font-weight:500; color:#2E2A61; font-size: 18px;">Tanggal Terbit</label>
-                                              <input type="date" id="tgl_terbit" class="form-control @error('tgl_terbit')
-                                                  is-invalid
-                                              @enderror" placeholder="tgl_terbit" name="tgl_terbit" value="{{ old('tgl_terbit') }}" required>
-                                              @error('time')
-                                              <div class="alert alert-danger">{{ $message }}</div>
-                                              @enderror
-                                          </div>
+                                              <input type="date" id="tgl_terbit" value="{{ old('tgl_terbit') }}" class="form-control" placeholder="tgl_terbit" name="tgl_terbit"  >
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="nm_dokumen" style="font-weight:500; color:#2E2A61; font-size: 18px;">Upload Dokumen</label>
+                                                <input type="file" id="nm_dokumen" class="form-control" name="nm_dokumen">
+                                            </div>
                                                 <div class="col-12 d-flex justify-content-end">
                                                     <button type="submit" class="btn btn-secondary" style="background-color: #3C5C94" name="submit" value="Simpan Data">Submit</button>
                                                 </div>

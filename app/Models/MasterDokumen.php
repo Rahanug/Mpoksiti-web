@@ -11,8 +11,10 @@ class MasterDokumen extends Model
     protected $table ="master_dokumens";
     protected $primaryKey='id_master';
     protected $fillable = [
-        'no_dokumen', 
+        'no_dokumen',
+        'nm_dokumen', 
         'status',
+        'tipe_dokumen',
         'tgl_terbit',
         'tgl_expired',
         'id_kategori',

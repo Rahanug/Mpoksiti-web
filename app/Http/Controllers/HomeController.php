@@ -6,10 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Trader;
 use App\Models\Ppk;
 use App\Models\KategoriDokumen;
+use App\Models\MasterDokumen;
 use App\Models\Dokumen;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Carbon;
 
 class HomeController extends Controller
 {
@@ -33,21 +34,38 @@ class HomeController extends Controller
         $ppks = new PpkController();
         $ppk = $ppks->getIf($id_ppk)[0];
         $dokumens = new Dokumen();
-        // $dokumen = $dokumens->getIf($id_dokumen)[0];
         $kategoriModel = new KategoriDokumen();
+        // $dokumen = $dokumens->getIf($id_dokumen)[0];
         // $kategoriJoinDokumen = KategoriDokumen::leftJoin('dokumens','kategori_dokumens.id_kategori','=','dokumens.id_kategori')
         // ->where('kategori_dokumens.status', 1)
         // ->get(['dokumens.nm_dokumen','kategori_dokumens.id_kategori', 'kategori_dokumens.nama_dokumen', 'dokumens.no_dokumen']);
         // $filter = $this->filterDocumentByIdPPK($kategoriJoinDokumen, $id_ppk);
-
+        $kategori = array();
+        foreach (KategoriDokumen::all() as $item) {
+            $kategori[$item->id_kategori] = $item->nama_kategori;
+        }
+        $masterDokumenModel = new MasterDokumen();
         return view('trader.document', [
             "title" => "Unggah Dokumen",
             "ppk" => $ppk,
             "kategoris" => $kategoriModel->all(),
             "dokumens" => $this->getNamaDokumen($id_ppk),
+            "masters" => $masterDokumenModel->where("id_trader", Auth::user()->id_trader)->get(),
+            "kategoriMaster" => $kategori,
+            "masterDokumens" => $this->getMasterDokumen(),
+            "id_ppk"=>$id_ppk,
             // "delDokumen"=> $dokumens
         ]);
-        // echo json_encode($this->getNamaDokumen($id_ppk));
+        // echo json_encode( [
+        //     "title" => "Unggah Dokumen",
+        //     "ppk" => $ppk,
+        //     "kategoris" => $kategoriModel->all(),
+        //     "dokumens" => $this->getNamaDokumen($id_ppk),
+        //     "masters" => $masterDokumenModel->where("id_trader", Auth::user()->id_trader)->get(),
+        //     "kategoriMaster" => $kategori,
+        //     "masterDokumens" => $this->getMasterDokumen(),
+        //     // "delDokumen"=> $dokumens
+        // ]);
     }
 
     private function getNamaDokumen($id_ppk)
@@ -62,6 +80,67 @@ class HomeController extends Controller
         return $result;
     }
 
+
+    private function getMasterDokumen(){
+        $dokumens = new MasterDokumen();
+        $list_dokumen = $dokumens->all();
+        $result = array();
+        foreach ($list_dokumen as $dokumen) {
+            $result[$dokumen['id_kategori']] = array();
+        }
+        foreach ($list_dokumen as $dokumen) {
+            array_push($result[$dokumen['id_kategori']], [
+                'id_master' => $dokumen['id_master'],
+                'nm_dokumen' => $dokumen['nm_dokumen'],
+                'no_dokumen' => $dokumen['no_dokumen'],
+                'tgl_terbit' => $dokumen['tgl_terbit'],
+                'status' => $dokumen['status'],
+            ]);
+        }
+        return $result;
+    }
+
+    // Store Upload Dokumen
+    public function storeDokumen(Request $request){
+        
+        $messages = [
+            'required' => ':attribute wajib diisi ',
+            'min' => ':attribute harus diisi minimal :min karakter !!!',
+            'max' => ':attribute harus diisi maksimal :max karakter !!!',
+            'numeric' => ':attribute harus diisi angka !!!',
+            'email' => ':attribute harus diisi dalam bentuk email !!!',
+        ];
+
+        $this->validate($request,[
+            "id_kategori" => 'required',
+            'no_dokumen' => 'required',
+            "tgl_terbit" => 'required',
+        ],$messages);
+
+        $nm_dokumen = $request->file('nm_dokumen');
+        $name = $nm_dokumen->getClientOriginalName();
+        $path = 'files';
+        $nm_dokumen->move($path, $name);
+                
+        MasterDokumen::create([
+            'no_dokumen' => $request->no_dokumen,
+            'nm_dokumen'=> $name,
+            "tgl_terbit" => $request->tgl_terbit,
+            "tgl_expired" =>Carbon::createFromFormat('Y-m-d', $request->tgl_terbit)->addMonth(),
+            "status" => "non-Aktif",
+            "tipe_dokumen" => 0,
+            "id_kategori" => $request->id_kategori,
+            "id_trader" => Auth::user()->id_trader,
+        ]);
+        
+        // $master = new MasterDokumen();
+        // $master->no_dokumen = $request->no_dokumen;
+        // $master->tgl_terbit = $request->tgl_terbit;
+        // $master->id_kategori = $request->nm_dokumen;
+        // $master->id_trader = Auth::user()->id_trader;
+
+        return redirect()->back();
+    }
 
     public function store(Request $request, $id_ppk)
     {
@@ -99,6 +178,31 @@ class HomeController extends Controller
         return redirect('/home')->with('status', 'File Success');
     }
 
+
+    public function pilihMaster(Request $request){
+        $id_master = $request->input('id_master');
+        $id_ppk = $request->input('id_ppk');
+
+        if(isset($id_master) && isset($id_ppk)){
+            Dokumen::insert([
+                'id_ppk'=> $id_ppk,
+                'id_master'=>$id_master,
+            ]);
+            echo json_encode([
+                'error'=>false
+            ]);
+        }
+        else{
+            echo json_encode([
+                'error'=>true
+            ]);
+        }
+        // echo json_encode([
+        //         'error'=>true,
+        //         'id_master'=>$id_master,
+        //         'id_ppk'=>$id_ppk,
+        // ]);
+    }
     public function deleteDokumen($id_ppk, $id_dokumen){
         if (Dokumen::where('id_dokumen', $id_dokumen)->delete()){
             return redirect()->back();

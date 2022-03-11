@@ -22,13 +22,16 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::post('/home/{id_ppk}/store', [App\Http\Controllers\HomeController::class, 'store'])->name('store');
         Route::get('/home/{id_ppk}/delete/{id_dokumen}', [App\Http\Controllers\HomeController::class, 'deleteDokumen'])->name('deleteDokumen');
 
+        Route::post('/home/{id_ppk}/storeDokumen', [App\Http\Controllers\HomeController::class, 'storeDokumen'])->name('trader.storeDocument');
+        Route::post('/home/dokumen/pilihMaster', [App\Http\Controllers\HomeController::class, 'pilihMaster'])->name('trader.pilihMaster');
+
         Route::get('/master', [App\Http\Controllers\MasterDokumenController::class, 'index'])->name('trader.master_dokumen');
         Route::get('/master/addMaster', [App\Http\Controllers\MasterDokumenController::class, 'master'])->name('trader.addMaster');
         Route::post('/master/addMaster/storeMaster', [App\Http\Controllers\MasterDokumenController::class, 'storeMaster'])->name('trader.storeMaster');
     });
     // Login untuk trader
-    Route::get('/login', [\App\Http\Controllers\LoginController::class, 'formLogin'])->name('login');
-    Route::post('/login', [\App\Http\Controllers\LoginController::class, 'login'])->name('login');
+    Route::get('/', [\App\Http\Controllers\LoginController::class, 'formLogin'])->name('login');
+    Route::post('/', [\App\Http\Controllers\LoginController::class, 'login'])->name('login');
     Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
 
     //login untuk admin

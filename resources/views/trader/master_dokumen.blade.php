@@ -40,7 +40,6 @@
   <script>
     $(document).ready( function () {
       $('#tableMaster').DataTable({
-        ordering: false,
         responsive: true,
       });
       
