@@ -18,7 +18,6 @@
       <?php
       $showButton = false;
       ?>
-      <form method="POST" enctype="multipart/form-data" id="upload-file" action="/home/{{$ppk->id_ppk}}/storeDokumen">
         @csrf
         @foreach ($kategoris as $kategori)
         <?php $no = 0; ?>
@@ -89,10 +88,10 @@
               </div>
             </div>
 
-            <a style="margin: 0 3px" class="btn btn-sm btn-outline-dark" data-toggle="modal" data-target="#addModal">Upload Dokumen</a>
+            <a style="margin: 0 3px" class="btn btn-sm btn-outline-dark" data-toggle="modal" data-target="#addModal-{{$kategori->id_kategori}}">Upload Dokumen</a>
 
             <!-- Add Modal -->
-            <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal fade" id="addModal-{{$kategori->id_kategori}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -117,7 +116,7 @@
                             <div class="card">
                               <div class="card-content">
                                 <div class="card-body">
-                                  <form method="POST" action="/master/addMaster/storeMaster" enctype="multipart/form-data">
+                                  <form method="POST" action="/home/storeDokumen?id_ppk={{$ppk->id_ppk}}" enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">
                                       <div class="col">
@@ -133,10 +132,7 @@
                                         <div class="form-group">
                                           <label for="id_kategori" style="font-weight:500; color:#2E2A61; font-size: 18px;">Kategori Dokumen</label>
                                           <select class="form-control" id="id_kategori" name="id_kategori">
-                                            <option value="" onclick="pushData('id_kategori')">-- Pilih Kategori --</option>
-                                            @foreach ($kategoris as $item)
-                                            <option value="{{ $item->id_kategori }}">{{ $item->nama_kategori }}</option>
-                                            @endforeach
+                                            <option value="{{ $kategori->id_kategori }}">{{ $kategori->nama_kategori }}</option>                                           
                                           </select>
                                         </div>
 
@@ -170,7 +166,6 @@
               </div>
             </div>
 </div>
-
 @else
 <a href="/home/{{$ppk->id_ppk}}/delete/{{$dokumens[$kategori['id_kategori']]['id_dokumen']}}" style="margin: 0 3px" class="btn btn-sm btn-outline-dark">Delete</a>
 @endif
@@ -178,13 +173,7 @@
 </tr>
 @endforeach
 </tbody>
-</form>
 </table>
-@if($showButton)
-<div class="col-md-12">
-  <button form="upload-file" type="submit" class="btn btn-primary" id="submit" >Submit</button>
-</div>
-@endif
 </div>
 
 

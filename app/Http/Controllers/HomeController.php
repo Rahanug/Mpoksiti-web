@@ -49,7 +49,7 @@ class HomeController extends Controller
             "title" => "Unggah Dokumen",
             "ppk" => $ppk,
             "kategoris" => $kategoriModel->all(),
-            "dokumens" => $this->getNamaDokumen($id_ppk),
+            "dokumens" => $this->getDetailDokumen($id_ppk),
             "masters" => $masterDokumenModel->where("id_trader", Auth::user()->id_trader)->get(),
             "kategoriMaster" => $kategori,
             "masterDokumens" => $this->getMasterDokumen(),
@@ -68,13 +68,30 @@ class HomeController extends Controller
         // ]);
     }
 
-    private function getNamaDokumen($id_ppk)
+    // Tidak dipakai karena yg dipakai get detail dokumen 
+    // private function getNamaDokumen($id_ppk)
+    // {
+    //     $dokumens = new Dokumen();
+    //     $list_dokumen = $dokumens->where('id_ppk', $id_ppk)->get();
+    //     $result = array();
+    //     foreach ($list_dokumen as $dokumen) {
+    //         $result[$dokumen['id_kategori']] = array('id_master' => $dokumen['id_master']);
+    //         $result[$dokumen['id_kategori']] += array('id_dokumen' => $dokumen['id_dokumen']);
+    //     }
+    //     return $result;
+    // }
+
+    private function getDetailDokumen($id_ppk)
     {
         $dokumens = new Dokumen();
-        $list_dokumen = $dokumens->where('id_ppk', $id_ppk)->get();
+        $list_dokumen = $dokumens->where('id_ppk', $id_ppk)
+        ->join('master_dokumens', 'dokumens.id_master', '=', 'master_dokumens.id_master')
+        ->get();
         $result = array();
         foreach ($list_dokumen as $dokumen) {
             $result[$dokumen['id_kategori']] = array('nm_dokumen' => $dokumen['nm_dokumen']);
+            $result[$dokumen['id_kategori']] += array('no_dokumen' => $dokumen['no_dokumen']);
+            $result[$dokumen['id_kategori']] += array('tgl_terbit' => $dokumen['tgl_terbit']);
             $result[$dokumen['id_kategori']] += array('id_dokumen' => $dokumen['id_dokumen']);
         }
         return $result;
@@ -83,7 +100,9 @@ class HomeController extends Controller
 
     private function getMasterDokumen(){
         $dokumens = new MasterDokumen();
-        $list_dokumen = $dokumens->all();
+        $list_dokumen = $dokumens
+                ->where('status', 'Aktif')
+                ->where('tipe_dokumen', 1)->get();
         $result = array();
         foreach ($list_dokumen as $dokumen) {
             $result[$dokumen['id_kategori']] = array();
@@ -121,18 +140,23 @@ class HomeController extends Controller
         $name = $nm_dokumen->getClientOriginalName();
         $path = 'files';
         $nm_dokumen->move($path, $name);
-                
-        MasterDokumen::create([
+        
+        DB::beginTransaction();
+        $id = MasterDokumen::insertGetId([
             'no_dokumen' => $request->no_dokumen,
             'nm_dokumen'=> $name,
             "tgl_terbit" => $request->tgl_terbit,
             "tgl_expired" =>Carbon::createFromFormat('Y-m-d', $request->tgl_terbit)->addMonth(),
-            "status" => "non-Aktif",
+            "status" => "Aktif",
             "tipe_dokumen" => 0,
             "id_kategori" => $request->id_kategori,
             "id_trader" => Auth::user()->id_trader,
         ]);
-        
+        Dokumen::create([
+            'id_master'=> $id,
+            'id_ppk'=> $request->input('id_ppk'),
+        ]);
+        DB::commit();
         // $master = new MasterDokumen();
         // $master->no_dokumen = $request->no_dokumen;
         // $master->tgl_terbit = $request->tgl_terbit;
@@ -142,41 +166,37 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
-    public function store(Request $request, $id_ppk)
-    {
-        // $validatedData = $request->validate([
-        //     'Dokumen' => 'required|csv,txt,xlx,pdf|max:2048',
-        // ]);
-        // $id_ppk = DB::select("SELECT id_ppk FROM ppks WHERE id_ppk='$id_ppk'");
-        $now = now();
-        // $ppkModel = new Ppk();
-        // $request = new Request();
-        // $KategoriDokumen = new KategoriDokumen();
-        // $no_ppk = $ppkModel->where('id_ppk', $id_ppk)->first();
-        $ppks = new PpkController();
-        $ppk = $ppks->getIf($id_ppk)[0];
-        $listIdKategori = KategoriDokumen::pluck('id_kategori');
-        DB::beginTransaction();
-        foreach ($listIdKategori as $idKategori) {
-            $name_file = $request->file('nm_dokumen-' . $idKategori);
-            if (isset($name_file)) {
-                $name = $name_file->getClientOriginalName();
-                $path = 'files';
-                $name_file->move($path, $name);
-                Dokumen::create([
-                    "no_dokumen" => "1",
-                    "nm_dokumen" => $name,
-                    // "tgl_dokumen" => $now,
-                    // "tgl_berlaku" => $now,
-                    // "tgl_lulus" => $now,
-                    "id_ppk" => $ppk->id_ppk,
-                    "id_kategori" => $idKategori,
-                ]);
-            }
-        }
-        DB::commit();
-        return redirect('/home')->with('status', 'File Success');
-    }
+    // Tidak dipakai, harusnya untuk store Dokumen tanpa no dokumen
+    // public function store(Request $request, $id_ppk)
+    // {
+    //     // $validatedData = $request->validate([
+    //     //     'Dokumen' => 'required|csv,txt,xlx,pdf|max:2048',
+    //     // ]);
+    //     $now = now();
+    //     $ppks = new PpkController();
+    //     $ppk = $ppks->getIf($id_ppk)[0];
+    //     $listIdKategori = KategoriDokumen::pluck('id_kategori');
+    //     DB::beginTransaction();
+    //     foreach ($listIdKategori as $idKategori) {
+    //         $name_file = $request->file('nm_dokumen-' . $idKategori);
+    //         if (isset($name_file)) {
+    //             $name = $name_file->getClientOriginalName();
+    //             $path = 'files';
+    //             $name_file->move($path, $name);
+    //             Dokumen::create([
+    //                 "no_dokumen" => "1",
+    //                 "nm_dokumen" => $name,
+    //                 // "tgl_dokumen" => $now,
+    //                 // "tgl_berlaku" => $now,
+    //                 // "tgl_lulus" => $now,
+    //                 "id_ppk" => $ppk->id_ppk,
+    //                 "id_kategori" => $idKategori,
+    //             ]);
+    //         }
+    //     }
+    //     DB::commit();
+    //     return redirect('/home')->with('status', 'File Success');
+    // }
 
 
     public function pilihMaster(Request $request){

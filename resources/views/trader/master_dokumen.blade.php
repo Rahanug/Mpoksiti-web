@@ -14,7 +14,7 @@
   
 
   <div class="container">
-  <div class="d-flex justify-content-left flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3" >
+  <div class="d-flex justify-content-left flex-wrap flex-md-nowrap align-items-center pt-3 pb-2" >
       <div class="btn-group">
         <button type="button" class="btn btn-sm btn btn-outline-primary" onclick="location.href='/master/addMaster'">Tambah Dokumen</button>
       </div>
