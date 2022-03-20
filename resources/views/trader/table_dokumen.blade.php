@@ -167,6 +167,7 @@
             </div>
 </div>
 @else
+<a target="_blank" href="<?=url('files/'. $dokumens[$kategori['id_kategori']]['nm_dokumen']) ?>" style="margin: 0 3px" class="btn btn-sm btn-outline-dark">Preview</a>
 <a href="/home/{{$ppk->id_ppk}}/delete/{{$dokumens[$kategori['id_kategori']]['id_dokumen']}}" style="margin: 0 3px" class="btn btn-sm btn-outline-dark">Delete</a>
 @endif
 </td>

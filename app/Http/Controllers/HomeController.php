@@ -223,6 +223,25 @@ class HomeController extends Controller
         //         'id_ppk'=>$id_ppk,
         // ]);
     }
+
+    public function previewDokumen(Request $request, $id_ppk, $id_dokumen){
+        $dokumens = new Dokumen();
+        $list_dokumen = $dokumens->where('id_ppk', $id_ppk)
+        ->join('master_dokumens', 'dokumens.id_master', '=', 'master_dokumens.id_master')
+        ->get();
+        $result = array();
+        foreach ($list_dokumen as $dokumen) {
+            $result[$dokumen['id_kategori']] = array('nm_dokumen' => $dokumen['nm_dokumen']);
+        }
+        $nm_dokumen = $request->file($result);
+        $name = $nm_dokumen->getClientOriginalName();
+        $path = 'files';
+        $nm_dokumen->response()->file($path, $name);
+        // if (Dokumen::where('id_dokumen', $id_dokumen)){
+        //     return $nm_dokumen;
+        // }
+    }
+
     public function deleteDokumen($id_ppk, $id_dokumen){
         if (Dokumen::where('id_dokumen', $id_dokumen)->delete()){
             return redirect()->back();
