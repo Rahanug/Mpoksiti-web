@@ -15,8 +15,12 @@ class CreateCameraFileTables extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
+            $table->integer('id_ppk');
             $table->string('no_aju_ppk');
+            $table->string('kd_ikan');
             $table->string('url_file');
+            $table->string('latitude');
+            $table->string('longitude');
             $table->integer('id_trader')->unsigned();
             $table->timestamps();
         });

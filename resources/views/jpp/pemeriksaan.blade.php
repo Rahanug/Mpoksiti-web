@@ -72,7 +72,7 @@
 
   <div id="taro">
     <div class="table-responsive">
-      <table class="table table-striped table-sm">
+      <table class="table table-striped" id="tablePermohonanPemeriksaanVirtual">
         <thead>
           <tr>
             <th scope="col" style="font-weight:semibold; color:#2E2A61;">No</th>
@@ -80,8 +80,12 @@
             <th scope="col" style="font-weight:semibold; color:#2E2A61;">No PPK</th>
             <th scope="col" style="font-weight:semibold; color:#2E2A61;">Tgl PPK</th>
             <th scope="col" style="font-weight:semibold; color:#2E2A61;">Trader</th>
+            <th scope="col" style="font-weight:semibold; color:#2E2A61;">Cetak PPK</th>
+            <th scope="col" style="font-weight:semibold; color:#2E2A61;">Permohonan Pemeriksaan Virtual</th>
             <th scope="col" style="font-weight:semibold; color:#2E2A61;">Jadwal Pemeriksaan</th>
             <th scope="col" style="font-weight:semibold; color:#2E2A61;">No Sertifikat</th>
+            <th scope="col" style="font-weight:semibold; color:#2E2A61;">Cetak Segel</th>
+            <th scope="col" style="font-weight:semibold; color:#2E2A61;">Pemeriksaan Virtual</th>
             <th scope="col" style="font-weight:semibold; color:#2E2A61;">Action</th>
           </tr>
         </thead>
@@ -89,20 +93,33 @@
           <?php 
           $count = 0;
           foreach ($list_ppk as $ppk){
-            $count++;
             $html = '<tr>';
-            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$count.'</td>';
+            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.($count+1).'</td>';
             $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_aju_ppk.'</td>';
             $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_ppk.'</td>';
-            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$count.'</td>';
-            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->nm_penerima.'</td>';
-            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$count.'</td>';
-            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$count.'</td>';
+            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$list_data_ppk[$count]['tgl'].'</td>';
+            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$list_data_ppk[$count]['nama_trader'].'</td>';
             $html .= 
             '<td>
-              <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Delete</a>
+              <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Cetak PPK</a>
+            </td>';
+            $html .= 
+            '<td>
+              <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Ajukan Permohonan</a>
+            </td>';
+            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.'jadwal pemeriksaan'.'</td>';
+            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.'no sertif'.'</td>';
+            $html .= 
+            '<td>
+              <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Cetak</a>
+            </td>';
+            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.'pemeriksaan virtual'.'</td>';
+            $html .= 
+            '<td>
+              <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Tolak</a>
             </td>';
             $html .= '</tr>';
+            $count++;
             echo $html;
           }
           ?>
