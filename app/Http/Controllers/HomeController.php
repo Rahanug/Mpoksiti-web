@@ -23,7 +23,7 @@ class HomeController extends Controller
         $ppks = new PpkController();
         $ppkModel = new Ppk();
         return view('trader.home', [
-            "title" => "Proses Stuffing",
+            "title" => "Dashboard",
             "ppks" => $ppkModel->where("id_trader", Auth::user()->id_trader)->get(),
             "trader" => $trader,
         ]);

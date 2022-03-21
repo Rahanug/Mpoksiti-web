@@ -68,7 +68,7 @@
                             <td>{{ ++$no; }}</td>
                             <td>{{ $kategori['nama_kategori'] }}</td>
                             <td>{{ $masterDokumen['no_dokumen'] }}</td>
-                            <td>{{ $masterDokumen['tgl_terbit'] }}</td>>
+                            <td>{{ $masterDokumen['tgl_terbit'] }}</td>
                             <td>{{ $masterDokumen['status'] }}</td>
                             <td>
                               <button type="button" style="margin: 0 3px" class="btn btn-sm btn-primary" onclick="chooseMaster(<?= $masterDokumen['id_master'] ?>)">Pilih</button>

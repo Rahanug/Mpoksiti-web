@@ -3,10 +3,11 @@
 @section('css')
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
   <link rel="stylesheet" href="//cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" type="text/css" href="vendor/DataTables/datatables.min.css"/>
 @endsection
 
 @section('content')
-<script>document.title = "Proses Stuffing Virtual"</script>
+<script>document.title = "Dashboard"</script>
 <main class="justify-content-md-center-lg-10 px-md-2"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
   <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3"> 
   <h2 class="h2">Proses Stuffing Virtual</h2> 

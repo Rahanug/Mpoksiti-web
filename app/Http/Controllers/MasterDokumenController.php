@@ -15,15 +15,17 @@ class MasterDokumenController extends Controller
 {
     public function index(Request $request)
     {
+        $ppkModel = new Ppk();
         $kategori = array();
         foreach (KategoriDokumen::all() as $item) {
             $kategori[$item->id_kategori] = $item->nama_kategori;
         }
         $masterDokumenModel = new MasterDokumen();
         return view('trader.master_dokumen', [
-            "title" => "Master Dokumen",
+            "title" => "Dokumen",
             "masters" => $masterDokumenModel->where("id_trader", Auth::user()->id_trader)->where("tipe_dokumen", 1)->get(),
             "kategori" => $kategori,
+            "ppks" => $ppkModel->where("id_trader", Auth::user()->id_trader)->get(),
         ]);
     }
 
@@ -55,7 +57,7 @@ class MasterDokumenController extends Controller
         $path = 'files';
         $nm_dokumen->move($path, $name);
                 
-        MasterDokumen::create([
+        MasterDokumen::insert([
             'no_dokumen' => $request->no_dokumen,
             'nm_dokumen'=> $name,
             "tgl_terbit" => $request->tgl_terbit,
