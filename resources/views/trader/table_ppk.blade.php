@@ -4,8 +4,7 @@
           <tr>
             <th scope="col">No</th>
             <th scope="col">Penerima</th>
-            <th scope="col">Nomor PPK</th>
-            <th scope="col">Nomor Pengajuan PPK</th>
+            <th scope="col">Nomor Ajua PPK</th>
             <th scope="col">Status</th>
             <th scope="col">Aksi</th>
           </tr>
@@ -16,7 +15,6 @@
           <tr>
             <td>{{ ++$no; }}</td>
             <td>{{ $ppk->nm_penerima}}</td>
-            <td>{{ $ppk->no_ppk }}</td>
             <td>{{ $ppk->no_aju_ppk }}</td>
             <td style="font-weight: bold">{{ ucfirst($ppk->status)}}</td>
             <td>

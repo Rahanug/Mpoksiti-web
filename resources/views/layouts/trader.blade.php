@@ -21,8 +21,8 @@
     <link rel="stylesheet" href="{{ asset('css/styleAdmin.css') }}">
     <style >
         .nav-item .nav-link.active {
-        color: #c5ac58;
-        background-color: #2d3339;
+        color: #03045E;
+        background-color: #ADE8F4;
         font-weight: bold;
         }
         </style>
@@ -37,7 +37,7 @@
     <!-- Page Wrapper -->
 <div id="wrapper">
     <!-- Sidebar -->
-    <ul style="background-color:#14171A" class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul style="background-color:#03045E" class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('trader.home') }}">
