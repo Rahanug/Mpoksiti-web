@@ -20,7 +20,7 @@
             <td>{{ $master->tgl_terbit }}</td>
             <td>{{ $master->status }}</td>
             <td>
-              <a style="margin: 0 3px" class="btn btn-sm btn-outline-dark" href="">Edit</a>
+              <a style="margin: 0 3px" class="btn btn-sm btn-secondary" href="">Edit</a>
             </td>
           </tr>
           @endforeach

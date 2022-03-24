@@ -4,7 +4,7 @@
           <tr>
             <th scope="col">No</th>
             <th scope="col">Penerima</th>
-            <th scope="col">Nomor Ajua PPK</th>
+            <th scope="col">Nomor Aju PPK</th>
             <th scope="col">Status</th>
             <th scope="col">Aksi</th>
           </tr>
@@ -18,8 +18,15 @@
             <td>{{ $ppk->no_aju_ppk }}</td>
             <td style="font-weight: bold">{{ ucfirst($ppk->status)}}</td>
             <td>
+            <!-- <style>
+                @media only screen and (max-width: 800px) {
+                  .btn-upload {
+                    content : Upload
+                  }
+                }
+            </style> -->
             @if ($ppk->status == "Pengajuan - Disetujui")
-              <a style="margin: 0 3px" class="btn btn-sm btn-outline-dark" href="/home/{{$ppk->id_ppk}}">Upload Dokumen</a>  
+              <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="/home/{{$ppk->id_ppk}}">Upload Dokumen</a>  
             @endif
 
             @if ($ppk->status == "Dokumen - Terverifikasi")
@@ -30,7 +37,7 @@
               <a style="margin: 0 3px" class="btn btn-sm btn-outline-dark">Cetak HC</a>  
             @endif
 
-              <a style="margin: 0 3px" class="btn btn-sm btn-outline-dark">Detail</a>
+              <a style="margin: 0 3px" class="btn btn-sm btn-secondary">Detail</a>
             </td>
           </tr>
           @endforeach

@@ -13,6 +13,7 @@ use Illuminate\Support\Carbon;
 
 class MasterDokumenController extends Controller
 {
+    // Halaman Trader
     public function index(Request $request)
     {
         $ppkModel = new Ppk();
@@ -80,5 +81,35 @@ class MasterDokumenController extends Controller
     public function getIf($id_master){
         $master = DB::select("SELECT * FROM $this->table WHERE id_master='$id_master'");
         return $master;
+    }
+
+    // Halaman Admin
+    public function indexAdmin(Request $request)
+    {
+        $traderModel = new Trader();
+        $traderNon = $traderModel->join('master_dokumens', 'traders.id_trader', '=', 'master_dokumens.id_trader')->where('master_dokumens.status', '=', 'non-Aktif')->where('master_dokumens.tipe_dokumen', '=', 1)->count();
+        $traderAktif = $traderModel->join('master_dokumens', 'traders.id_trader', '=', 'master_dokumens.id_trader')->where('master_dokumens.status', '=', 'Aktif')->where('master_dokumens.tipe_dokumen', '=', 1)->count();
+        return view('admin.master_dokumen_admin', [
+            "title"=>"Master Dokumen Trader",
+            "traders"=>$traderModel->all(),
+            "countNon"=>$traderNon,
+            "countAktif"=>$traderAktif,
+        ]);
+    }
+
+    public function masterTrader(Request $request)
+    {
+        // $ppkModel = new Ppk();
+        // $kategori = array();
+        // foreach (KategoriDokumen::all() as $item) {
+        //     $kategori[$item->id_kategori] = $item->nama_kategori;
+        // }
+        // $masterDokumenModel = new MasterDokumen();
+        // return view('admin.master_dokumen', [
+        //     "title" => "Dokumen",
+        //     "masters" => $masterDokumenModel->where("id_trader", Auth::user()->id_trader)->where("tipe_dokumen", 1)->get(),
+        //     "kategori" => $kategori,
+        //     "ppks" => $ppkModel->where("id_trader", Auth::user()->id_trader)->get(),
+        // ]);
     }
 }

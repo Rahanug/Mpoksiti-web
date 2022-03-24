@@ -21,8 +21,8 @@
     <link rel="stylesheet" href="{{ asset('css/styleAdmin.css') }}">
     <style >
         .nav-item .nav-link.active {
-        color: #2E2A61;
-        background-color: rgba(196, 196, 196, 0.3);
+        /* color: #2E2A61; */
+        /* background-color: rgba(196, 196, 196, 0.3); */
         font-weight: bold;
         }
         </style>
@@ -43,25 +43,51 @@
         <a class="sidebar-brand d-flex align-items-center justify-content-center">
             <div class="sidebar-brand-text mx-3" style="font-size:28px">Mpok Siti</div>
         </a>
-    </br></br></br></br>
 
         <!-- Nav Item - Management User -->
         <li class="nav-item">
             <a class="nav-link {{ $title==='Management'? 'active' : '' }}" href="{{ route('admin.manage') }}">
-                <div class="d-flex align-items-center justify-content-center" style="font-weight:700; font-size:15px;">Management User</div></a>
+            <i class="fas fa-fw fa-user-circle"></i>
+                <span>Management User</span></a>
         </li>
 
         <!-- Nav Item - Menu -->
         <li class="nav-item">
             <a class="nav-link {{ $title==='Menu'? 'active' : '' }}" href="{{ route('admin.menu') }}">
-                <div class="d-flex align-items-center justify-content-center" style="font-weight:700; font-size:15px;">Menu</div></a>
+            <i class="fas fa-fw fa-window-maximize"></i>
+                <span>Menu</span></a>
         </li>
 
         <!-- Nav Item - Publikasi -->
         <li class="nav-item">
             <a class="nav-link {{ $title==='Publikasi'? 'active' : '' }}" href="{{ route('admin.publikasi') }}" href="">
-                <div class="d-flex align-items-center justify-content-center" style="font-weight:700; font-size:15px;">Publikasi</div></a>
+            <i class="fas fa-fw fa-camera"></i>
+            <span>Publikasi</span></a>
         </li>
+        <!-- Nav Item - PPK EKSPOR -->
+        <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-map-signs"></i>
+                    <span>Ekspor</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <style>
+                            .collapse-item.active {
+                            color: #3C5C94;
+                            /* background-color: rgba(196, 196, 196, 0.3); */
+                            font-weight: bold;
+                            }
+                            </style>
+                        <h6 class="collapse-header">Bagian Ekspor:</h6>
+                        <a class="collapse-item {{ $title==='Verifikasi'? 'active' : '' }}" href="">Verifikasi</a>
+                        <a class="collapse-item {{ $title==='Master Dokumen Trader'? 'active' : '' }}" href="/admin/master">Master Dokumen Trader</a>
+                    </div>
+                </div>
+        </li>
+        <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
     </ul>
     <!-- End of Sidebar -->
 
