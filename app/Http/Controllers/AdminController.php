@@ -64,7 +64,7 @@ class AdminController extends Controller
             'kt_trader' => $request->kt_trader,
             'npwp' => $request->npwp,
             'no_ktp' => $request->no_ktp,
-            'no_izin' => $request->no_izin,
+            // 'no_izin' => $request->no_izin,
             'no_hp' => $request->no_hp,
             'email' => $request->email,
             'password' => Hash::make($request->password),

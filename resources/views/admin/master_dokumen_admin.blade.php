@@ -53,7 +53,7 @@
                     <th scope="col">Nama Trader</th>
                     <th scope="col">Alamat Trader</th>
                     <th scope="col">Kota</th>
-                    <!-- <th scope="col">Status</th> -->
+                    <th scope="col">Tidak Terverifikasi</th>
                     <th scope="col">Aksi</th>
                 </tr>
                 </thead>
@@ -65,7 +65,7 @@
                     <td>{{ $trader->nm_trader }}</td>
                     <td>{{ $trader->al_trader }}</td>
                     <td>{{ $trader->kt_trader }}</td>
-                    <!-- <td>{{ $trader->status }}</td> -->
+                    <td>{{ $countMaster[$trader->id_trader] ?? 0 }}</td>
                     <td>
                     <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="">Verifikasi</a>
                     </td>

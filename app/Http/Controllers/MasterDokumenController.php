@@ -89,12 +89,22 @@ class MasterDokumenController extends Controller
         $traderModel = new Trader();
         $traderNon = $traderModel->join('master_dokumens', 'traders.id_trader', '=', 'master_dokumens.id_trader')->where('master_dokumens.status', '=', 'non-Aktif')->where('master_dokumens.tipe_dokumen', '=', 1)->count();
         $traderAktif = $traderModel->join('master_dokumens', 'traders.id_trader', '=', 'master_dokumens.id_trader')->where('master_dokumens.status', '=', 'Aktif')->where('master_dokumens.tipe_dokumen', '=', 1)->count();
+        $traderUserNons = $traderModel->selectRaw('traders.id_trader, COUNT(master_dokumens.id_master) AS count')->leftJoin('master_dokumens', 'traders.id_trader', '=', 'master_dokumens.id_trader')->where('master_dokumens.status', '=', 'non-Aktif')->where('master_dokumens.tipe_dokumen', '=', 1)->groupby('traders.id_trader')->get();
         return view('admin.master_dokumen_admin', [
             "title"=>"Master Dokumen Trader",
             "traders"=>$traderModel->all(),
             "countNon"=>$traderNon,
             "countAktif"=>$traderAktif,
+            "countMaster"=> $this->mapCountMaster($traderUserNons)
         ]);
+    }
+
+    private function mapCountMaster($listCount){
+        $result = array();
+        foreach ($listCount as $count){
+            $result[$count['id_trader']] = $count['count'];
+        }
+        return $result;
     }
 
     public function masterTrader(Request $request)
