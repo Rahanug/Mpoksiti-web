@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Jpp;
-use App\Models\Ppk;
+use App\Models\vDataHeader;
 use App\Models\Trader;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -19,9 +19,11 @@ class JPPController extends Controller
     }
 
     public function pemeriksaan() {
-        $ppkModel = new Ppk();  
         $traderModel = new Trader();
-        $list_ppk = $ppkModel->where("kode_counter_jpp", Auth::user()->kode_counter)->get();
+        $list_ppk = vDataHeader::leftJoin('pemeriksaan_klinis', 'v_data_header.id_ppk', '=', 'pemeriksaan_klinis.id_ppk')
+                    ->select('v_data_header.*', 'pemeriksaan_klinis.status')
+                    ->where("id_jpp", Auth::user()->id)
+                    ->get();
         $list_data_ppk = array();
         $count = 0;
         foreach ($list_ppk as $ppk) {

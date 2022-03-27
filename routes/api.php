@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\PpkAPIController;
+use App\Http\Controllers\api\PemeriksaanKlinisAPIController;
 use App\Http\Controllers\api\JenisKurirController;
 use App\Http\Controllers\api\JPPController;
 use App\Http\Controllers\api\ImageController;
@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('/jpps', 'App\Http\Controllers\api\JPPController');
-Route::apiResource('/ppks', 'App\Http\Controllers\api\PpkAPIController');
+Route::apiResource('/jpp', 'App\Http\Controllers\api\JPPController');
+Route::apiResource('/pemeriksaan_klinis', 'App\Http\Controllers\api\PemeriksaanKlinisAPIController');
 Route::apiResource('/kurirs', 'App\Http\Controllers\api\JenisKurirController');
 Route::apiResource('/addimage', 'App\Http\Controllers\api\ImageController');

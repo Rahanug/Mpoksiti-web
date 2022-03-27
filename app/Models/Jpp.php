@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Jpp extends Authenticatable
 {
     use HasFactory;
-    protected $table ="jpps";
+    protected $table ="jpp";
     protected $primaryKey='id';
     public $timestamps = false;
     protected $fillable = [

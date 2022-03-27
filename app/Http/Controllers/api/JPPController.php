@@ -17,11 +17,11 @@ class JPPController extends Controller
     public function index()
     {
         //
-        $jpps = DB::table('jpps')
+        $jpp = DB::table('jpp')
                 ->select('id', 'kode_counter', 'nama_counter', 'latitude', 'longitude', 'penanggungJawab', 'id_kurir')
                 ->get();
 
-        return response()->json($jpps);
+        return response()->json($jpp);
     }
 
     /**

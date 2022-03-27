@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Ppk;
+use App\Models\vDataHeader;
 
 class vDtlPelaporanFactory extends Factory
 {
@@ -16,10 +16,10 @@ class vDtlPelaporanFactory extends Factory
     {
         return [
             //
-            'id_ppk' => $this->faker->randomElement(Ppk::all())['id_ppk'],
+            'id_ppk' => $this->faker->randomElement(vDataHeader::all())['id_ppk'],
             'id_kd_ikan' => $this->faker->randomDigit,
             'kd_ikan_lokal_ol' => $this->faker->randomDigit,
-            'kd_ikan' => $this->faker->unique()->randomElement(['5065','C00195','C00070','C01245','C00070']),
+            'kd_ikan' => $this->faker->unique()->numerify('kd_ikan-###'),
             'nm_lokal' => ('nm_lokal'),
             'nm_umum' => ('nm_umum'),
             'nm_latin' => ('nm_latin'),

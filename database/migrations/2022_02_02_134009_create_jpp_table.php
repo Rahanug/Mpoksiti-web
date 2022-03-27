@@ -13,7 +13,7 @@ class CreateJppTable extends Migration
      */
     public function up()
     {
-        Schema::create('jpps', function (Blueprint $table) {
+        Schema::create('jpp', function (Blueprint $table) {
             $table->id();
             $table->string('kode_counter');
             $table->string('nama_counter');
@@ -32,6 +32,6 @@ class CreateJppTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jpps');
+        Schema::dropIfExists('jpp');
     }
 }
