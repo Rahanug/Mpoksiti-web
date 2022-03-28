@@ -9,6 +9,7 @@ use App\Models\Menu;
 use App\Models\Trader;
 use App\Models\Ppk;
 use App\Models\KategoriDokumen;
+use App\Models\vDataHeader;
 use App\Models\vDtlPelaporan;
 use Illuminate\Database\Seeder;
 
@@ -30,6 +31,7 @@ class DatabaseSeeder extends Seeder
         Menu::factory(8)->create();
         Ppk::factory(20)->create();
         KategoriDokumen::factory(4)->create();
-        vDtlPelaporan::factory(4)->create();
+        vDataHeader::factory(20)->create();
+        vDtlPelaporan::factory(50)->create();
     }
 }
