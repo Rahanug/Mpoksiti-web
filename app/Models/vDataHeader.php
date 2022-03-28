@@ -9,12 +9,13 @@ class vDataHeader extends Model
 {
     use HasFactory;
     protected $table ="v_data_header";
+    protected $primaryKey='id_ppk';
     public $timestamps = false;
     protected $fillable = [
-        'id_ppk',
         'no_ppk',
         'no_aju_ppk',
         'id_trader',
-        'nm_trader'
+        'nm_trader',
+        'tgl_ppk'
     ];
 }

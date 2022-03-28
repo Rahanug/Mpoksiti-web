@@ -46,7 +46,7 @@
     </br></br></br></br>
 
         <!-- Nav Item -->
-        <<li class="nav-item">
+        <li class="nav-item">
             <a class="nav-link {{ $title==='dashboard'? 'active' : '' }}" href="{{ route('jpp.home') }}">
                 <div class="d-flex align-items-center justify-content-center" style="font-weight:700; font-size:15px;">Dashboard</div></a>
         </li>

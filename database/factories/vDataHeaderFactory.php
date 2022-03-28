@@ -20,6 +20,7 @@ class vDataHeaderFactory extends Factory
             'no_aju_ppk' => $this->faker->numerify('E/E/######'),
             'id_trader' => $this->faker->randomElement(Trader::all())['id_trader'],
             'nm_trader' => $this->faker->name,
+            'tgl_ppk' => 'tes_tgl'
         ];
     }
 }
