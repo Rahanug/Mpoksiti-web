@@ -20,12 +20,12 @@ class CreateVDataHeaderTable extends Migration
             $table->integer('id_trader')->unsigned();
             $table->foreign('id_trader')->references('id_trader')->on('traders');
             $table->string('nm_trader');
+            $table->string('tgl_ppk');
             /*
             no_ssm
             karantina_mutu
             kd_input
             tgl_input
-            tgl_ppk
             tgl_berangkat
             id_trader
             id_penerima

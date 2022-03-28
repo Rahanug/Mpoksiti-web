@@ -77,7 +77,7 @@
           <tr>
             <th scope="col" style="font-weight:semibold; color:#2E2A61;">No</th>
             <th scope="col" style="font-weight:semibold; color:#2E2A61;">No Aju PPK</th>
-            <th scope="col" style="font-weight:semibold; color:#2E2A61;">No PPK</th>
+            <!--<th scope="col" style="font-weight:semibold; color:#2E2A61;">No PPK</th>-->
             <th scope="col" style="font-weight:semibold; color:#2E2A61;">Tgl PPK</th>
             <th scope="col" style="font-weight:semibold; color:#2E2A61;">Trader</th>
             <th scope="col" style="font-weight:semibold; color:#2E2A61;">Cetak PPK</th>
@@ -96,24 +96,39 @@
             $html = '<tr>';
             $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.($count+1).'</td>';
             $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_aju_ppk.'</td>';
-            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_ppk.'</td>';
-            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$list_data_ppk[$count]['tgl'].'</td>';
-            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$list_data_ppk[$count]['nama_trader'].'</td>';
+            //$html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_ppk.'</td>';
+            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->tgl_ppk.'</td>';
+            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->nama_trader.'</td>';
             $html .= 
             '<td>
               <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Cetak PPK</a>
             </td>';
-            $html .= 
-            '<td>
-              <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Ajukan Permohonan</a>
-            </td>';
-            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.'jadwal pemeriksaan'.'</td>';
-            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.'no sertif'.'</td>';
+            
+            if ($ppk->status_periksa == null){
+              $html .= 
+              /*'<td>
+                <a href="/admin/manage/delete/${res.traders[i].id_trader}" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Ajukan Permohonan</a>
+              </td>';*/
+              '<td><form action="/jpp/permohonan" method="POST">
+                '.csrf_field().'
+                <input type="hidden" id="id_ppk" name="id_ppk" value='.$ppk->id_ppk.'>
+                <button class="btn btn-sm btn-outline-dark">Ajukan Permohonan</button>       
+              </form></td>';
+            }else{
+              $html .= '<td style="font-weight:regular; color:#2E2A61;"> Sudah diajukan </td>';
+            }
+
+            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->jadwal_periksa.'</td>';
+            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_sertif.'</td>';
             $html .= 
             '<td>
               <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Cetak</a>
             </td>';
-            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.'pemeriksaan virtual'.'</td>';
+            $url_pemeriksaan = "Belum diberikan";
+            if ($ppk->url_periksa!=null){
+              $url_pemeriksaan = $url_pemeriksaan;
+            }
+            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$url_pemeriksaan.'</td>';
             $html .= 
             '<td>
               <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Tolak</a>
