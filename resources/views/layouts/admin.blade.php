@@ -64,6 +64,14 @@
             <i class="fas fa-fw fa-camera"></i>
             <span>Publikasi</span></a>
         </li>
+
+        <!-- Nav Item - Pemeriksaan Klinis Virtual-->
+        <li class="nav-item">
+            <a class="nav-link {{ $title==='PKVirtual'? 'active' : '' }}" href="{{ route('admin.pemeriksaan_klinis') }}" href="">
+            <i class="fas fa-fw fa-mobile"></i>
+            <span>Pemeriksaan Klinis</span></a>
+        </li>
+
         <!-- Nav Item - PPK EKSPOR -->
         <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
