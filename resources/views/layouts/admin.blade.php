@@ -24,6 +24,7 @@
         /* color: #2E2A61; */
         /* background-color: rgba(196, 196, 196, 0.3); */
         font-weight: bold;
+        text-shadow: 0 0 1px #ffff;
         }
         </style>
 
@@ -47,21 +48,21 @@
         <!-- Nav Item - Management User -->
         <li class="nav-item">
             <a class="nav-link {{ $title==='Management'? 'active' : '' }}" href="{{ route('admin.manage') }}">
-            <i class="fas fa-fw fa-user-circle"></i>
+            <i class="fas fa-fw fa-user-circle {{ $title==='Management'? 'active' : '' }}"></i>
                 <span>Management User</span></a>
         </li>
 
         <!-- Nav Item - Menu -->
         <li class="nav-item">
             <a class="nav-link {{ $title==='Menu'? 'active' : '' }}" href="{{ route('admin.menu') }}">
-            <i class="fas fa-fw fa-window-maximize"></i>
+            <i class="fas fa-fw fa-window-maximize {{ $title==='Management'? 'active' : '' }}"></i>
                 <span>Menu</span></a>
         </li>
 
         <!-- Nav Item - Publikasi -->
         <li class="nav-item">
             <a class="nav-link {{ $title==='Publikasi'? 'active' : '' }}" href="{{ route('admin.publikasi') }}" href="">
-            <i class="fas fa-fw fa-camera"></i>
+            <i class="fas fa-fw fa-camera {{ $title==='Management'? 'active' : '' }}"></i>
             <span>Publikasi</span></a>
         </li>
 
