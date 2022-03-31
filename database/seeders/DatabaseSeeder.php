@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         JenisKurir::factory(4)->create();
         Jpp::factory(50)->create();
         Menu::factory(8)->create();
-        Ppk::factory(20)->create();
+        // Ppk::factory(20)->create();
         KategoriDokumen::factory(4)->create();
         vDataHeader::factory(20)->create();
         vDtlPelaporan::factory(50)->create();

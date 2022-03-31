@@ -3,8 +3,10 @@
         <thead>
           <tr>
             <th scope="col">No</th>
-            <th scope="col">Penerima</th>
             <th scope="col">Nomor Aju PPK</th>
+            <th scope="col">Penerima</th>
+            <th scope="col">Alamat</th>
+            <th scope="col">Negara</th>
             <th scope="col">Status</th>
             <th scope="col">Aksi</th>
           </tr>
@@ -14,8 +16,10 @@
           @foreach ($ppks as $ppk) 
           <tr>
             <td>{{ ++$no; }}</td>
-            <td>{{ $ppk->nm_penerima}}</td>
             <td>{{ $ppk->no_aju_ppk }}</td>
+            <td>{{ $ppk->nm_penerima}}</td>
+            <td>{{ $ppk->alamat}}</td>
+            <td>{{ $ppk->negara_penerima}}</td>
             <td style="font-weight: bold">{{ ucfirst($ppk->status)}}</td>
             <td>
             @if ($ppk->status == "Pengajuan - Disetujui")

@@ -22,6 +22,9 @@ class CreateVDataHeaderTable extends Migration
             $table->string('nm_trader');
             $table->date('tgl_ppk');
             $table->string('kd_kegiatan'); //raha=E afif=K
+            $table->string('nm_penerima');
+            $table->string('alamat');
+            $table->string('negara_penerima');
             /*
             no_ssm
             karantina_mutu

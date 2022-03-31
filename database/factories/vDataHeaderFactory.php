@@ -21,7 +21,10 @@ class vDataHeaderFactory extends Factory
             'id_trader' => $this->faker->randomElement(Trader::all())['id_trader'],
             'nm_trader' => $this->faker->name,
             'tgl_ppk' =>  $this->faker->date(),
-            'kd_kegiatan' => $this->faker->randomElement(['K', 'E'])
+            'kd_kegiatan' => $this->faker->randomElement(['K', 'E']),
+            'nm_penerima' => $this->faker->name,
+            'alamat' => $this->faker->address,
+            'negara_penerima' => $this->faker->country,
         ];
     }
 }

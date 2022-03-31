@@ -11,6 +11,7 @@ use App\Models\Dokumen;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+use App\Models\vDataHeader;
 
 class HomeController extends Controller
 {
@@ -22,9 +23,15 @@ class HomeController extends Controller
         }
         $ppks = new PpkController();
         $ppkModel = new Ppk();
+        $vdataHeader = new vDataHeader();
         return view('trader.home', [
             "title" => "Dashboard",
-            "ppks" => $ppkModel->where("id_trader", Auth::user()->id_trader)->get(),
+            // "ppks" => $ppkModel->where("id_trader", Auth::user()->id_trader)->get(),
+            "ppks" => $vdataHeader
+            ->leftJoin('ppks', 'v_data_header.id_ppk', '=', 'ppks.id_ppk')
+            ->where('v_data_header.kd_kegiatan', 'E')
+            ->where("v_data_header.id_trader", Auth::user()->id_trader)
+            ->select('ppks.*', 'v_data_header.*')->get(),
             "trader" => $trader,
         ]);
     }

@@ -17,6 +17,9 @@ class vDataHeader extends Model
         'id_trader',
         'nm_trader',
         'tgl_ppk',
-        'kd_kegiatan'
+        'kd_kegiatan',
+        'nm_penerima',
+        'alamat',
+        'negara_penerima',
     ];
 }
