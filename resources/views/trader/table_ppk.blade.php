@@ -22,8 +22,8 @@
             <td>{{ $ppk->negara_penerima}}</td>
             <td style="font-weight: bold">{{ ucfirst($ppk->status)}}</td>
             <td>
-            @if ($ppk->status == "Pengajuan - Disetujui")
-              <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="/home/{{$ppk->id_ppk}}">Upload Dokumen</a>  
+            @if ($ppk->status == "")
+              <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="/home/{{$ppk->id_ppk}}">Unggah</a>  
             @endif
 
             @if ($ppk->status == "Dokumen - Terverifikasi")

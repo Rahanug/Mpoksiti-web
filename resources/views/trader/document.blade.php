@@ -39,8 +39,8 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Nomor PPK</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$ppk->no_ppk}}</div>
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Negara</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$ppk->negara_penerima}}</div>
                         </div>
                     </div>
                 </div>

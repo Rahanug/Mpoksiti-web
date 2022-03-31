@@ -9,16 +9,14 @@ class Ppk extends Model
 {
     use HasFactory;
     protected $table ="ppks";
-    protected $primaryKey='id_ppk';
+    protected $primaryKey='id';
     public $timestamps = false;
     protected $fillable = [
-        'no_ppk',
-        'no_aju_ppk', 
-        'jumlah',
-        'satuan',
+        'id_ppk',
         'status',
-        'nm_penerima',
         'id_trader',
-        'kode_counter_jpp'
+        'jadwal_periksa',
+        'url_periksa',
+
     ];
 }

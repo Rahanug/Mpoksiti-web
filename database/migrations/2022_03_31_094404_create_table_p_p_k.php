@@ -14,16 +14,12 @@ class CreateTablePPK extends Migration
     public function up()
     {
         Schema::create('ppks', function (Blueprint $table) {
-            $table->increments('id_ppk');
-            $table->string('no_ppk', 100);
-            $table->string('no_aju_ppk', 100);
-            $table->integer('jumlah');
-            $table->integer('satuan');
+            $table->id();
+            $table->integer('id_ppk')->references('id_ppk')->on('v_data_header');
             $table->integer('status')->nullable();  //TODO sementara null=belum disetujui, 1=diproses, 2=disetujui 
-            $table->string('nm_penerima', 50);
-            $table->integer('id_trader')->unsigned();
-            $table->foreign('id_trader')->references('id_trader')->on('traders');
-            $table->integer('kode_counter_jpp')->unsigned()->nullable();
+            $table->integer('jadwal_periksa')->nullable();
+            $table->integer('url_periksa')->nullable();
+            
         });
     }
 
@@ -36,5 +32,4 @@ class CreateTablePPK extends Migration
     {
         Schema::dropIfExists('ppks');
     }
-
 }

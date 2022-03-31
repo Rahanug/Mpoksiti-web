@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class PpkController extends Controller
 {
-    private $table = "ppks";
+    private $table = "v_data_header";
     public function all(){
         $ppks = DB::select("SELECT * FROM $this->table");
         return $ppks;

@@ -7,6 +7,7 @@ use App\Models\Trader;
 use App\Models\Ppk;
 use App\Models\KategoriDokumen;
 use App\Models\MasterDokumen;
+use App\Models\vDataHeader;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -16,7 +17,7 @@ class MasterDokumenController extends Controller
     // Halaman Trader
     public function index(Request $request)
     {
-        $ppkModel = new Ppk();
+        $ppkModel = new vDataHeader();
         $kategori = array();
         foreach (KategoriDokumen::all() as $item) {
             $kategori[$item->id_kategori] = $item->nama_kategori;
