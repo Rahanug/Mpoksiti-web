@@ -16,6 +16,7 @@ class vDataHeader extends Model
         'no_aju_ppk',
         'id_trader',
         'nm_trader',
-        'tgl_ppk'
+        'tgl_ppk',
+        'kd_kegiatan'
     ];
 }

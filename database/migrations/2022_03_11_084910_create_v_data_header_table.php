@@ -15,12 +15,13 @@ class CreateVDataHeaderTable extends Migration
     {
         Schema::create('v_data_header', function (Blueprint $table) {
             $table->increments('id_ppk');
-            $table->string('no_ppk');
+            $table->string('no_ppk');   
             $table->string('no_aju_ppk');
             $table->integer('id_trader')->unsigned();
             $table->foreign('id_trader')->references('id_trader')->on('traders');
             $table->string('nm_trader');
-            $table->string('tgl_ppk');
+            $table->date('tgl_ppk');
+            $table->string('kd_kegiatan'); //raha=E afif=K
             /*
             no_ssm
             karantina_mutu
