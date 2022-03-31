@@ -54,8 +54,8 @@ Route::group(['middleware' => 'revalidate'], function () {
         // Ekspor
         Route::get('/admin/master', [App\Http\Controllers\MasterDokumenController::class, 'indexAdmin'])->name('admin.master_dokumen_trader');
         Route::get('/admin/master/{id_trader}', [App\Http\Controllers\MasterDokumenController::class, 'verifikasi'])->name('admin.verifikasi');
-        Route::post('/admin/master/accept/{id_master}', [App\Http\Controllers\MasterDokumenController::class, 'verifikasi'])->name('admin.verifikasi');
-        
+        Route::get('/admin/master/accept/{id_master}', [App\Http\Controllers\MasterDokumenController::class, 'accept'])->name('admin.verifikasi');
+        Route::get('/admin/master/decline/{id_master}', [App\Http\Controllers\MasterDokumenController::class, 'decline'])->name('admin.verifikasi');
 
         //Pemeriksaan Klinis
         Route::get('/admin/pemeriksaan_klinis', [App\Http\Controllers\AdminPKController::class, 'index'])->name('admin.pemeriksaan_klinis');

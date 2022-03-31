@@ -98,13 +98,44 @@ class MasterDokumenController extends Controller
             "countMaster"=> $this->mapCountMaster($traderUserNons)
         ]);
     }
-
+    // HashMap menghitung master tidak aktif
     private function mapCountMaster($listCount){
         $result = array();
         foreach ($listCount as $count){
             $result[$count['id_trader']] = $count['count'];
         }
         return $result;
+    }
+
+    // Halaman verifikasi
+    public function verifikasi($trader)
+    {
+        $master_dokumen = new MasterDokumen;
+        return view('admin.verifikasi',[
+            "title"=>"verifikasi",
+            "masters"=>$master_dokumen->where('id_trader', $trader)->where('tipe_dokumen', '1')->get(),
+        ]);
+    }
+
+    // Setuju
+    public function accept($id_master){
+        // $id_master = $request->input('id_master');
+            MasterDokumen::where('id_master', $id_master)->update([
+                "status"=>"Aktif",
+            ]);
+        
+        
+        return redirect()->back();
+    }
+
+    public function decline($id_master){
+        // $id_master = $request->input('id_master');
+            MasterDokumen::where('id_master', $id_master)->update([
+                "status"=>"Gagal",
+            ]);
+        
+        
+        return redirect()->back();
     }
 
     public function masterTrader(Request $request)

@@ -40,5 +40,11 @@
       });
       
     } );
+    window.addEventListener('resize', myFunction);
+      function myFunction() {
+        if(screen.availWidth <= 800){
+        document.getElementById("detail").innerText = "Value baru"
+        }
+      }
   </script>
 @endpush

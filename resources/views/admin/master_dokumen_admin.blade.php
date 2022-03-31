@@ -67,7 +67,7 @@
                     <td>{{ $trader->kt_trader }}</td>
                     <td>{{ $countMaster[$trader->id_trader] ?? 0 }}</td>
                     <td>
-                    <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="">Verifikasi</a>
+                    <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="/admin/master/{{$trader->id_trader}}">Verifikasi</a>
                     </td>
                 </tr>
                 @endforeach
