@@ -1,186 +1,110 @@
-<style>
-  .placeholder::-webkit-input-placeholder {
-    color: rgba(46, 42, 97, 0.69);
-    font-weight: bold;
-    text-align: center;
-  }
-  .placeholder::-moz-input-placeholder {
-      color: rgba(46, 42, 97, 0.69);
-      font-weight: bold;
-      text-align: center;
-  }
-  .placeholder::-ms-input-placeholder {
-    color: rgba(46, 42, 97, 0.69);
-    font-weight: bold;
-    text-align: center;
-  }
-  .placeholder::-o-input-placeholder {
-    color: rgba(46, 42, 97, 0.69);
-    font-weight: bold;
-    text-align: center;
-  }
-
-</style>
-
 @extends('layouts.jpp')
 
+@section('css')
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+  <link rel="stylesheet" href="//cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css">
+@endsection
+
 @section('content')
-<script>document.title = "Pemeriksaan Virtual - Mpok Siti"</script>
+<script>document.title = "Pemeriksaan Klinis Virtual - Mpok Siti"</script>
 <main class="col-md-9 ms-sm-auto col-lg-12 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h1" style="font-weight:bold; color:#2E2A61;">Pemeriksaan Virtual</h1>
-    <div class="btn-toolbar mb-2 mb-md-0">
-      <div class="btn-group me-2">
-        <!--Here is spot for put the button -->
-        <form class="row row-cols-lg-auto g-3 align-items-center">
-          <div class="input-group mb-3">
-            <!--<input type="text" id="search"class="placeholder" name="npwp" placeholder="NO PPK" aria-label="Recipient's username" >
-            <button type="button" class="btn btn-secondary" style="font-weight: bold; background-color: #3C5C94" onclick="//location.href='/admin/manage/addUser'">Search</button>-->
-          </div>
-        </form>
-      </div>
-    </div>
+    <h1 class="h2" style="font-weight:bold; color:#2E2A61;">Pemeriksaan Klinis Virtual</h1>
   </div>
-  <!-- Session ketika berhasil -->
-  @if (session()->has('success'))
-    <div class="alert alert-primary alert-dismissible fade show" role="alert">
-      {{ session('success') }}
-      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    </div>
-    @endif
 
-    @if (session()->has('accept'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      {{ session('accept') }}
-      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    </div>
-    @endif
-
-  @if (session()->has('error'))
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    {{ session('error') }}
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  </div>
-  @endif
-
-  @if (session()->has('info'))
-  <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    {{ session('info') }}
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  </div>
-  @endif
-
-  <div id="taro">
-    <div class="table-responsive">
-      <table class="table table-striped" id="tablePermohonanPemeriksaanVirtual">
-        <thead>
-          <tr>
-            <th scope="col" style="font-weight:semibold; color:#2E2A61;">No</th>
-            <th scope="col" style="font-weight:semibold; color:#2E2A61;">No Aju PPK</th>
-            <!--<th scope="col" style="font-weight:semibold; color:#2E2A61;">No PPK</th>-->
-            <th scope="col" style="font-weight:semibold; color:#2E2A61;">Tgl PPK</th>
-            <th scope="col" style="font-weight:semibold; color:#2E2A61;">Trader</th>
-            <th scope="col" style="font-weight:semibold; color:#2E2A61;">Cetak PPK</th>
-            <th scope="col" style="font-weight:semibold; color:#2E2A61;">Permohonan Pemeriksaan Virtual</th>
-            <th scope="col" style="font-weight:semibold; color:#2E2A61;">Jadwal Pemeriksaan</th>
-            <th scope="col" style="font-weight:semibold; color:#2E2A61;">No Sertifikat</th>
-            <th scope="col" style="font-weight:semibold; color:#2E2A61;">Cetak Segel</th>
-            <th scope="col" style="font-weight:semibold; color:#2E2A61;">Pemeriksaan Virtual</th>
-            <th scope="col" style="font-weight:semibold; color:#2E2A61;">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php 
-          $count = 0;
-          foreach ($list_ppk as $ppk){
-            $html = '<tr>';
-            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.($count+1).'</td>';
-            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_aju_ppk.'</td>';
-            //$html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_ppk.'</td>';
-            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->tgl_ppk.'</td>';
-            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->nama_trader.'</td>';
-            $html .= 
-            '<td>
-              <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Cetak PPK</a>
-            </td>';
-            
-            if ($ppk->status_periksa == null){
+  <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <div class="card shadow w-100 responsive" style="margin: top 10px;">
+        <div class="card-body" style="margin: top 10px;">
+        <div class="table-responsive">
+          <table class="table table-striped" id="tablePermohonanPemeriksaanVirtual">
+          <thead>
+            <tr>
+              <th scope="col" style="font-weight:semibold; color:#2E2A61;">No</th>
+              <th scope="col" style="font-weight:semibold; color:#2E2A61;">No Aju PPK</th>
+              <!--<th scope="col" style="font-weight:semibold; color:#2E2A61;">No PPK</th>-->
+              <th scope="col" style="font-weight:semibold; color:#2E2A61;">Tgl PPK</th>
+              <th scope="col" style="font-weight:semibold; color:#2E2A61;">Trader</th>
+              <th scope="col" style="font-weight:semibold; color:#2E2A61;">Cetak PPK</th>
+              <th scope="col" style="font-weight:semibold; color:#2E2A61;">Permohonan Pemeriksaan Virtual</th>
+              <th scope="col" style="font-weight:semibold; color:#2E2A61;">Jadwal Pemeriksaan</th>
+              <th scope="col" style="font-weight:semibold; color:#2E2A61;">No Sertifikat</th>
+              <th scope="col" style="font-weight:semibold; color:#2E2A61;">Cetak Segel</th>
+              <th scope="col" style="font-weight:semibold; color:#2E2A61;">Link Pemeriksaan Virtual</th>
+              <th scope="col" style="font-weight:semibold; color:#2E2A61;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php 
+            $count = 0;
+            foreach ($list_ppk as $ppk){
+              $html = '<tr>';
+              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.($count+1).'</td>';
+              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_aju_ppk.'</td>';
+              //$html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_ppk.'</td>';
+              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->tgl_ppk.'</td>';
+              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->nama_trader.'</td>';
               $html .= 
-              /*'<td>
-                <a href="/admin/manage/delete/${res.traders[i].id_trader}" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Ajukan Permohonan</a>
-              </td>';*/
-              '<td><form action="/jpp/permohonan" method="POST">
-                '.csrf_field().'
-                <input type="hidden" id="id_ppk" name="id_ppk" value='.$ppk->id_ppk.'>
-                <button class="btn btn-sm btn-outline-dark">Ajukan Permohonan</button>       
-              </form></td>';
-            }else{
-              $html .= '<td style="font-weight:regular; color:#2E2A61;"> Sudah diajukan </td>';
-            }
+              '<td>
+                <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Cek PPK</a>
+              </td>';
+              
+              if ($ppk->status_periksa == null){
+                $html .= 
+                '<td><form action="/jpp/permohonan" method="POST">
+                  '.csrf_field().'
+                  <input type="hidden" id="id_ppk" name="id_ppk" value='.$ppk->id_ppk.'>
+                  <button class="btn btn-sm btn-outline-dark">Ajukan Permohonan</button>       
+                </form></td>';
+              }else{
+                $html .= '<td style="font-weight:regular; color:#2E2A61;"> Sudah diajukan </td>';
+              }
 
-            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->jadwal_periksa.'</td>';
-            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_sertif.'</td>';
-            $html .= 
-            '<td>
-              <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Cetak</a>
-            </td>';
-            $url_pemeriksaan = "Belum diberikan";
-            if ($ppk->url_periksa!=null){
-              $url_pemeriksaan = $url_pemeriksaan;
+              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->jadwal_periksa.'</td>';
+              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_sertif.'</td>';
+              $html .= 
+              '<td>
+                <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Cetak</a>
+              </td>';
+              $url_pemeriksaan = "Belum diberikan";
+              if ($ppk->url_periksa!=null){
+                $url_pemeriksaan = $url_pemeriksaan;
+              }
+              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$url_pemeriksaan.'</td>';
+              $status_string = "Belum di proses";
+              if ($ppk->status==1){
+                $status_string = "Sedang di proses";
+              }else if ($ppk->status==2){
+                $status_string = "Disetujui";
+              }else if ($ppk->status==3){
+                $status_string = "Ditolak";
+              }
+              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$status_string.'</td>';
+              $html .= '</tr>';
+              $count++;
+              echo $html;
             }
-            $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$url_pemeriksaan.'</td>';
-            $html .= 
-            '<td>
-              <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Tolak</a>
-            </td>';
-            $html .= '</tr>';
-            $count++;
-            echo $html;
-          }
-          ?>
-        </tbody>
-      </table>
+            ?>
+          </tbody>
+        </table>
+        </div>
+    </div>
     </div>
   </div>
-
 </main>
 @endsection
 
 @push('scripts')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="//code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+  <script src="//cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="//cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
   <script>
-    $('#search').on('keyup', function(){
-      search();
-    });
-    search();
-    function search(){
-      var keyword = $('#search').val();
-
-      $.post('{{ route("admin.search") }}',{
-        _token: $('meta[name="csrf-token"]').attr('content'),
-        keyword:keyword
-      },
-      function(data){
-        table_post_row(data);
+    $(document).ready( function () {
+      $('#tablePermohonanPemeriksaanVirtual').DataTable({
+        responsive: true,
       });
-    }
-    function table_post_row(res){
-      let htmlView = '';
-      if(res.list_ppk.length <= 0){
-        htmlView += '<tr><td colspan = "4" style="font-weight:regular; color:#2E2A61;">No data.</td></tr>';
-      }
-      for(let i=0; i<res.list_ppk.length; i++){
-        htmlView += `<tr>
-            <td style="font-weight:regular; color:#2E2A61;">`+ (i+1) +`</td>
-            <td style="font-weight:regular; color:#2E2A61;">`+ res.list_ppk.no_aju_ppk +`</td>
-            <td style="font-weight:regular; color:#2E2A61;">`+ res.list_ppk.no_ppk +`</td>
-            <td style="font-weight:regular; color:#2E2A61;">`+ res.list_ppk.id_trader +`</td>
-            <td>
-              <a href="`/*/admin/manage/delete/${res.traders[i].id_trader}*/`" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Delete</a>
-            </td>
-          </tr>`;
-      }
-      $('tbody').html(htmlView);
-    }
+      
+    } );
   </script>
 @endpush

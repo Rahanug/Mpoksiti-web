@@ -54,7 +54,7 @@
         <!-- Nav Item -->
         <li class="nav-item">
             <a class="nav-link {{ $title==='pemeriksaan'? 'active' : '' }}" href="{{ route('jpp.pemeriksaan') }}">
-                <div class="d-flex align-items-center justify-content-center" style="font-weight:700; font-size:15px;">Dokumentasi Kegiatan</div></a>
+                <div class="d-flex align-items-center justify-content-center" style="font-weight:700; font-size:15px;">Pemeriksaan Virtual</div></a>
         </li>
     </ul>
     <!-- End of Sidebar -->

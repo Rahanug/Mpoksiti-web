@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\JenisKurir;
+use Illuminate\Support\Facades\DB;
 
 class JenisKurirController extends Controller
 {
@@ -16,7 +17,9 @@ class JenisKurirController extends Controller
     public function index()
     {
         //
-        $kurirs= JenisKurir::all();
+        $kurirs = DB::table('kurir')
+                ->select('*')
+                ->get();
 
         return response()->json($kurirs);
     }
