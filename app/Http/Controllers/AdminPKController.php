@@ -8,6 +8,7 @@ use App\Models\PemeriksaanKlinis;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\ServiceProvider;
 
 
 class AdminPKController extends Controller
@@ -23,6 +24,7 @@ class AdminPKController extends Controller
                 ->join('v_data_header', 'v_data_header.id_ppk', '=', 'pemeriksaan_klinis.id_ppk')
                 ->join('traders', 'v_data_header.id_trader', '=', 'traders.id_trader')
                 ->select('jpp.*', 'pemeriksaan_klinis.*', 'v_data_header.*', 'traders.*')
+                ->whereNotNull('pemeriksaan_klinis.status_periksa')
                 ->get();
         return view('admin.pemeriksaan_klinis', [
             "title"=>"PKVirtual",

@@ -25,7 +25,6 @@
                     <th scope="col">ID_JPP</th>
                     <th scope="col">Nama Counter</th>
                     <th scope="col">Nama Trader</th>
-                    <th scope="col">Cek PPK</th>
                     <th scope="col">Link Meet Virtual</th>
                     <th scope="col">Aksi</th>
                 </tr>
@@ -40,13 +39,10 @@
                     <td>{{ $ppk->id_jpp }}</td>
                     <td>{{ $ppk->nama_counter }}</td>
                     <td>{{ $ppk->nm_trader }}</td>
-                    <td>
-                        <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="">Cek Files</a>
-                    </td>
                     <td>{{ $ppk->url_periksa ?? 'Belum ada link meet' }}</td>
                     <td>
-                        <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="">Kirim Jadwal Pemeriksaan</a>
-                        <a style="margin: 0 3px" class="btn btn-sm btn-warning" href="">Tolak</a>
+                        <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Cek PPK</a>
+                        <a href="" style="margin: 0 3px; " class="btn btn-sm btn-primary">Action</a>
                     </td>
                 </tr>
                 @endforeach

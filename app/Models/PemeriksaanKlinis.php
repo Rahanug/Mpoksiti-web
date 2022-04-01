@@ -14,7 +14,7 @@ class PemeriksaanKlinis extends Model
     protected $fillable = [
         'id_ppk',
         'id_jpp',
-        'status',           //TODO sementara null=belum disetujui, 1=diproses, 2=disetujui
+        'status',           //TODO sementara null=belum disetujui, 1=diproses, 2=disetujui 3=ditolak
         'status_periksa',   //TODO sementara null=belum mengajukan, 1=sudah mengajukan, 2=link diberikan
         'jadwal_periksa', 
         'url_periksa',
