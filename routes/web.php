@@ -56,6 +56,10 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::get('/admin/master/{id_trader}', [App\Http\Controllers\MasterDokumenController::class, 'verifikasi'])->name('admin.verifikasi');
         Route::get('/admin/master/accept/{id_master}', [App\Http\Controllers\MasterDokumenController::class, 'accept'])->name('admin.verifikasi');
         Route::get('/admin/master/decline/{id_master}', [App\Http\Controllers\MasterDokumenController::class, 'decline'])->name('admin.verifikasi');
+        Route::get('/admin/stuffing', [App\Http\Controllers\StuffingController::class, 'index'])->name('admin.stuffing');
+        Route::get('/admin/stuffing/{id_ppk}', [App\Http\Controllers\StuffingController::class, 'dokumen'])->name('admin.document_stuffing');
+        Route::get('/admin/stuffing/{id_ppk}/accept', [App\Http\Controllers\StuffingController::class, 'accept'])->name('admin.stuffing');
+        Route::post('/admin/stuffing/{id_ppk}/decline', [App\Http\Controllers\StuffingController::class, 'decline'])->name('admin.stuffing');
 
         //Pemeriksaan Klinis
         Route::get('/admin/pemeriksaan_klinis', [App\Http\Controllers\AdminPKController::class, 'index'])->name('admin.pemeriksaan_klinis');

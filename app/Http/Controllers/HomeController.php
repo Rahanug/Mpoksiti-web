@@ -163,15 +163,10 @@ class HomeController extends Controller
             'id_master'=> $id,
             'id_ppk'=> $request->input('id_ppk'),
         ]);
-        // Ppk::updateOrCreate([
-        // 'no_ppk',
-        // 'no_aju_ppk', 
-        // 'jumlah',
-        // 'satuan',
-        // 'status',
-        // 'nm_penerima',
-        // 'id_trader',
-        // ]);
+        Ppk::updateOrCreate([
+        'id_ppk'=> $request->input('id_ppk'),
+        'status'=> 'verifikasi'
+        ]);
         DB::commit();
         // $master = new MasterDokumen();
         // $master->no_dokumen = $request->no_dokumen;

@@ -5,8 +5,9 @@
             <th scope="col">No</th>
             <th scope="col">Nomor Aju PPK</th>
             <th scope="col">Penerima</th>
-            <th scope="col">Alamat</th>
             <th scope="col">Negara</th>
+            <th scope="col">Jadwal</th>
+            <th scope="col">Link</th>
             <th scope="col">Status</th>
             <th scope="col">Aksi</th>
           </tr>
@@ -18,11 +19,12 @@
             <td>{{ ++$no; }}</td>
             <td>{{ $ppk->no_aju_ppk }}</td>
             <td>{{ $ppk->nm_penerima}}</td>
-            <td>{{ $ppk->alamat}}</td>
             <td>{{ $ppk->negara_penerima}}</td>
+            <td>{{ $ppk->jadwal_pemeriksaan}}</td>
+            <td>{{ $ppk->url_pemeriksaan}}</td>
             <td style="font-weight: bold">{{ ucfirst($ppk->status)}}</td>
             <td>
-            @if ($ppk->status == "")
+            @if ($ppk->status == "" || $ppk->status == "verifikasi")
               <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="/home/{{$ppk->id_ppk}}">Unggah</a>  
             @endif
 

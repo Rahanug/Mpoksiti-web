@@ -89,7 +89,7 @@
                             }
                             </style>
                         <h6 class="collapse-header">Bagian Ekspor:</h6>
-                        <a class="collapse-item {{ $title==='Verifikasi'? 'active' : '' }}" href="">Verifikasi</a>
+                        <a class="collapse-item {{ $title==='Stuffing'? 'active' : '' }}" href="/admin/stuffing">Stuffing</a>
                         <a class="collapse-item {{ $title==='Master Dokumen Trader'? 'active' : '' }}" href="/admin/master">Master Dokumen Trader</a>
                     </div>
                 </div>
