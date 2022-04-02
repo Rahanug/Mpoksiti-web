@@ -28,10 +28,10 @@ class StuffingController extends Controller
             "title" => "stuffing",
             // "ppks" => $ppkModel->where("id_trader", Auth::user()->id_trader)->get(),
             "ppks" => $vdataHeader
-            ->leftJoin('ppks', 'v_data_header.id_ppk', '=', 'ppks.id_ppk')
-            ->where('v_data_header.kd_kegiatan', 'E')
-            ->whereNotNull('ppks.status')
-            ->select('ppks.*', 'v_data_header.*')->get(),
+                ->leftJoin('ppks', 'v_data_header.id_ppk', '=', 'ppks.id_ppk')
+                ->where('v_data_header.kd_kegiatan', 'E')
+                ->whereNotNull('ppks.status')
+                ->select('ppks.*', 'v_data_header.*')->get(),
             "trader" => $trader,
         ]);
     }
@@ -60,7 +60,7 @@ class StuffingController extends Controller
             "masters" => $masterDokumenModel->where("id_trader", Auth::user()->id_trader)->get(),
             "kategoriMaster" => $kategori,
             "masterDokumens" => $this->getMasterDokumen(),
-            "id_ppk"=>$id_ppk,
+            "id_ppk" => $id_ppk,
             // "delDokumen"=> $dokumens
         ]);
         // echo json_encode( [
@@ -92,8 +92,8 @@ class StuffingController extends Controller
     {
         $dokumens = new Dokumen();
         $list_dokumen = $dokumens->where('id_ppk', $id_ppk)
-        ->join('master_dokumens', 'dokumens.id_master', '=', 'master_dokumens.id_master')
-        ->get();
+            ->join('master_dokumens', 'dokumens.id_master', '=', 'master_dokumens.id_master')
+            ->get();
         $result = array();
         foreach ($list_dokumen as $dokumen) {
             $result[$dokumen['id_kategori']] = array('nm_dokumen' => $dokumen['nm_dokumen']);
@@ -105,11 +105,12 @@ class StuffingController extends Controller
     }
 
 
-    private function getMasterDokumen(){
+    private function getMasterDokumen()
+    {
         $dokumens = new MasterDokumen();
         $list_dokumen = $dokumens
-                ->where('status', 'Aktif')
-                ->where('tipe_dokumen', 1)->get();
+            ->where('status', 'Aktif')
+            ->where('tipe_dokumen', 1)->get();
         $result = array();
         foreach ($list_dokumen as $dokumen) {
             $result[$dokumen['id_kategori']] = array();
@@ -126,26 +127,55 @@ class StuffingController extends Controller
         return $result;
     }
 
-
-    public function accept($id_ppk){
+    // Untuk Terima dan Tolak Dokumen
+    public function accept($id_ppk)
+    {
         // $id_master = $request->input('id_master');
-            Ppk::where('id_ppk', $id_ppk)->update([
-                "status"=>"Penjadwalan",
-                "deskripsi"=> null
-            ]);
-        
-        
+        Ppk::where('id_ppk', $id_ppk)->update([
+            "status" => "Penjadwalan",
+            "deskripsi" => null
+        ]);
+
+
         return redirect('/admin/stuffing')->with('success', 'Dokumen telah disetujui!');
     }
 
-    public function decline(Request $request, $id_ppk){
+    public function decline(Request $request, $id_ppk)
+    {
         // $id_master = $request->input('id_master');
-            Ppk::where('id_ppk', $id_ppk)->update([
-                "status"=>"Gagal",
-                "deskripsi"=> $request->deskripsi
-            ]);
-        
-        
+        Ppk::where('id_ppk', $id_ppk)->update([
+            "status" => "Gagal",
+            "deskripsi" => $request->deskripsi
+        ]);
+
+
         return redirect('/admin/stuffing')->with('error', 'Dokumen tidak disetujui!');
+    }
+
+    // Untuk Terima dan Tolak Jadwal
+    public function terima(Request $request, $id_ppk)
+    {
+        // $id_ppk = $request->input('id_ppk');
+        Ppk::where('id_ppk', $id_ppk)->update([
+            "status" => "Stuffing",
+            "deskripsi" => null,
+            "url_periksa"=> $request->url_periksa
+        ]);
+
+
+        return redirect('/admin/stuffing')->with('success', 'Jadwal telah disetujui!');
+    }
+
+    public function tolak(Request $request, $id_ppk)
+    {
+        // $id_ppk = $request->input('id_ppk');
+        Ppk::where('id_ppk', $id_ppk)->update([
+            "status" => "Ditolak",
+            "deskripsi" => $request->deskripsi,
+            "url_periksa"=> null,
+        ]);
+
+
+        return redirect('/admin/stuffing')->with('error', 'Jadwal tidak disetujui!');
     }
 }

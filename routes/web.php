@@ -22,6 +22,7 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::post('/home/{id_ppk}/store', [App\Http\Controllers\HomeController::class, 'store'])->name('store');
         Route::get('/home/{id_ppk}/delete/{id_dokumen}', [App\Http\Controllers\HomeController::class, 'deleteDokumen'])->name('deleteDokumen');
         Route::get('/home/{id_ppk}/preview/{id_dokumen}', [App\Http\Controllers\HomeController::class, 'previewDokumen'])->name('previewDokumen');
+        Route::post('/home/ajukan/{id_ppk}', [App\Http\Controllers\HomeController::class, 'ajukanTanggal'])->name('ajukanTanggal');
 
         Route::post('/home/storeDokumen', [App\Http\Controllers\HomeController::class, 'storeDokumen'])->name('trader.storeDocument');
         Route::post('/home/dokumen/pilihMaster', [App\Http\Controllers\HomeController::class, 'pilihMaster'])->name('trader.pilihMaster');
@@ -60,6 +61,8 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::get('/admin/stuffing/{id_ppk}', [App\Http\Controllers\StuffingController::class, 'dokumen'])->name('admin.document_stuffing');
         Route::get('/admin/stuffing/{id_ppk}/accept', [App\Http\Controllers\StuffingController::class, 'accept'])->name('admin.stuffing');
         Route::post('/admin/stuffing/{id_ppk}/decline', [App\Http\Controllers\StuffingController::class, 'decline'])->name('admin.stuffing');
+        Route::post('/admin/stuffing/{id_ppk}/terima', [App\Http\Controllers\StuffingController::class, 'terima'])->name('admin.stuffing');
+        Route::post('/admin/stuffing/{id_ppk}/tolak', [App\Http\Controllers\StuffingController::class, 'tolak'])->name('admin.stuffing');
 
         //Pemeriksaan Klinis
         Route::get('/admin/pemeriksaan_klinis', [App\Http\Controllers\AdminPKController::class, 'index'])->name('admin.pemeriksaan_klinis');

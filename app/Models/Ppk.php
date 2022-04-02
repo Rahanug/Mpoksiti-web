@@ -19,4 +19,5 @@ class Ppk extends Model
         'url_periksa',
 
     ];
+    protected $dates = ['jadwal_periksa'];
 }

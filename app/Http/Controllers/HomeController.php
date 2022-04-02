@@ -259,4 +259,21 @@ class HomeController extends Controller
         }
         echo $id_dokumen;
     }
+
+    public function getDateStartAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d\TH:i');
+    }
+
+    public function ajukanTanggal(Request $request, $id_ppk){
+        $now = date('Y-m-d H:i');
+        Ppk::where('id_ppk', $id_ppk)->update([
+            'status'=>'Menunggu',
+            'jadwal_periksa'=> date('Y-m-d H:i', strtotime($request->jadwal_periksa)),
+            // Carbon::createFromFormat('Y-m-dTHH:MI:SS', $request->jadwal_periksa)->get($request->jadwal_periksa),
+        ]);
+        return redirect()->back();
+    }
+
+    
 }

@@ -16,9 +16,10 @@ class CreateTablePPK extends Migration
         Schema::create('ppks', function (Blueprint $table) {
             $table->id();
             $table->integer('id_ppk')->references('id_ppk')->on('v_data_header');
-            $table->integer('status')->nullable();  //TODO sementara null=belum disetujui, 1=diproses, 2=disetujui 
-            $table->integer('jadwal_periksa')->nullable();
-            $table->integer('url_periksa')->nullable();
+            $table->string('status')->nullable();  //TODO sementara null=belum disetujui, 1=diproses, 2=disetujui 
+            $table->datetime('jadwal_periksa')->nullable();
+            $table->string('url_periksa')->nullable();
+            $table->string('deskripsi')->nullable();
             
         });
     }

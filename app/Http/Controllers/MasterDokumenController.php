@@ -113,7 +113,7 @@ class MasterDokumenController extends Controller
     {
         $master_dokumen = new MasterDokumen;
         return view('admin.verifikasi',[
-            "title"=>"verifikasi",
+            "title"=>"Verifikasi",
             "masters"=>$master_dokumen->where('id_trader', $trader)->where('tipe_dokumen', '1')->get(),
         ]);
     }
