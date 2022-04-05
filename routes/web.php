@@ -66,6 +66,8 @@ Route::group(['middleware' => 'revalidate'], function () {
 
         //Pemeriksaan Klinis
         Route::get('/admin/pemeriksaan_klinis', [App\Http\Controllers\AdminPKController::class, 'index'])->name('admin.pemeriksaan_klinis');
+        Route::post('/admin/pemeriksaan_klinis/kirim_url', [App\Http\Controllers\AdminPKController::class, 'sendLinkPemeriksaanKlinis'])->name('admin.pemeriksaan_kirim_url');
+        Route::post('/admin/pemeriksaan_klinis/action', [App\Http\Controllers\AdminPKController::class, 'sendAction'])->name('admin.pemeriksaan_send_action');
     });
     Route::get('/loginadmin', [\App\Http\Controllers\LoginAdminController::class, 'formLogin'])->name('loginadmin');
     Route::post('/loginadmin', [\App\Http\Controllers\LoginAdminController::class, 'loginAdmin'])->name('loginadmin');

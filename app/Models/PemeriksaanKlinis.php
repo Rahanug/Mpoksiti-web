@@ -14,10 +14,11 @@ class PemeriksaanKlinis extends Model
     protected $fillable = [
         'id_ppk',
         'id_jpp',
-        'status',           //TODO sementara null=belum disetujui, 1=diproses, 2=disetujui 3=ditolak
+        'status',           //TODO sementara null=belum diproses, 1=ditolak, 2=disetujui 
         'status_periksa',   //TODO sementara null=belum mengajukan, 1=sudah mengajukan, 2=link diberikan
         'jadwal_periksa', 
         'url_periksa',
-        'no_sertif'
+        'no_sertif',
+        'keterangan'
     ];
 }

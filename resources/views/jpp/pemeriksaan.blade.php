@@ -19,17 +19,16 @@
           <table class="table table-striped" id="tablePermohonanPemeriksaanVirtual">
           <thead>
             <tr>
-              <th scope="col" style="font-weight:semibold; color:#2E2A61;">No</th>
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">No Aju PPK</th>
               <!--<th scope="col" style="font-weight:semibold; color:#2E2A61;">No PPK</th>-->
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">Tgl PPK</th>
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">Trader</th>
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">Cetak PPK</th>
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">Permohonan Pemeriksaan Virtual</th>
+              <th scope="col" style="font-weight:semibold; color:#2E2A61;">Link Pemeriksaan Virtual</th>
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">Jadwal Pemeriksaan</th>
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">No Sertifikat</th>
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">Cetak Segel</th>
-              <th scope="col" style="font-weight:semibold; color:#2E2A61;">Link Pemeriksaan Virtual</th>
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">Status</th>
             </tr>
           </thead>
@@ -38,7 +37,6 @@
             $count = 0;
             foreach ($list_ppk as $ppk){
               $html = '<tr>';
-              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.($count+1).'</td>';
               $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_aju_ppk.'</td>';
               //$html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_ppk.'</td>';
               $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->tgl_ppk.'</td>';
@@ -59,24 +57,28 @@
                 $html .= '<td style="font-weight:regular; color:#2E2A61;"> Sudah diajukan </td>';
               }
 
-              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->jadwal_periksa.'</td>';
+              $url_pemeriksaan = "Belum diberikan";
+              if ($ppk->url_periksa!=null){
+                $url_pemeriksaan = $ppk->url_periksa;
+              }
+              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$url_pemeriksaan.'</td>';
+              $jadwal_string = "";
+              if ($ppk->jadwal_periksa!=null){
+                $jadwal_string = date('Y-m-d H:i A', strtotime($ppk->jadwal_periksa));
+              }
+              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$jadwal_string.'</td>';
               $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_sertif.'</td>';
               $html .= 
               '<td>
                 <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Cetak</a>
               </td>';
-              $url_pemeriksaan = "Belum diberikan";
-              if ($ppk->url_periksa!=null){
-                $url_pemeriksaan = $url_pemeriksaan;
-              }
-              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$url_pemeriksaan.'</td>';
               $status_string = "Belum di proses";
               if ($ppk->status==1){
-                $status_string = "Sedang di proses";
+                $status_string = "Diproses";
               }else if ($ppk->status==2){
-                $status_string = "Disetujui";
-              }else if ($ppk->status==3){
                 $status_string = "Ditolak";
+              }else if ($ppk->status==3){
+                $status_string = "Disetujui";
               }
               $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$status_string.'</td>';
               $html .= '</tr>';
