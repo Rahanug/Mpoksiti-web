@@ -17,11 +17,12 @@ class CreatePemeriksaanKlinisTable extends Migration
             $table->id();
             $table->integer('id_ppk')->references('id_ppk')->on('v_data_header');
             $table->integer('id_jpp')->references('id')->on('jpp');
-            $table->integer('status')->nullable();  //TODO sementara null=belum disetujui, 1=diproses, 2=disetujui 
-            $table->integer('status_periksa')->nullable(); //TODO sementara null=belum mengajukan, 1=link diberikan, 2=selesai
-            $table->string('jadwal_periksa')->nullable();
+            $table->integer('status')->nullable();          //TODO sementara null=belum diproses, 1=uploaded dari user(diproses) 2=ditolak, 3=disetujui 
+            $table->integer('status_periksa')->nullable();  //TODO sementara null=belum mengajukan, 1=link diberikan, 2=selesai
+            $table->datetime('jadwal_periksa')->nullable();
             $table->string('url_periksa')->nullable();
             $table->string('no_sertif')->nullable();
+            $table->string('keterangan')->nullable();
         });
     }
 

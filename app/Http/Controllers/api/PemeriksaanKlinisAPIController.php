@@ -15,7 +15,6 @@ class PemeriksaanKlinisAPIController extends Controller
     public function index(Request $request)
     {
         //TODO ini hanya untuk sementara selama fitur auth trader dari app mobile
-        $id_trader = $request->id_trader;
         $vDataHeaders = PemeriksaanKlinis::rightJoin('v_data_header', 'v_data_header.id_ppk', '=', 'pemeriksaan_klinis.id_ppk')
                 ->select('v_data_header.id_ppk', 'v_data_header.no_aju_ppk', 'pemeriksaan_klinis.id_jpp as nama_counter', 'pemeriksaan_klinis.status')
                 ->where('id_trader', $request->id_trader)
