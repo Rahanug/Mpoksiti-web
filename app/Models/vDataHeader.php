@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class vDataHeader extends Model
 {
     use HasFactory;
+    protected $connection = 'sqlsrv2';
     protected $table ="v_data_header";
     protected $primaryKey='id_ppk';
     public $timestamps = false;

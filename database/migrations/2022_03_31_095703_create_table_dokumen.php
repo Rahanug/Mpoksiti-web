@@ -23,7 +23,7 @@ class CreateTableDokumen extends Migration
             // $table->integer('id_trader')->unsigned();
             // $table->foreign('id_trader')->references('id_trader')->on('traders');
             $table->integer('id_ppk')->unsigned();
-            $table->foreign('id_ppk')->references('id_ppk')->on('v_data_header');
+            //$table->foreign('id_ppk')->references('id_ppk')->on('v_data_header');
             $table->integer('id_master')->unsigned();
             $table->foreign('id_master')->references('id_master')->on('master_dokumens');
         });

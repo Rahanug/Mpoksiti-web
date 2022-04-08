@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Jpp;
-use App\Models\vDataHeader;
 use App\Models\Trader;
-use App\Models\PemeriksaanKlinis;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Carbon;
 
 class JPPController extends Controller
 {
@@ -20,15 +16,15 @@ class JPPController extends Controller
     }
 
     public function pemeriksaan() {
-        $traderModel = new Trader();
-        $list_ppk = vDataHeader::leftJoin('pemeriksaan_klinis', 'v_data_header.id_ppk', '=', 'pemeriksaan_klinis.id_ppk')
-                    ->select('v_data_header.*', 'pemeriksaan_klinis.*')
-                    ->where("id_jpp", Auth::user()->id)
-                    ->get();
-        foreach ($list_ppk as $ppk) {
-            $trader = $traderModel->where('id_trader', $ppk->id_trader)->get();
-            $ppk['nama_trader'] = $trader[0]->nm_trader;
-        }
+        $dbView = DB::connection('sqlsrv2')->getDatabaseName().'.dbo';
+        $list_ppk = DB::table("pemeriksaan_klinis")
+            ->joinSub("SELECT * FROM $dbView.v_data_header", 'data_view', function ($join) {
+                $join->on('pemeriksaan_klinis.id_ppk', '=', 'data_view.id_ppk');
+            })
+            ->join('traders', 'data_view.id_trader', '=', 'traders.id_trader')
+            ->select('*') //TODO dont select everything
+            ->where("id_jpp", Auth::user()->id)
+            ->get();
         return view('jpp.pemeriksaan', [
             "title" => "pemeriksaan",
             "list_ppk" => $list_ppk

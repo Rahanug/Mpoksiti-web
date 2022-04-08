@@ -20,15 +20,13 @@
           <thead>
             <tr>
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">No Aju PPK</th>
-              <!--<th scope="col" style="font-weight:semibold; color:#2E2A61;">No PPK</th>-->
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">Tgl PPK</th>
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">Trader</th>
-              <th scope="col" style="font-weight:semibold; color:#2E2A61;">Cetak PPK</th>
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">Permohonan Pemeriksaan Virtual</th>
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">Link Pemeriksaan Virtual</th>
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">Jadwal Pemeriksaan</th>
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">No Sertifikat</th>
-              <th scope="col" style="font-weight:semibold; color:#2E2A61;">Cetak Segel</th>
+              <th scope="col" style="font-weight:semibold; color:#2E2A61;">Aksi</th>
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">Status</th>
             </tr>
           </thead>
@@ -38,13 +36,8 @@
             foreach ($list_ppk as $ppk){
               $html = '<tr>';
               $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_aju_ppk.'</td>';
-              //$html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_ppk.'</td>';
               $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->tgl_ppk.'</td>';
-              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->nama_trader.'</td>';
-              $html .= 
-              '<td>
-                <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Cek PPK</a>
-              </td>';
+              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->nm_trader.'</td>';
               
               if ($ppk->status_periksa == null){
                 $html .= 
@@ -70,7 +63,11 @@
               $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_sertif.'</td>';
               $html .= 
               '<td>
-                <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Cetak</a>
+                <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Cek PPK</a>
+              </td>';
+              $html .= 
+              '<td>
+                <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Cetak Segel</a>
               </td>';
               $status_string = "Belum di proses";
               if ($ppk->status==1){

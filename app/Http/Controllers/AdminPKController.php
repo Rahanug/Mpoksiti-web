@@ -19,17 +19,19 @@ class AdminPKController extends Controller
     ///
 
     public function index() {
-
+        $dbView = DB::connection('sqlsrv2')->getDatabaseName().'.dbo';
         $pks = DB::table('pemeriksaan_klinis')
+                ->joinSub("SELECT * FROM $dbView.v_data_header", 'data_view', function ($join) {
+                    $join->on('pemeriksaan_klinis.id_ppk', '=', 'data_view.id_ppk');
+                })
                 ->join('jpp', 'jpp.id', '=', 'pemeriksaan_klinis.id_jpp')
-                ->join('v_data_header', 'v_data_header.id_ppk', '=', 'pemeriksaan_klinis.id_ppk')
-                ->join('traders', 'v_data_header.id_trader', '=', 'traders.id_trader')
-                ->select('jpp.*', 'pemeriksaan_klinis.*', 'v_data_header.*', 'traders.*')
+                ->join('traders', 'data_view.id_trader', '=', 'traders.id_trader')
+                ->select('jpp.*', 'pemeriksaan_klinis.*', 'data_view.*', 'traders.*') //TODO dont select everything
                 ->whereNotNull('pemeriksaan_klinis.status_periksa')
                 ->get();
         return view('admin.pemeriksaan_klinis', [
             "title"=>"PKVirtual",
-            "pks"=>$pks,
+            "pks"=>$pks
         ]);
     }
     

@@ -15,21 +15,24 @@ class PemeriksaanKlinisAPIController extends Controller
     public function index(Request $request)
     {
         //TODO ini hanya untuk sementara selama fitur auth trader dari app mobile
-        $vDataHeaders = PemeriksaanKlinis::rightJoin('v_data_header', 'v_data_header.id_ppk', '=', 'pemeriksaan_klinis.id_ppk')
-                ->select('v_data_header.id_ppk', 'v_data_header.no_aju_ppk', 'pemeriksaan_klinis.id_jpp as nama_counter', 'pemeriksaan_klinis.status')
-                ->where('id_trader', $request->id_trader)
-                ->where('v_data_header.kd_kegiatan', 'K')
-                ->get();
+        $dbMpok = DB::connection('sqlsrv')->getDatabaseName().'.dbo';
+        $vDataHeaders = DB::connection('sqlsrv2')
+            ->table('v_data_header')
+            ->leftJoinSub("SELECT * FROM $dbMpok.pemeriksaan_klinis", 'pk', function ($join) {
+                $join->on('v_data_header.id_ppk', '=', 'pk.id_ppk');
+            })
+            ->leftJoinSub("SELECT * FROM $dbMpok.jpp", 'jpp', function ($join) {
+                $join->on('pk.id_jpp', '=', 'jpp.id');
+            })
+            ->select('v_data_header.id_ppk', 'v_data_header.no_aju_ppk', 'pk.status', 'jpp.nama_counter')
+            ->where('id_trader', $request->id_trader)
+            ->where('kd_kegiatan', 'K')
+            ->get();
         foreach ($vDataHeaders as $data){
-            $ikans = DB::select("
+            $data->ikan = DB::connection('sqlsrv2')->select("
                 SELECT kd_ikan, nm_lokal, nm_umum, nm_latin, satuan, jumlah 
-                FROM v_dtl_pelaporan WHERE id_ppk=".$data['id_ppk']
+                FROM v_dtl_pelaporan WHERE id_ppk=".(int)$data->id_ppk
             );
-            $data['ikan'] = $ikans;
-            if ($data['nama_counter']!=null){
-                $jpp = DB::table('jpp')->where('id', (int)$data['nama_counter'])->first();
-                $data['nama_counter'] = $jpp->nama_counter;
-            }
         }
         return response()->json($vDataHeaders);
     }
