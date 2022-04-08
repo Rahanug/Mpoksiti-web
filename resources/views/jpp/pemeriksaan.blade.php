@@ -64,9 +64,6 @@
               $html .= 
               '<td>
                 <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Cek PPK</a>
-              </td>';
-              $html .= 
-              '<td>
                 <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Cetak Segel</a>
               </td>';
               $status_string = "Belum di proses";
