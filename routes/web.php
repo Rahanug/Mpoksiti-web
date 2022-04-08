@@ -63,7 +63,12 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::post('/admin/stuffing/{id_ppk}/decline', [App\Http\Controllers\StuffingController::class, 'decline'])->name('admin.stuffing');
         Route::post('/admin/stuffing/{id_ppk}/terima', [App\Http\Controllers\StuffingController::class, 'terima'])->name('admin.stuffing');
         Route::post('/admin/stuffing/{id_ppk}/tolak', [App\Http\Controllers\StuffingController::class, 'tolak'])->name('admin.stuffing');
-
+        Route::get('/admin/stuffing/form/{id_ppk}', [App\Http\Controllers\FormController::class, 'index'])->name('admin.form_stuffing');
+        // Kategori
+        Route::get('/admin/kategori', [App\Http\Controllers\KategoriController::class, 'index'])->name('admin.kategori_dokumen');
+        Route::get('/admin/kategori/TambahKategori', [App\Http\Controllers\KategoriController::class, 'addKategori'])->name('admin.addKategori');
+        Route::post('/admin/kategori/TambahKategori/add', [App\Http\Controllers\KategoriController::class, 'storeKategori'])->name('admin.addKategori');
+        
         //Pemeriksaan Klinis
         Route::get('/admin/pemeriksaan_klinis', [App\Http\Controllers\AdminPKController::class, 'index'])->name('admin.pemeriksaan_klinis');
         Route::post('/admin/pemeriksaan_klinis/kirim_url', [App\Http\Controllers\AdminPKController::class, 'sendLinkPemeriksaanKlinis'])->name('admin.pemeriksaan_kirim_url');
