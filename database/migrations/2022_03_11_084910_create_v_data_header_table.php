@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateVDataHeaderTable extends Migration
 {
+
+    protected $connection = 'sqlsrv2';
     /**
      * Run the migrations.
      *
@@ -13,12 +15,12 @@ class CreateVDataHeaderTable extends Migration
      */
     public function up()
     {
-        Schema::create('v_data_header', function (Blueprint $table) {
+        $this->down();
+        Schema::connection('sqlsrv2')->create('v_data_header', function (Blueprint $table) {
             $table->increments('id_ppk');
             $table->string('no_ppk');   
             $table->string('no_aju_ppk');
             $table->integer('id_trader')->unsigned();
-            $table->foreign('id_trader')->references('id_trader')->on('traders');
             $table->string('nm_trader');
             $table->date('tgl_ppk');
             $table->string('kd_kegiatan'); //raha=E afif=K
@@ -208,6 +210,6 @@ class CreateVDataHeaderTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('v_data_header');
+        Schema::connection('sqlsrv2')->dropIfExists('v_data_header');
     }
 }
