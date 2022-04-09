@@ -11,6 +11,8 @@ use App\Models\Ppk;
 use App\Models\KategoriDokumen;
 use App\Models\vDataHeader;
 use App\Models\vDtlPelaporan;
+use App\Models\FormModel;
+use App\Models\HasilFormModel;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -33,5 +35,6 @@ class DatabaseSeeder extends Seeder
         KategoriDokumen::factory(4)->create();
         vDataHeader::factory(20)->create();
         vDtlPelaporan::factory(50)->create();
+        // FormModel::factory(5)->create();
     }
 }

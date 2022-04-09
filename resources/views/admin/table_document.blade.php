@@ -31,15 +31,14 @@
                 </td>
                 <td id="button-aksi">
                     @if(!isset($dokumens[$kategori['id_kategori']]['nm_dokumen']))
-</div>
-@else
-<a target="_blank" href="<?= url('files/' . $dokumens[$kategori['id_kategori']]['nm_dokumen']) ?>" style="margin: 0 3px" class="btn btn-sm btn-outline-dark">Preview</a>
-@endif
-</td>
-</tr>
-@endforeach
-</tbody>
-</table>
+                    @else
+                    <a target="_blank" href="<?= url('files/' . $dokumens[$kategori['id_kategori']]['nm_dokumen']) ?>" style="margin: 0 3px" class="btn btn-sm btn-outline-dark">Preview</a>
+                    @endif
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
 
 

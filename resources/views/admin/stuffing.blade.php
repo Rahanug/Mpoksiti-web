@@ -50,10 +50,10 @@
                   <td>{{ $ppk->url_periksa}}</td>
                   <td style="font-weight: bold">{{ ucfirst($ppk->status)}}</td>
                   <td>
-                    @if ($ppk->status == "Verifikasi")
+                    @if ($ppk->status == "verifikasi")
                     <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="/admin/stuffing/{{$ppk->id_ppk}}">Dokumen</a>
                     @endif
-                    @if ($ppk->status != "Menunggu")
+                    @if ($ppk->status == "Menunggu")
                     <a style="margin: 0 3px" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#declineModal">Tidak Setuju</a>
                     <!-- Decline Modal -->
                     <div class="modal fade" id="declineModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -175,6 +175,9 @@
                       </div>
                     </div>
                     @endif
+                    @if($ppk->status == 'Stuffing')
+                    <a style="margin: 0 3px" class="btn btn-sm btn-info" href="/admin/stuffing/form/{{$ppk->id_ppk}}">Form</a>
+                    @endif
                     <a style="margin: 0 3px" class="btn btn-sm btn-secondary" id="detail">Detail</a>
                   </td>
                 </tr>
@@ -196,7 +199,7 @@
 <script src="//cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
 <script>
   $(document).ready(function() {
-    $('#tableMaster').DataTable({
+    $('#tablePpk').DataTable({
       responsive: true,
     });
 

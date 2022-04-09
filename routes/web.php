@@ -64,11 +64,17 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::post('/admin/stuffing/{id_ppk}/terima', [App\Http\Controllers\StuffingController::class, 'terima'])->name('admin.stuffing');
         Route::post('/admin/stuffing/{id_ppk}/tolak', [App\Http\Controllers\StuffingController::class, 'tolak'])->name('admin.stuffing');
         Route::get('/admin/stuffing/form/{id_ppk}', [App\Http\Controllers\FormController::class, 'index'])->name('admin.form_stuffing');
+        Route::post('/admin/stuffing/form/{id_ppk}/storeSubform', [App\Http\Controllers\FormController::class, 'storeSubform'])->name('admin.form_stuffing');
+
         // Kategori
         Route::get('/admin/kategori', [App\Http\Controllers\KategoriController::class, 'index'])->name('admin.kategori_dokumen');
         Route::get('/admin/kategori/TambahKategori', [App\Http\Controllers\KategoriController::class, 'addKategori'])->name('admin.addKategori');
         Route::post('/admin/kategori/TambahKategori/add', [App\Http\Controllers\KategoriController::class, 'storeKategori'])->name('admin.addKategori');
-        
+        // Form
+        Route::get('/admin/subform', [App\Http\Controllers\SubformController::class, 'index'])->name('admin.master_subform');
+        Route::get('/admin/subform/TambahSubform', [App\Http\Controllers\SubformController::class, 'addSubform'])->name('admin.master_subform');
+        Route::post('/admin/subform/TambahSubform/add', [App\Http\Controllers\SubformController::class, 'storeSubform'])->name('admin.master_subform');
+
         //Pemeriksaan Klinis
         Route::get('/admin/pemeriksaan_klinis', [App\Http\Controllers\AdminPKController::class, 'index'])->name('admin.pemeriksaan_klinis');
         Route::post('/admin/pemeriksaan_klinis/kirim_url', [App\Http\Controllers\AdminPKController::class, 'sendLinkPemeriksaanKlinis'])->name('admin.pemeriksaan_kirim_url');

@@ -91,6 +91,8 @@
                         <h6 class="collapse-header">Bagian Ekspor:</h6>
                         <a class="collapse-item {{ $title==='Stuffing'? 'active' : '' }}" href="/admin/stuffing">Stuffing</a>
                         <a class="collapse-item {{ $title==='Master Dokumen Trader'? 'active' : '' }}" href="/admin/master">Master Dokumen Trader</a>
+                        <a class="collapse-item {{ $title==='Kategori Dokumen'? 'active' : '' }}" href="/admin/kategori">Kategori Dokumen</a>
+                        <a class="collapse-item {{ $title==='Master Subform'? 'active' : '' }}" href="/admin/subform">Master Subform</a>
                     </div>
                 </div>
         </li>

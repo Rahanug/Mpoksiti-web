@@ -8,10 +8,12 @@ use App\Models\Ppk;
 use App\Models\KategoriDokumen;
 use App\Models\MasterDokumen;
 use App\Models\Dokumen;
+use App\Models\MasterSubform;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Models\vDataHeader;
+use App\Models\Subform;
 
 class StuffingController extends Controller
 {
@@ -162,6 +164,27 @@ class StuffingController extends Controller
             "url_periksa"=> $request->url_periksa
         ]);
 
+        // Validasi jangan lupa
+        // Select dari table subform where id ppk = id ppk
+        // if number of row lebih dari 0, empty
+        // else select(*) from master, nanti dapet id_masternya terus pake
+        // 
+        $count = Subform::where('id_ppk', $id_ppk)->count();
+        if($count == 0){
+            $master = MasterSubform::all();
+            DB::beginTransaction();
+            foreach($master as $key=>$m){
+                Subform::insert([
+                    'urutan'=>++$key,
+                    'value'=>'',
+                    'visibility'=>'show',
+                    'id_masterSubform'=>$m->id_masterSubform,
+                    'id_ppk'=>$id_ppk,
+                ]);
+            }
+            DB::commit();
+
+        }
 
         return redirect('/admin/stuffing')->with('success', 'Jadwal telah disetujui!');
     }

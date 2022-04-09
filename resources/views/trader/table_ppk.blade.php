@@ -28,7 +28,7 @@
         <td>{{ $ppk->url_periksa}}</td>
         <td style="font-weight: bold">{{ ucfirst($ppk->status)}}</td>
         <td>
-          @if ($ppk->status == "" || $ppk->status == "Verifikasi")
+          @if ($ppk->status == "" || $ppk->status == "verifikasi")
           <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="/home/{{$ppk->id_ppk}}">Unggah</a>
           @endif
 
