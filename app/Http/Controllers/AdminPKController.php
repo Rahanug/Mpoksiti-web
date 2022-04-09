@@ -56,12 +56,12 @@ class AdminPKController extends Controller
         }
 
         DB::table('pemeriksaan_klinis')
-              ->where('id_ppk', $request->id_ppk)
-              ->update([
-                  'status_periksa' => 2,
-                  'jadwal_periksa' => date('Y-m-d H:i', strtotime($request->jadwalMeet.' '.$request->jamMeet)),
-                  'url_periksa' => $request->linkMeet
-                ]);
+            ->where('id_ppk', $request->id_ppk)
+            ->update([
+                'status_periksa' => 2,
+                'jadwal_periksa' => date('Y-m-d H:i', strtotime($request->jadwalMeet.' '.$request->jamMeet)),
+                'url_periksa' => $request->linkMeet
+            ]);
         return redirect('admin/pemeriksaan_klinis');
     }
 

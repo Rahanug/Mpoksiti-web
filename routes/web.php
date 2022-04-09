@@ -88,7 +88,7 @@ Route::group(['middleware' => 'revalidate'], function () {
     Route::group(['middleware' => 'auth:jpp'], function () {
         Route::get('/jpp/home', [App\Http\Controllers\JPPController::class, 'index'])->name('jpp.home');
         Route::get('/jpp/pemeriksaan', [App\Http\Controllers\JPPController::class, 'pemeriksaan'])->name('jpp.pemeriksaan');
-        Route::post('/jpp/permohonan', [App\Http\Controllers\JPPController::class, 'permohonan_pemeriksaan_virtual'])->name('jpp.permohonan');
+        Route::post('/jpp/permohonan', [App\Http\Controllers\JPPController::class, 'permohonan'])->name('jpp.permohonan');
     });
     Route::get('/loginjpp', [\App\Http\Controllers\LoginJPPController::class, 'formLogin'])->name('loginjpp');
     Route::post('/loginjpp', [\App\Http\Controllers\LoginJPPController::class, 'login'])->name('loginjpp');

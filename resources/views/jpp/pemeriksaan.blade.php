@@ -22,6 +22,7 @@
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">No Aju PPK</th>
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">Tgl PPK</th>
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">Trader</th>
+              <th scope="col" style="font-weight:semibold; color:#2E2A61;">Penerima/Tujuan</th>
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">Permohonan Pemeriksaan Virtual</th>
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">Link Pemeriksaan Virtual</th>
               <th scope="col" style="font-weight:semibold; color:#2E2A61;">Jadwal Pemeriksaan</th>
@@ -31,41 +32,99 @@
             </tr>
           </thead>
           <tbody>
-            <?php 
-            $count = 0;
-            foreach ($list_ppk as $ppk){
-              $html = '<tr>';
-              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_aju_ppk.'</td>';
-              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->tgl_ppk.'</td>';
-              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->nm_trader.'</td>';
+            <?php $count = 0?>
+            @foreach ($list_ppk as $ppk)
+            <?php $count++?>
+              <tr>
+              <td style="font-weight:regular; color:#2E2A61;"> {{ $ppk->no_aju_ppk }}</td>
+              <td style="font-weight:regular; color:#2E2A61;"> {{ $ppk->tgl_ppk }}</td>
+              <td style="font-weight:regular; color:#2E2A61;"> {{ $ppk->nm_trader }}</td>
+              <td style="font-weight:regular; color:#2E2A61;"> {{ $ppk->nm_penerima }}</td>
               
-              if ($ppk->status_periksa == null){
-                $html .= 
-                '<td><form action="/jpp/permohonan" method="POST">
-                  '.csrf_field().'
-                  <input type="hidden" id="id_ppk" name="id_ppk" value='.$ppk->id_ppk.'>
-                  <button class="btn btn-sm btn-outline-dark">Ajukan Permohonan</button>       
-                </form></td>';
-              }else{
-                $html .= '<td style="font-weight:regular; color:#2E2A61;"> Sudah diajukan </td>';
-              }
-
+              @if ($ppk->status_periksa == null)
+                <td>
+                  <form action="/jpp/permohonan" method="POST">
+                    @csrf
+                    <input type="hidden" id="id_ppk" name="id_ppk" value= <?=$ppk->id_ppk?>>
+                    <button class="btn btn-sm btn-outline-dark">Ajukan Permohonan</button>       
+                  </form>
+                </td>
+              @else
+                <td style="font-weight:regular; color:#2E2A61;"> Sudah diajukan </td>
+              @endif
+              
+              <?php 
               $url_pemeriksaan = "Belum diberikan";
               if ($ppk->url_periksa!=null){
                 $url_pemeriksaan = $ppk->url_periksa;
               }
-              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$url_pemeriksaan.'</td>';
+              ?>
+              <td style="font-weight:regular; color:#2E2A61;"> {{ $url_pemeriksaan }}</td>
+              
+              <?php 
               $jadwal_string = "";
               if ($ppk->jadwal_periksa!=null){
                 $jadwal_string = date('Y-m-d H:i A', strtotime($ppk->jadwal_periksa));
               }
-              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$jadwal_string.'</td>';
-              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$ppk->no_sertif.'</td>';
-              $html .= 
-              '<td>
+              ?>
+              <td style="font-weight:regular; color:#2E2A61;"> {{ $jadwal_string }}</td>
+              <td style="font-weight:regular; color:#2E2A61;"> {{ $ppk->no_sertifikat }}</td>
+              <td>
                 <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Cek PPK</a>
-                <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Cetak Segel</a>
-              </td>';
+                <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark" data-toggle="modal" data-target=<?= '"#cetakSegel'.$count.'"' ?>>Cetak Segel</a>
+                <!-- modal cetak segel-->
+                <div class="modal fade" id=<?= '"cetakSegel'.$count.'"' ?> tabindex="-1" role="dialog" aria-labelledby=<?= '"#cetakSegelLabel'.$count.'"' ?> aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id=<?= '"#cetakSegelLabel'.$count.'"' ?>>Cetak Segel <?= $ppk->no_aju_ppk?> </h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            @if ($ppk->status==3)
+                              <div class="modal-body" id=<?= '"segel'.$count.'"' ?>>
+                                <table style="border: 1px solid;">
+                                  <tr style="border: 1px solid;">
+                                    <td style="border: 1px solid; margin: 8px">
+                                      {!! QrCode::size(192)->generate($ppk->data_segel); !!}
+                                    </td>
+                                    <th style="border: 1px solid;">Kementerian Kelautan<br> dan Perikanan Balai<br> Besar KIPM <br>Jakarta I</th>
+                                    <td style="border: 1px solid;"><img src="/img/bkipm-logo.png" height="192"></td>
+                                  </tr>
+                                  <tr style="border: 1px solid;">
+                                    <td style="border: 1px solid;">
+                                      KEGIATAN<br>
+                                      NO SERTIFIKAT<br>
+                                      NO SERI<br>
+                                      TANGGAL<br>
+                                      TUJUAN<br>
+                                    </td>
+                                    <td colspan=2 style="border: 1px solid;">
+                                      {{ $ppk->kd_kegiatan }}<br>
+                                      {{ $ppk->no_sertifikat }}<br>
+                                      {{ $ppk->seri }}<br>
+                                      {{ $ppk->tgl_ppk }}<br>
+                                      {{ $ppk->nm_penerima }}<br>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </div>
+                            @else
+                              <div class="modal-body">Segel tidak tersedia</div>
+                            @endif
+                            <div class="modal-footer">
+                                <button class="btn btn-link" type="button" data-dismiss="modal">Tutup</button>
+                                @if ($ppk->status==3)
+                                <button class="btn btn-primary" onclick=<?= 'printDiv("segel'.$count.'")' ?>>Cetak</button>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+              </td>
+              
+              <?php 
               $status_string = "Belum di proses";
               if ($ppk->status==1){
                 $status_string = "Diproses";
@@ -74,12 +133,10 @@
               }else if ($ppk->status==3){
                 $status_string = "Disetujui";
               }
-              $html .= '<td style="font-weight:regular; color:#2E2A61;"> '.$status_string.'</td>';
-              $html .= '</tr>';
-              $count++;
-              echo $html;
-            }
-            ?>
+              ?>
+              <td style="font-weight:regular; color:#2E2A61;"> {{ $status_string }}</td>
+              </tr>
+            @endforeach
           </tbody>
         </table>
         </div>
@@ -102,5 +159,19 @@
       });
       
     } );
+    function printDiv(divName) {
+      var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+      mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+      mywindow.document.write('</head><body >');
+      mywindow.document.write('<h1>' + document.title  + '</h1>');
+      mywindow.document.write(document.getElementById(divName).innerHTML);
+      mywindow.document.write('</body></html>');
+      mywindow.document.close(); // necessary for IE >= 10
+      mywindow.focus(); // necessary for IE >= 10*/
+      mywindow.print();
+      mywindow.close();
+
+      return true;
+    }
   </script>
 @endpush
