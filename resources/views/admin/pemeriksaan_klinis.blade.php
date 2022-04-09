@@ -22,20 +22,22 @@
             <table class="table table-striped" id="tablePPK">
                 <thead>
                 <tr>
-                    <th scope="col">ID_PPK</th>
+                    <th scope="col">ID PPK</th>
                     <th scope="col">No PPK</th>
                     <th scope="col">No Aju PPK</th>
                     <th scope="col">Kode Counter</th>
                     <th scope="col">Nama Counter</th>
                     <th scope="col">Nama Trader</th>
+                    <th scope="col">Nama Penerima/Tujuan</th>
                     <th scope="col">Jadwal Pemeriksaan</th>
                     <th scope="col">Link Meet Virtual</th>
                     <th scope="col">Aksi</th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php $no = 0; ?>
-                @foreach ($pks as $ppk) 
+                <?php $count = 0; ?>
+                @foreach ($pks as $ppk)
+                <?php $count++; ?>
                 <tr>
                     <td>{{ $ppk->id_ppk }}</td>
                     <td>{{ $ppk->no_ppk }}</td>
@@ -43,6 +45,7 @@
                     <td>{{ $ppk->kode_counter }}</td>
                     <td>{{ $ppk->nama_counter }}</td>
                     <td>{{ $ppk->nm_trader }}</td>
+                    <td>{{ $ppk->nm_penerima }}</td>
                     <?php 
                     $jadwal_string = "";
                     if ($ppk->jadwal_periksa!=null){
@@ -54,19 +57,19 @@
                       <td>{{ $ppk->url_periksa }} </td>
                     @else
                       <td>
-                        <a href="" style="margin: 0 3px; " class="btn btn-sm btn-primary" data-toggle="modal" data-target=<?= '"#linkModal'.$ppk->id_ppk.'"' ?>>Kirim Link</a>
+                        <a href="" style="margin: 0 3px; " class="btn btn-sm btn-primary" data-toggle="modal" data-target=<?= '"#linkModal'.$count.'"' ?>>Kirim Link</a>
 
-                        <!-- modal kirim virtual, fuck jquery -->
-                        <div class="modal fade" id=<?= '"linkModal'.$ppk->id_ppk.'"' ?> tabindex="-1" role="dialog" aria-labelledby=<?= '"#linkModalLabel'.$ppk->id_ppk.'"' ?> aria-hidden="true">
+                        <!-- modal kirim virtual -->
+                        <div class="modal fade" id=<?= '"linkModal'.$count.'"' ?> tabindex="-1" role="dialog" aria-labelledby=<?= '"#linkModalLabel'.$count.'"' ?> aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
                               <div class="modal-content">
                                   <div class="modal-header">
-                                      <h5 class="modal-title" id=<?= '"#linkModalLabel'.$ppk->id_ppk.'"' ?>>Pemeriksaan Klinis Virtual <?= $ppk->no_ppk?> </h5>
+                                      <h5 class="modal-title" id=<?= '"#linkModalLabel'.$count.'"' ?>>Pemeriksaan Klinis Virtual <?= $ppk->no_ppk?> </h5>
                                       <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                           <span aria-hidden="true">×</span>
                                       </button>
                                   </div>
-                                  <form id="action-form" action="/admin/pemeriksaan_klinis/kirim_url" method="POST">
+                                  <form id=<?= '"kirim-link-url'.$count.'"' ?> action="/admin/pemeriksaan_klinis/kirim_url" method="POST">
                                     @csrf
                                     <div class="modal-body">
                                       <div class="form-group">
@@ -88,13 +91,13 @@
                       </td>
                     @endif
                     <td>
-                        <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark" data-toggle="modal" data-target=<?= '"#cekModal'.$ppk->id_ppk.'"' ?>>Cek PPK</a>
-                        <!-- modal cek ppk, fuck jquery -->
-                        <div class="modal fade" id=<?= '"cekModal'.$ppk->id_ppk.'"' ?> tabindex="-1" role="dialog" aria-labelledby=<?= '"#cekModalLabel'.$ppk->id_ppk.'"' ?> aria-hidden="true">
+                        <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark" data-toggle="modal" data-target=<?= '"#cekModal'.$count.'"' ?>>Cek PPK</a>
+                        <!-- modal cek ppk -->
+                        <div class="modal fade" id=<?= '"cekModal'.$count.'"' ?> tabindex="-1" role="dialog" aria-labelledby=<?= '"#cekModalLabel'.$count.'"' ?> aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                               <div class="modal-content">
                                   <div class="modal-header">
-                                      <h5 class="modal-title" id=<?= '"#cekModalLabel'.$ppk->id_ppk.'"' ?>>Cek No PPK <?= $ppk->no_ppk?> </h5>
+                                      <h5 class="modal-title" id=<?= '"#cekModalLabel'.$count.'"' ?>>Cek No PPK <?= $ppk->no_ppk?> </h5>
                                       <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                           <span aria-hidden="true">×</span>
                                       </button>
@@ -109,24 +112,24 @@
                         </div>
                         
                         @if ($ppk->status==NULL || $ppk->status==1)
-                        <a href="" style="margin: 0 3px; " class="btn btn-sm btn-primary" data-toggle="modal" data-target=<?= '"#actionModal'.$ppk->id_ppk.'"' ?>>Action</a>
+                        <a href="" style="margin: 0 3px; " class="btn btn-sm btn-primary" data-toggle="modal" data-target=<?= '"#actionModal'.$count.'"' ?>>Action</a>
                         <!-- modal action, fuck jquery -->
-                        <div class="modal fade" id=<?= '"actionModal'.$ppk->id_ppk.'"' ?> tabindex="-1" role="dialog" aria-labelledby=<?= '"#actionModalLabel'.$ppk->id_ppk.'"' ?> aria-hidden="true">
+                        <div class="modal fade" id=<?= '"actionModal'.$count.'"' ?> tabindex="-1" role="dialog" aria-labelledby=<?= '"#actionModalLabel'.$count.'"' ?> aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                               <div class="modal-content">
                                   <div class="modal-header">
-                                      <h5 class="modal-title" id=<?= '"#actionModalLabel'.$ppk->id_ppk.'"' ?>>No PPK <?= $ppk->no_ppk?> </h5>
+                                      <h5 class="modal-title" id=<?= '"#actionModalLabel'.$count.'"' ?>>No PPK <?= $ppk->no_ppk?> </h5>
                                       <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                           <span aria-hidden="true">×</span>
                                       </button>
                                   </div>
-                                  <form id=<?= '"action-form'.$ppk->id_ppk.'"' ?> action="/admin/pemeriksaan_klinis/action" method="POST">
+                                  <form id=<?= '"action-form'.$count.'"' ?> action="/admin/pemeriksaan_klinis/action" method="POST">
                                     @csrf
                                     <div class="modal-body">
                                       <div class="form-group">
                                         <input type="hidden" id="id_ppk" name="id_ppk" value=<?= $ppk->id_ppk ?>>
                                         <label for="keterangan" class="col-form-label">Keterangan:</label>
-                                        <textarea class="form-control" id="keterangan" name="keterangan" form=<?= '"action-form'.$ppk->id_ppk.'"' ?>></textarea>
+                                        <textarea class="form-control" id="keterangan" name="keterangan" form=<?= '"action-form'.$count.'"' ?>></textarea>
                                       </div>
                                     </div>
                                     <div class="modal-footer">
