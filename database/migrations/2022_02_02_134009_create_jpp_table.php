@@ -15,10 +15,10 @@ class CreateJppTable extends Migration
     {
         Schema::create('jpp', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_counter');
+            $table->string('kode_counter')->unique();
             $table->string('nama_counter');
-            $table->string('latitude');
-            $table->string('longitude');
+            $table->float('latitude');
+            $table->float('longitude');
             $table->string('penanggungJawab');
             $table->string('id_kurir')->references('id')->on('kurir');
             $table->string('password');

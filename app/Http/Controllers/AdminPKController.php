@@ -29,7 +29,7 @@ class AdminPKController extends Controller
                 ->select('jpp.*', 'pemeriksaan_klinis.*', 'data_view.*', 'traders.*') //TODO dont select everything
                 ->whereNotNull('pemeriksaan_klinis.status_periksa')
                 ->get();
-        return view('admin.pemeriksaan_klinis', [
+        return view('admin.PK-pemeriksaan_klinis', [
             "title"=>"PKVirtual",
             "pks"=>$pks
         ]);
@@ -62,7 +62,7 @@ class AdminPKController extends Controller
                 'jadwal_periksa' => date('Y-m-d H:i', strtotime($request->jadwalMeet.' '.$request->jamMeet)),
                 'url_periksa' => $request->linkMeet
             ]);
-        return redirect('admin/pemeriksaan_klinis');
+        return redirect('admin/pemeriksaan_klinis')->with('success', 'Jadwal meet telah dikirim untuk ID PPK '.$request->id_ppk);;
     }
 
     public function sendAction(Request $request){
@@ -82,10 +82,13 @@ class AdminPKController extends Controller
         }
 
         $statusPPK = null;
+        $text = '';
         if ($request->action=='Tolak'){
             $statusPPK = 2;
+            $text = 'ditolak';
         }else if ($request->action=='Setuju'){
             $statusPPK = 3;
+            $text = 'disetujui';
         }
         DB::table('pemeriksaan_klinis')
             ->where('id_ppk', $request->id_ppk)
@@ -93,6 +96,6 @@ class AdminPKController extends Controller
                 'status' => $statusPPK,
                 'keterangan' => $request->keterangan
             ]);
-        return redirect('admin/pemeriksaan_klinis');
+        return redirect('admin/pemeriksaan_klinis')->with('success', 'ID PPK '.$request->id_ppk.' telah '.$text);
     }
 }

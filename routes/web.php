@@ -78,9 +78,11 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::post('/admin/subform/TambahSubform/add', [App\Http\Controllers\SubformController::class, 'storeSubform'])->name('admin.master_subform');
 
         //Pemeriksaan Klinis
-        Route::get('/admin/pemeriksaan_klinis', [App\Http\Controllers\AdminPKController::class, 'index'])->name('admin.pemeriksaan_klinis');
-        Route::post('/admin/pemeriksaan_klinis/kirim_url', [App\Http\Controllers\AdminPKController::class, 'sendLinkPemeriksaanKlinis'])->name('admin.pemeriksaan_kirim_url');
-        Route::post('/admin/pemeriksaan_klinis/action', [App\Http\Controllers\AdminPKController::class, 'sendAction'])->name('admin.pemeriksaan_send_action');
+        Route::get('/admin/pemeriksaan_klinis', [App\Http\Controllers\AdminPKController::class, 'index'])->name('admin.PK-pemeriksaan_klinis');
+        Route::post('/admin/pemeriksaan_klinis/kirim_url', [App\Http\Controllers\AdminPKController::class, 'sendLinkPemeriksaanKlinis']);
+        Route::post('/admin/pemeriksaan_klinis/action', [App\Http\Controllers\AdminPKController::class, 'sendAction']);
+        Route::get('/admin/jasper_management', [App\Http\Controllers\AdminJPPController::class, 'index'])->name('admin.PK-jasper_management');
+        Route::post('/admin/jasper_management/add_jasper', [App\Http\Controllers\AdminJPPController::class, 'addJPP']);
     });
     Route::get('/loginadmin', [\App\Http\Controllers\LoginAdminController::class, 'formLogin'])->name('loginadmin');
     Route::post('/loginadmin', [\App\Http\Controllers\LoginAdminController::class, 'loginAdmin'])->name('loginadmin');

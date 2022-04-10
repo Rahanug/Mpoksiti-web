@@ -12,8 +12,18 @@
     <h1 class="h2" style="font-weight:bold; color:#2E2A61;">Pemeriksaan Klinis Virtual</h1>
   </div>
 
+  @if (session()->has('success'))
+    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    </div>
+    @endif
+
   @if ($errors->any())
-  <h4 class="h4">{{$errors->first()}}</h4>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{$errors->first()}}
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    </div>
   @endif
   <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
     <div class="card shadow w-100 responsive" style="margin: top 10px;">
