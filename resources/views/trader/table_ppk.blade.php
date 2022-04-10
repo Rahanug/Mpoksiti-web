@@ -35,6 +35,9 @@
           @if ($ppk->status == "Selesai")
           <a style="margin: 0 3px" class="btn btn-sm btn-outline-dark">Cetak HC</a>
           @endif
+          @if ($ppk->status == "Persetujuan")
+          <a style="margin: 0 3px" class="btn btn-sm btn-info" href="/home/form/{{$ppk->id_ppk}}">Hasil</a>
+          @endif
           <a style="margin: 0 3px" class="btn btn-sm btn-secondary" id="detail">Detail</a>
         </td>
       </tr>

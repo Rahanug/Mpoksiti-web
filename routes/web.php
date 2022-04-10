@@ -30,6 +30,8 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::get('/master', [App\Http\Controllers\MasterDokumenController::class, 'index'])->name('trader.master_dokumen');
         Route::get('/master/addMaster', [App\Http\Controllers\MasterDokumenController::class, 'master'])->name('trader.addMaster');
         Route::post('/master/addMaster/storeMaster', [App\Http\Controllers\MasterDokumenController::class, 'storeMaster'])->name('trader.storeMaster');
+
+        Route::get('/home/form/{id_ppk}', [App\Http\Controllers\FormController::class, 'Hasil'])->name('trader.hasil_form');
     });
     // Login untuk trader
     Route::get('/', [\App\Http\Controllers\LoginController::class, 'formLogin'])->name('login');

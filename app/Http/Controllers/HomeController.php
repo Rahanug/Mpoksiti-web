@@ -24,11 +24,12 @@ class HomeController extends Controller
         $ppks = new PpkController();
         $ppkModel = new Ppk();
         $vdataHeader = new vDataHeader();
+        $dbView = DB::connection('sqlsrv')->getDatabaseName().'.dbo';
         return view('trader.home', [
             "title" => "Dashboard",
             // "ppks" => $ppkModel->where("id_trader", Auth::user()->id_trader)->get(),
             "ppks" => $vdataHeader
-            ->leftJoin('ppks', 'v_data_header.id_ppk', '=', 'ppks.id_ppk')
+            ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', "ppks.id_ppk")
             ->where('v_data_header.kd_kegiatan', 'E')
             ->where("v_data_header.id_trader", Auth::user()->id_trader)
             ->select('ppks.*', 'v_data_header.*')->get(),
@@ -40,6 +41,8 @@ class HomeController extends Controller
     {
         $ppks = new PpkController();
         $ppk = $ppks->getIf($id_ppk)[0];
+        $dbView = DB::connection('sqlsrv2')->getDatabaseName().'.dbo';
+        
         $dokumens = new Dokumen();
         $kategoriModel = new KategoriDokumen();
         // $dokumen = $dokumens->getIf($id_dokumen)[0];
@@ -51,6 +54,7 @@ class HomeController extends Controller
         foreach (KategoriDokumen::all() as $item) {
             $kategori[$item->id_kategori] = $item->nama_kategori;
         }
+        $dbView = DB::connection('sqlsrv2')->getDatabaseName().'.dbo';
         $masterDokumenModel = new MasterDokumen();
         return view('trader.document', [
             "title" => "Unggah Dokumen",

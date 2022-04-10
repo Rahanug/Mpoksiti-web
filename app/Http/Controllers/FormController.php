@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Models\vDataHeader;
 use App\Models\Subform;
+use App\Models\MasterSubform;
 use Exception;
 use Symfony\Component\Console\Input\Input;
 
@@ -46,7 +47,9 @@ class FormController extends Controller
                     'keterangan'=>$i['keterangan']
                 ]);
             }
-
+            Ppk::where('id_ppk', $id_ppk)->update([
+                "status" => "Persetujuan",
+            ]);
             DB::commit();
             return redirect('/admin/stuffing')->with('Success', 'Form telah diisi!!!!!!!!!!!');
         }
@@ -69,6 +72,12 @@ class FormController extends Controller
                         break;
                     }
                 }
+            }
+            else if ($j->tipe_data == 'boolean') {
+                if (!isset($data['keterangan'])) {
+                    throw new Exception('Semua Indikator harus diisi');
+                    break;
+                }
             } else {
                 if (!isset($data['value'])) {
                     throw new Exception('Semua Indikator harus diisi');
@@ -81,4 +90,15 @@ class FormController extends Controller
     }
     // select leftjoin master m (select urutan id_master from subform where id_ppk = id_ppk) s on m.id_master = s.id_master
 
+    public function Hasil($id_ppk){
+        $master = array();
+        foreach (MasterSubform::all() as $item) {
+            $master[$item->id_masterSubform] = $item->indikator;
+        }
+        return view('trader.hasil_form', [
+            "title"=>'Hasil Stuffing Virtual',
+            "form"=>Subform::where('id_ppk', $id_ppk)->get(),
+            "master"=>$master,
+        ]);
+    }
 }

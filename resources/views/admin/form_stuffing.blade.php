@@ -51,17 +51,17 @@
                                                     <td>{{$d->indikator}}</td>
                                                     <td>
                                                         <?php
-                                                        $old = old("input-' . $d->id_masterSubform . '-' . $d->id_subform . '"); 
+                                                        $old = old("input-' . $d->id_masterSubform . '-' . $d->id_subform . '");
                                                         switch ($d->tipe_data) {
                                                             case 'datetime':
                                                                 echo '
                                                         <div class="form-group">
-                                                            <input type="datetime-local" id="jadwal_periksa" value="'.$old.'" class="form-control" placeholder="Jadwal" name="input-' . $d->id_masterSubform . '-' . $d->id_subform . '">
+                                                            <input type="datetime-local" id="jadwal_periksa" value="' . $old . '" class="form-control" placeholder="Jadwal" name="input-' . $d->id_masterSubform . '-' . $d->id_subform . '">
                                                         </div>                             
                                                         ';
                                                                 break;
                                                             case 'kondisi':
-                                                                $oldK = old("keterangan-' . $d->id_masterSubform . '-' . $d->id_subform . '"); 
+                                                                $oldK = old("keterangan-' . $d->id_masterSubform . '-' . $d->id_subform . '");
                                                                 echo '
                                                         <div class="form-group">
                                                             <select name="input-' . $d->id_masterSubform . '-' . $d->id_subform . '">
@@ -70,7 +70,7 @@
                                                             </select>
                                                             <td>
                                                             <div class="form-group">
-                                                                <input type="text" id="" value="'.$oldK.'" class="form-control" placeholder="" name="keterangan-' . $d->id_masterSubform . '-' . $d->id_subform . '">
+                                                                <input type="text" id="" value="' . old("keterangan-' . $d->id_masterSubform . '-' . $d->id_subform . '") . '" class="form-control" placeholder="" name="keterangan-' . $d->id_masterSubform . '-' . $d->id_subform . '">
                                                             </div>
                                                             </td> 
                                                         </div>
@@ -79,12 +79,20 @@
                                                             case 'text':
                                                                 echo '
                                                         <div class="form-group">
-                                                            <input type="text" id="" value="'.$old.'" class="form-control" placeholder="" name="input-' . $d->id_masterSubform . '-' . $d->id_subform . '">
+                                                            <input type="text" id="" value="' . old("input-' . $d->id_masterSubform . '-' . $d->id_subform . '") . '" class="form-control" placeholder="" name="input-' . $d->id_masterSubform . '-' . $d->id_subform . '">
                                                         </div>  
                                                         ';
                                                                 break;
                                                             case 'boolean':
-                                                                echo 'rekomendasi';
+                                                                echo '
+                                                                <div class="form-group">
+                                                                    <select name="input-' . $d->id_masterSubform . '-' . $d->id_subform . '">
+                                                                        <option value="Sesuai">Sesuai</option>
+                                                                        <option value="Tidak Sesuai">Tidak Sesuai</option>
+                                                                    </select>
+                                                                    <input type="text" id="" value="' . old("keterangan-' . $d->id_masterSubform . '-' . $d->id_subform . '"). '" class="form-control" placeholder="" name="keterangan-' . $d->id_masterSubform . '-' . $d->id_subform . '">
+                                                                </div>  
+                                                                ';;
                                                                 break;
                                                         } ?>
                                                     </td>
