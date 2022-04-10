@@ -68,11 +68,31 @@
 
         <!-- Nav Item - Pemeriksaan Klinis Virtual-->
         <li class="nav-item">
-            <a class="nav-link {{ $title==='PKVirtual'? 'active' : '' }}" href="{{ route('admin.pemeriksaan_klinis') }}" href="">
+            <a class="nav-link {{ $title==='PKVirtual'? 'active' : '' }}" href="{{ route('admin.PK-pemeriksaan_klinis') }}" href="">
             <i class="fas fa-fw fa-mobile"></i>
             <span>Pemeriksaan Klinis</span></a>
         </li>
 
+
+        <li class="nav-item">
+            <a class="nav-link collapsed {{ ($title==='PKJasper'||$title==='PKKurir')? 'active' : '' }}" href="#" data-toggle="collapse" data-target="#JPPcollapsePages" aria-expanded="false" aria-controls="JPPcollapsePages">
+                <i class="fas fa-fw fa-shipping-fast"></i>
+                <span>Management Jasper</span>
+            </a>
+            <div id="JPPcollapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <style>
+                        .collapse-item.active {
+                        color: #3C5C94;
+                        /* background-color: rgba(196, 196, 196, 0.3); */
+                        font-weight: bold;
+                        }
+                        </style>
+                    <a class="collapse-item {{ $title==='PKJasper'? 'active' : '' }}" href="{{ route('admin.PK-jasper_management') }}" href="">Konter Jasa Pengiriman</a>
+                    <a class="collapse-item {{ $title==='PKKurir'? 'active' : '' }}" href="">Jenis Kurir</a>
+                </div>
+            </div>
+        </li>
         <!-- Nav Item - PPK EKSPOR -->
         <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
