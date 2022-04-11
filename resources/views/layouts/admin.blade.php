@@ -95,7 +95,7 @@
         </li>
         <!-- Nav Item - PPK EKSPOR -->
         <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                <a class="nav-link collapsed {{ ($title==='Stuffing'||$title==='Master Dokumen Trader' || $title==='Kategori Dokumen' || $title==='Master Subform')? 'active' : '' }}" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-map-signs"></i>
                     <span>Ekspor</span>
                 </a>

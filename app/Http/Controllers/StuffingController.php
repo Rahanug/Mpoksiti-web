@@ -28,7 +28,7 @@ class StuffingController extends Controller
         $vdataHeader = new vDataHeader();
         $dbView = DB::connection('sqlsrv')->getDatabaseName().'.dbo';
         return view('admin.stuffing', [
-            "title" => "stuffing",
+            "title" => "Stuffing",
             // "ppks" => $ppkModel->where("id_trader", Auth::user()->id_trader)->get(),
             "ppks" => $vdataHeader
                 ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', 'ppks.id_ppk')
