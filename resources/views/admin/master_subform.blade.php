@@ -29,6 +29,26 @@
     <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
         <div class="card shadow w-100 responsive" style="margin: top 10px;">
             <div class="card-body" style="margin: top 10px;">
+            @if (session()->has('success'))
+                <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </div>
+                @endif
+
+                @if (session()->has('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </div>
+                @endif
+
+                @if (session()->has('info'))
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ session('info') }}
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </div>
+                @endif
                 <div class="table-responsive">
                     <table class="table table-striped" id="tableMaster">
                         <thead>
@@ -60,7 +80,7 @@
                                         break;    
                                 } ?>
                                 <td>
-                                    <a style="margin: 0 3px" class="btn btn-sm btn-secondary" href="">Edit</a>
+                                    <a style="margin: 0 3px" class="btn btn-sm btn-secondary" href="/admin/subform/EditSubform/{{$master->id_masterSubform}}">Edit</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -82,7 +102,7 @@
 <script src="//cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#tablePpk').DataTable({
+        $('#tableMaster').DataTable({
             responsive: true,
         });
 

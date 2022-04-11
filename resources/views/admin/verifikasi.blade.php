@@ -24,6 +24,18 @@
   <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
     <div class="card shadow w-100 responsive" style="margin: top 10px;">
       <div class="card-body" style="margin: top 10px;">
+          @if (session()->has('accept'))
+          <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            {{ session('accept') }}
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          </div>
+          @endif
+          @if (session()->has('decline'))
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('decline') }}
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          </div>
+          @endif
         <form method="POST" enctype="multipart/form-data">
           @csrf
           <div class="table-responsive">

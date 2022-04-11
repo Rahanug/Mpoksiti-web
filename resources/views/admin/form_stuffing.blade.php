@@ -20,6 +20,7 @@
     </div>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2" style="font-weight:bold; color:#2E2A61;">Form Hasil Verifikasi Lapangan</h1>
+        <a class="btn btn-sm btn-secondary" id="edit form">Edit form</a>
     </div>
     <section id="multiple-column-form">
         <div class="row match-height">

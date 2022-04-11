@@ -31,6 +31,26 @@
         <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
             <div class="card shadow w-100 responsive" style="margin: top 10px;">
                 <div class="card-body" style="margin: top 10px;">
+                @if (session()->has('success'))
+                <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </div>
+                @endif
+
+                @if (session()->has('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </div>
+                @endif
+
+                @if (session()->has('info'))
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ session('info') }}
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </div>
+                @endif
                     <div class="table-responsive">
                         <table class="table table-striped" id="tableMaster">
                             <thead>
@@ -56,7 +76,7 @@
                                     @endif
                                     <td>{{ $kategori->instansi_penerbit }}</td>
                                     <td>
-                                        <a style="margin: 0 3px" class="btn btn-sm btn-secondary" href="">Edit</a>
+                                        <a style="margin: 0 3px" class="btn btn-sm btn-secondary" href="/admin/kategori/editKategori/{{$kategori->id_kategori}}">Edit</a>
                                     </td>
                                 </tr>
                                 @endforeach

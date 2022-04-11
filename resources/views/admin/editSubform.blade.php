@@ -19,11 +19,11 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="card-title" style="font-weight:bold; color:#2E2A61;">Tambah Subform</h2>
+                        <h2 class="card-title" style="font-weight:bold; color:#2E2A61;">Edit Subform</h2>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form method="POST" action="/admin/subform/TambahSubform/add" enctype="multipart/form-data">
+                            <form method="POST" action="/admin/subform/EditSubform/{{$id}}/update" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col">
@@ -36,20 +36,21 @@
                                             </ul>
                                         </div>
                                         @endif
+                                        @foreach($edit as $p)
                                         <div class="form-group">
                                             <label for="indikator" style="font-weight:500; color:#2E2A61; font-size: 18px;">Indikator Form</label>
-                                            <input type="text" id="indikator" value="{{ old('indikator') }}" class="form-control" placeholder="Indikator" name="indikator">
+                                            <input type="text" id="indikator" value="{{ $p->indikator }}" class="form-control" placeholder="Indikator" name="indikator">
                                         </div>
                                         <div class="form-group">
                                             <label for="tipe_data" style="font-weight:500; color:#2E2A61; font-size: 18px;">Jenis Data</label>
                                             <select class="form-control" id="tipe_data" name="tipe_data">
-                                                <option value="">-- Jenis Data --</option>
-                                                <option value='datetime'>tanggal dan waktu</option>
-                                                <option value='kondisi'>sesuai/tidak sesuai</option>
-                                                <option value='text'>text</option>
-                                                <option value='rekomendasi'>boolean</option>
+                                                <option value='datetime' {{ strcmp($p->tipe_data, "datetime")==0? 'selected':''; }}>tanggal dan waktu</option>
+                                                <option value='kondisi' {{ strcmp($p->tipe_data, "kondisi")==0? 'selected':''; }}>sesuai/tidak sesuai</option>
+                                                <option value='text' {{ strcmp($p->tipe_data, "text")==0? 'selected':''; }}>text</option>
+                                                <option value='rekomendasi' {{ strcmp($p->tipe_data, "rekomendasi")==0? 'selected':''; }}>boolean</option>
                                             </select>
                                         </div>
+                                        @endforeach
                                         <div class="col-12 d-flex justify-content-end">
                                             <button type="submit" class="btn btn-secondary" style="background-color: #3C5C94" name="submit" value="Simpan Data">Submit</button>
                                         </div>

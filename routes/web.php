@@ -30,6 +30,8 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::get('/master', [App\Http\Controllers\MasterDokumenController::class, 'index'])->name('trader.master_dokumen');
         Route::get('/master/addMaster', [App\Http\Controllers\MasterDokumenController::class, 'master'])->name('trader.addMaster');
         Route::post('/master/addMaster/storeMaster', [App\Http\Controllers\MasterDokumenController::class, 'storeMaster'])->name('trader.storeMaster');
+        Route::get('/master/editMaster/{id_master}', [App\Http\Controllers\MasterDokumenController::class, 'editMaster'])->name('trader.editMaster');
+        Route::post('/master/editMaster/{id_master}/updateMaster', [App\Http\Controllers\MasterDokumenController::class, 'updateMaster'])->name('trader.editMaster');
 
         Route::get('/home/form/{id_ppk}', [App\Http\Controllers\FormController::class, 'Hasil'])->name('trader.hasil_form');
     });
@@ -71,11 +73,15 @@ Route::group(['middleware' => 'revalidate'], function () {
         // Kategori
         Route::get('/admin/kategori', [App\Http\Controllers\KategoriController::class, 'index'])->name('admin.kategori_dokumen');
         Route::get('/admin/kategori/TambahKategori', [App\Http\Controllers\KategoriController::class, 'addKategori'])->name('admin.addKategori');
+        Route::get('/admin/kategori/editKategori/{id_kategori}', [App\Http\Controllers\KategoriController::class, 'editKategori'])->name('admin.editKategori');
+        Route::post('/admin/kategori/editKategori/{id_kategori}/update', [App\Http\Controllers\KategoriController::class, 'updateKategori'])->name('admin.editKategori');
         Route::post('/admin/kategori/TambahKategori/add', [App\Http\Controllers\KategoriController::class, 'storeKategori'])->name('admin.addKategori');
         // Form
         Route::get('/admin/subform', [App\Http\Controllers\SubformController::class, 'index'])->name('admin.master_subform');
         Route::get('/admin/subform/TambahSubform', [App\Http\Controllers\SubformController::class, 'addSubform'])->name('admin.master_subform');
-        Route::post('/admin/subform/TambahSubform/add', [App\Http\Controllers\SubformController::class, 'storeSubform'])->name('admin.master_subform');
+        Route::post('/admin/subform/TambahSubform/add', [App\Http\Controllers\SubformController::class, 'storeSubform'])->name('admin.addSubform');
+        Route::get('/admin/subform/EditSubform/{id_masterSubform}', [App\Http\Controllers\SubformController::class, 'editSubform'])->name('admin.editSubform');
+        Route::post('/admin/subform/EditSubform/{id_masterSubform}/update', [App\Http\Controllers\SubformController::class, 'updateSubform'])->name('admin.editSubform');
 
         //Pemeriksaan Klinis
         Route::get('/admin/pemeriksaan_klinis', [App\Http\Controllers\AdminPKController::class, 'index'])->name('admin.PK-pemeriksaan_klinis');

@@ -20,7 +20,9 @@
             <td>{{ $master->tgl_terbit }}</td>
             <td>{{ $master->status }}</td>
             <td>
-              <a style="margin: 0 3px" class="btn btn-sm btn-secondary" href="">Edit</a>
+              @if($master->status == 'non-Aktif')
+              <a style="margin: 0 3px" class="btn btn-sm btn-secondary" href="/master/editMaster/{{$master->id_master}}">Edit</a>
+              @endif
             </td>
           </tr>
           @endforeach

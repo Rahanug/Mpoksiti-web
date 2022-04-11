@@ -42,16 +42,22 @@ class MasterDokumenController extends Controller
         
         $messages = [
             'required' => ':attribute wajib diisi ',
+            'id_kategori.required' => 'Kategori wajib dipilih',
+            'no_dokumen.required' => 'Nomor dokumen wajib diisi',
+            'tgl_terbit.required' => 'Tanggal terbit diisi',
+            'nm_dokumen.required' => 'Dokumen wajib diunggah',
             'min' => ':attribute harus diisi minimal :min karakter !!!',
             'max' => ':attribute harus diisi maksimal :max karakter !!!',
             'numeric' => ':attribute harus diisi angka !!!',
             'email' => ':attribute harus diisi dalam bentuk email !!!',
+            'nm_dokumen.mimes'=> 'Format dokumen harus berupa pdf!!!'
         ];
 
         $this->validate($request,[
             "id_kategori" => 'required',
             'no_dokumen' => 'required',
             "tgl_terbit" => 'required',
+            'nm_dokumen'=> 'required|mimes:pdf,'
         ],$messages);
 
         $nm_dokumen = $request->file('nm_dokumen');
@@ -76,13 +82,10 @@ class MasterDokumenController extends Controller
         // $master->id_kategori = $request->nm_dokumen;
         // $master->id_trader = Auth::user()->id_trader;
 
-        return redirect('/master');
+        return redirect('/master')->with('success', 'Master dokumen telah ditambahkan!!!');
     }
 
-    public function getIf($id_master){
-        $master = DB::select("SELECT * FROM $this->table WHERE id_master='$id_master'");
-        return $master;
-    }
+    
 
     // Halaman Admin
     public function indexAdmin(Request $request)
@@ -126,7 +129,7 @@ class MasterDokumenController extends Controller
             ]);
         
         
-        return redirect()->back();
+        return redirect()->back()->with('accept', 'Master dokumen telah diterima!!!');;
     }
 
     public function decline($id_master){
@@ -136,22 +139,67 @@ class MasterDokumenController extends Controller
             ]);
         
         
-        return redirect()->back();
+        return redirect()->back()->with('decline', 'Master dokumen telah ditolak!!!');
     }
 
-    public function masterTrader(Request $request)
-    {
-        // $ppkModel = new Ppk();
-        // $kategori = array();
-        // foreach (KategoriDokumen::all() as $item) {
-        //     $kategori[$item->id_kategori] = $item->nama_kategori;
-        // }
-        // $masterDokumenModel = new MasterDokumen();
-        // return view('admin.master_dokumen', [
-        //     "title" => "Dokumen",
-        //     "masters" => $masterDokumenModel->where("id_trader", Auth::user()->id_trader)->where("tipe_dokumen", 1)->get(),
-        //     "kategori" => $kategori,
-        //     "ppks" => $ppkModel->where("id_trader", Auth::user()->id_trader)->get(),
-        // ]);
+
+    public function getIf($id_master){
+        $master = DB::select("SELECT * FROM master_dokumens WHERE id_master='$id_master'");
+        return $master;
+    }
+
+    public function editMaster($id_master)
+    {   
+        return view('trader.editMaster', [
+            "title" => "Edit Order",
+            'editMasters' => $this->getIf($id_master), 
+            "kategori" => KategoriDokumen::all(),
+            "id_master"=> $id_master
+        ]);
+    }
+
+
+
+    public function updateMaster(Request $request, $id_master){
+        
+        $messages = [
+            'required' => ':attribute wajib diisi ',
+            'id_kategori.required' => 'Kategori wajib dipilih',
+            'no_dokumen.required' => 'Nomor dokumen wajib diisi',
+            'tgl_terbit.required' => 'Tanggal terbit diisi',
+            'nm_dokumen.required' => 'Dokumen wajib diunggah',
+            'min' => ':attribute harus diisi minimal :min karakter !!!',
+            'max' => ':attribute harus diisi maksimal :max karakter !!!',
+            'numeric' => ':attribute harus diisi angka !!!',
+            'email' => ':attribute harus diisi dalam bentuk email !!!',
+            'nm_dokumen.mimes'=> 'Format dokumen harus berupa pdf!!!'
+        ];
+
+        $this->validate($request,[
+            "id_kategori" => 'required',
+            'no_dokumen' => 'required',
+            "tgl_terbit" => 'required',
+            'nm_dokumen'=> 'required|mimes:pdf,'
+        ],$messages);
+
+        $nm_dokumen = $request->file('nm_dokumen');
+        $name = $nm_dokumen->getClientOriginalName();
+        $path = 'files';
+        $nm_dokumen->move($path, $name);
+                
+        MasterDokumen::where('id_master', $id_master)->update([
+            'no_dokumen' => $request->no_dokumen,
+            'nm_dokumen'=> $name,
+            "tgl_terbit" => $request->tgl_terbit,
+            "id_kategori" => $request->id_kategori,
+        ]);
+        
+        // $master = new MasterDokumen();
+        // $master->no_dokumen = $request->no_dokumen;
+        // $master->tgl_terbit = $request->tgl_terbit;
+        // $master->id_kategori = $request->nm_dokumen;
+        // $master->id_trader = Auth::user()->id_trader;
+
+        return redirect('/master')->with('info', 'Master dokumen telah terganti!!!');
     }
 }
