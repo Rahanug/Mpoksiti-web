@@ -22,6 +22,7 @@ class CreateJppTable extends Migration
             $table->string('penanggungJawab');
             $table->string('id_kurir')->references('id')->on('kurir');
             $table->string('password');
+            $table->integer('is_active');
         });
     }
 

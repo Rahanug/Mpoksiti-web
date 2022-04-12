@@ -68,7 +68,7 @@
 
         <!-- Nav Item - Pemeriksaan Klinis Virtual-->
         <li class="nav-item">
-            <a class="nav-link {{ $title==='PKVirtual'? 'active' : '' }}" href="{{ route('admin.PK-pemeriksaan_klinis') }}" href="">
+            <a class="nav-link {{ $title==='PKVirtual'? 'active' : '' }}" href="{{ route('admin.PK-pemeriksaan_klinis') }}">
             <i class="fas fa-fw fa-mobile"></i>
             <span>Pemeriksaan Klinis</span></a>
         </li>
@@ -88,8 +88,8 @@
                         font-weight: bold;
                         }
                         </style>
-                    <a class="collapse-item {{ $title==='PKJasper'? 'active' : '' }}" href="{{ route('admin.PK-jasper_management') }}" href="">Konter Jasa Pengiriman</a>
-                    <a class="collapse-item {{ $title==='PKKurir'? 'active' : '' }}" href="">Jenis Kurir</a>
+                    <a class="collapse-item {{ $title==='PKJasper'? 'active' : '' }}" href="{{ route('admin.PK-jasper_management') }}">Konter Jasa Pengiriman</a>
+                    <a class="collapse-item {{ $title==='PKKurir'? 'active' : '' }}" href="{{ route('admin.PK-kurir_management') }}">Jenis Kurir</a>
                 </div>
             </div>
         </li>
