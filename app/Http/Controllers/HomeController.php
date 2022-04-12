@@ -59,7 +59,7 @@ class HomeController extends Controller
         return view('trader.document', [
             "title" => "Unggah Dokumen",
             "ppk" => $ppk,
-            "kategoris" => $kategoriModel->all(),
+            "kategoris" => $kategoriModel->where('status', 1)->get(),
             "dokumens" => $this->getDetailDokumen($id_ppk),
             "masters" => $masterDokumenModel->where("id_trader", Auth::user()->id_trader)->get(),
             "kategoriMaster" => $kategori,
@@ -113,7 +113,9 @@ class HomeController extends Controller
         $dokumens = new MasterDokumen();
         $list_dokumen = $dokumens
                 ->where('status', 'Aktif')
-                ->where('tipe_dokumen', 1)->get();
+                ->where('tipe_dokumen', 1)
+                ->where('id_trader', Auth::user()->id_trader)
+                ->get();
         $result = array();
         foreach ($list_dokumen as $dokumen) {
             $result[$dokumen['id_kategori']] = array();

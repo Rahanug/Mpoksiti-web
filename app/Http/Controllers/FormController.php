@@ -46,10 +46,19 @@ class FormController extends Controller
                     'value'=>$i['value'],
                     'keterangan'=>$i['keterangan']
                 ]);
+                if($i['tipe_data'] == 'rekomendasi'){
+                    if($i['value'] == 'Sesuai'){
+                        Ppk::where('id_ppk', $id_ppk)->update([
+                            "status" => "Persetujuan",
+                        ]);
+                    }else{
+                        Ppk::where('id_ppk', $id_ppk)->update([
+                            "status" => "Ditolak",
+                        ]);
+                    }
+                }
             }
-            Ppk::where('id_ppk', $id_ppk)->update([
-                "status" => "Persetujuan",
-            ]);
+            
             DB::commit();
             return redirect('/admin/stuffing')->with('Success', 'Form telah diisi!!!!!!!!!!!');
         }
@@ -64,6 +73,7 @@ class FormController extends Controller
             $data['value'] = $request->input("input-$j->id_masterSubform-$j->id_subform");
             $data['keterangan'] = $request->input("keterangan-$j->id_masterSubform-$j->id_subform", null);
             $data['idsubform'] = $j->id_subform;
+            $data['tipe_data'] = $j->tipe_data;
 
             if ($j->tipe_data == 'kondisi') {
                 if ($data['value'] == 'Tidak Sesuai') {
@@ -73,7 +83,7 @@ class FormController extends Controller
                     }
                 }
             }
-            else if ($j->tipe_data == 'boolean') {
+            else if ($j->tipe_data == 'rekomendasi') {
                 if (!isset($data['keterangan'])) {
                     throw new Exception('Semua Indikator harus diisi');
                     break;

@@ -80,7 +80,6 @@ class KategoriController extends Controller
         ],$messages);
                 
         KategoriDokumen::where('id_kategori', $id_kategori)->update([
-            "nama_kategori" => $request->nama_kategori,
             'status' => $request->status,
             "instansi_penerbit" => $request->instansi_penerbit,
         ]);

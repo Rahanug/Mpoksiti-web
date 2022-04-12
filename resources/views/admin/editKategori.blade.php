@@ -39,7 +39,7 @@
                                         @foreach($edit as $p)
                                         <div class="form-group">
                                             <label for="nama_kategori" style="font-weight:500; color:#2E2A61; font-size: 18px;">Kategori Dokumen</label>
-                                            <input type="text" id="nama_kategori" value="{{ $p->nama_kategori }}" class="form-control" placeholder="Kategori Dokumen" name="nama_kategori">
+                                            <input type="text" id="nama_kategori" value="{{ $p->nama_kategori }}" class="form-control" placeholder="Kategori Dokumen" name="nama_kategori" disabled>
                                         </div>
                                         <div class="form-group">
                                             <label for="status" style="font-weight:500; color:#2E2A61; font-size: 18px;">Status</label>

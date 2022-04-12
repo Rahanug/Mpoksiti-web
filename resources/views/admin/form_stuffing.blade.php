@@ -45,6 +45,7 @@
                                                 <thead>
                                                     <th scope='col'>Indikator</th>
                                                     <th scope='col'>Keterangan</th>
+                                                    <th></th>
                                                 </thead>
                                                 <tbody>
                                                     @foreach($data as $d)
@@ -84,16 +85,20 @@
                                                         </div>  
                                                         ';
                                                                 break;
-                                                            case 'boolean':
+                                                            case 'rekomendasi':
                                                                 echo '
                                                                 <div class="form-group">
                                                                     <select name="input-' . $d->id_masterSubform . '-' . $d->id_subform . '">
                                                                         <option value="Sesuai">Sesuai</option>
                                                                         <option value="Tidak Sesuai">Tidak Sesuai</option>
                                                                     </select>
+                                                                </div>
+                                                                <td>
+                                                                <div class="form-group">
                                                                     <input type="text" id="" value="' . old("keterangan-' . $d->id_masterSubform . '-' . $d->id_subform . '"). '" class="form-control" placeholder="" name="keterangan-' . $d->id_masterSubform . '-' . $d->id_subform . '">
-                                                                </div>  
-                                                                ';;
+                                                                </div> 
+                                                                </td> 
+                                                                ';
                                                                 break;
                                                         } ?>
                                                     </td>

@@ -75,7 +75,7 @@
                                     case 'text' : 
                                         echo '<td>teks</td>';
                                         break;    
-                                    case 'boolean' : 
+                                    case 'rekomendasi' : 
                                         echo '<td>rekomendasi</td>';
                                         break;    
                                 } ?>

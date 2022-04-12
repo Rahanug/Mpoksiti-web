@@ -47,7 +47,7 @@
                                                 <option value='datetime'>tanggal dan waktu</option>
                                                 <option value='kondisi'>sesuai/tidak sesuai</option>
                                                 <option value='text'>text</option>
-                                                <option value='rekomendasi'>boolean</option>
+                                                <option value='rekomendasi'>rekomendasi</option>
                                             </select>
                                         </div>
                                         <div class="col-12 d-flex justify-content-end">

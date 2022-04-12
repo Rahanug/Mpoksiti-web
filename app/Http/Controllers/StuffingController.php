@@ -58,7 +58,7 @@ class StuffingController extends Controller
         return view('admin.document_stuffing', [
             "title" => "Unggah Dokumen",
             "ppk" => $ppk,
-            "kategoris" => $kategoriModel->all(),
+            "kategoris" => $kategoriModel->where('status', 1)->get(),
             "dokumens" => $this->getDetailDokumen($id_ppk),
             "masters" => $masterDokumenModel->where("id_trader", Auth::user()->id_trader)->get(),
             "kategoriMaster" => $kategori,
