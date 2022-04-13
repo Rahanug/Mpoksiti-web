@@ -21,6 +21,7 @@ class JPPFactory extends Factory
             'penanggungJawab' => $this->faker->name,
             'id_kurir' => $this->faker->randomElement([1, 2, 3, 4]),
             'password' => '$2y$10$wMPua3iytghAjW3nmM.U2u0hUigj80FreoSCzuzBfKhRnDErUHAdO',
+            'is_active' => (1)
         ];
     }
 }

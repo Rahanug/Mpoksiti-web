@@ -6,20 +6,20 @@
 @endsection
 
 @section('content')
-<script>document.title = "Managemen Jasper - Mpok Siti"</script>
+<script>document.title = "Managemen Kurir Jasper - Mpok Siti"</script>
 <main class="col-md-9 ms-sm-auto col-lg-12 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2" style="font-weight:bold; color:#2E2A61;">Managemen Jasa Pengiriman</h1>
+    <h1 class="h2" style="font-weight:bold; color:#2E2A61;">Managemen Kurir Jasper</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
       <div class="btn-group me-2">
         <!--Here is spot for put the button -->
           <div class="input-group mb-3">
-            <button type="button" class="btn btn-secondary" style="font-weight: bold; background-color: #3C5C94" data-toggle="modal" data-target="#newJppModal" >Add New Jasper</button>
+            <button type="button" class="btn btn-secondary" style="font-weight: bold; background-color: #3C5C94" data-toggle="modal" data-target="#newJppModal" >Add New Kurir</button>
             <div class="modal fade" id="newJppModal"tabindex="-1" role="dialog" aria-labelledby="#newJppModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="newJppModalLabel"> Add New Jasper </h5>
+                            <h5 class="modal-title" id="newJppModalLabel"> Add New Kurir </h5>
                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
@@ -28,7 +28,7 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="kode_counter" class="col-form-label">Kode Counter (digunakan untuk login): </label>
+                                <!--<label for="kode_counter" class="col-form-label">Kode Counter (digunakan untuk login): </label>
                                 <input type="text" id="kode_counter" name="kode_counter" class="form-control">
                                 <label for="nama_counter" class="col-form-label">Nama Counter: </label>
                                 <input type="text" id="nama_counter" name="nama_counter" class="form-control">
@@ -46,7 +46,7 @@
                                     @endforeach
                                 </select>
                                 <label for="password" class="col-form-label">Password: </label>
-                                <input type="password" id="password" name="password" class="form-control">
+                                <input type="password" id="password" name="password" class="form-control">-->
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -81,37 +81,28 @@
             <table class="table table-striped" id="tableJPP">
                 <thead>
                 <tr>
-                    <th scope="col">ID JPP</th>
-                    <th scope="col">Kode Counter</th>
-                    <th scope="col">Nama Counter</th>
-                    <th scope="col">Penanggung Jawab</th>
-                    <th scope="col">Latitude</th>
-                    <th scope="col">Longitude</th>
-                    <th scope="col">Kurir</th>
+                    <th scope="col">ID KURIR</th>
+                    <th scope="col">Nama Kurir</th>
+                    <th scope="col">Logo Kurir</th>
                     <th scope="col">Aksi</th>
-                    <th scope="col">Status</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php $count = 0; ?>
-                @foreach ($jpps as $jpp)
+                @foreach ($kurirs as $jpp)
                 <?php $count++; ?>
                 <tr>
                     <td>{{ $jpp->id }}</td>
-                    <td>{{ $jpp->kode_counter }}</td>
-                    <td>{{ $jpp->nama_counter }}</td>
-                    <td>{{ $jpp->penanggungJawab }}</td>
-                    <td>{{ $jpp->latitude }}</td>
-                    <td>{{ $jpp->longitude }}</td>
-                    <td>{{ $jpp->namaKurir}}</td>
+                    <td>{{ $jpp->namaKurir }}</td>
+                    <td>{{ $jpp->namaKurir }}</td>
                     <td>
                         <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark" data-toggle="modal" data-target=<?= '"#updateModal'.$count.'"' ?>>Edit</a>
-                        <!-- modal -->
+                        <!-- modal 
                         <div class="modal fade" id=<?= '"updateModal'.$count.'"' ?> tabindex="-1" role="dialog" aria-labelledby=<?= '"#updateModalLabel'.$count.'"' ?> aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                               <div class="modal-content">
                                   <div class="modal-header">
-                                      <h5 class="modal-title" id=<?= '"#updateModalLabel'.$count.'"' ?>> <?= $jpp->nama_counter?> </h5>
+                                      <h5 class="modal-title" id=<?= '"#updateModalLabel'.$count.'"' ?>> <?= $jpp->namaKurir?> </h5>
                                       <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                           <span aria-hidden="true">×</span>
                                       </button>
@@ -120,26 +111,6 @@
                                   @csrf
                                   <div class="modal-body">
                                       <div class="form-group">
-                                          <input type="hidden" id="id" name="id" value=<?= $jpp->id ?>>
-                                          <label for="kode_counter" class="col-form-label">Kode Counter (digunakan untuk login): </label>
-                                          <input type="text" id="kode_counter" name="kode_counter" class="form-control" value=<?= $jpp->kode_counter?> disabled readonly>
-                                          <label for="nama_counter" class="col-form-label">Nama Counter: </label>
-                                          <input type="text" id="nama_counter" name="nama_counter" class="form-control" value=<?= '"'.$jpp->nama_counter.'"'?>>
-                                          <label for="penanggungJawab" class="col-form-label">Penanggung Jawab: </label>
-                                          <input type="text" id="penanggungJawab" name="penanggungJawab" class="form-control" value=<?= '"'.$jpp->penanggungJawab.'"'?>>
-                                          <label for="latitude" class="col-form-label">Latitude: </label>
-                                          <input type="number" id="latitude" name="latitude" class="form-control" step="any" value=<?= '"'.$jpp->latitude.'"'?>>
-                                          <label for="longitude" class="col-form-label">Longitude: </label>
-                                          <input type="number" id="longitude" name="longitude" class="form-control" step="any" value=<?= '"'.$jpp->longitude.'"'?>>
-                                          <label for="jenis_kurir" class="col-form-label">Kurir: </label>
-                                          <select name="jenis_kurir" id="jenis_kurir" class="form-control">
-                                              <option value=''>Pilih Kurir</option>
-                                              @foreach ($kurirs as $kurir)
-                                              <option value=<?= $kurir->id ?> <?= $jpp->id_kurir==$kurir->id? 'selected' : '' ?>>{{ $kurir->namaKurir }}</option>
-                                              @endforeach
-                                          </select>
-                                          <label for="password" class="col-form-label">Password: </label>
-                                          <input type="password" id="password" name="password" class="form-control" placeholder="(tetap)">
                                       </div>
                                   </div>
                                   <div class="modal-footer">
@@ -148,48 +119,7 @@
                                   </form>
                               </div>
                           </div>
-                        </div>
-
-                        <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark" data-toggle="modal" data-target=<?= '"#mapModal'.$count.'"' ?>>Cek Lokasi</a>
-                        <!-- modal -->
-                        <div class="modal fade" id=<?= '"mapModal'.$count.'"' ?> tabindex="-1" role="dialog" aria-labelledby=<?= '"#mapModalLabel'.$count.'"' ?> aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                              <div class="modal-content">
-                                  <div class="modal-header">
-                                      <h5 class="modal-title" id=<?= '"#mapModalLabel'.$count.'"' ?>>Lokasi <?= $jpp->nama_counter?> </h5>
-                                      <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                          <span aria-hidden="true">×</span>
-                                      </button>
-                                  </div>
-                                  <div class="modal-body">
-                                  <iframe src=<?="https://maps.google.com/maps?q=".$jpp->latitude.",". $jpp->longitude."&z=15&output=embed"?> width="720" height="540" frameborder="0" style="border:0"></iframe>
-                                  </div>
-                                  <div class="modal-footer">
-                                      <button type="submit" class="btn btn-primary">Ubah</button>
-                                  </div>
-                              </div>
-                          </div>
-                        </div>
-
-                        @if ($jpp->is_active == 1)
-                          <td>
-                            <form action="/admin/jasper_management/toggle_jasper" method="POST">
-                              @csrf
-                              <input type="hidden" id="id" name="id" value= <?=$jpp->id?>>
-                              <input type="hidden" id="status" name="status" value='0'>
-                              <button class="btn btn-sm btn-danger">Disable</button>       
-                            </form>
-                          </td>
-                        @else
-                          <td>
-                            <form action="/admin/jasper_management/toggle_jasper" method="POST">
-                              @csrf
-                              <input type="hidden" id="id" name="id" value= <?=$jpp->id?>>
-                              <input type="hidden" id="status" name="status" value='1'>
-                              <button class="btn btn-sm btn-outline-dark">Enable</button>       
-                            </form>
-                          </td>
-                        @endif
+                        </div>-->
                     </td>
                 @endforeach
                 </tbody>
