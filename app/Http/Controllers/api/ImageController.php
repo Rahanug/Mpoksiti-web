@@ -24,8 +24,12 @@ class ImageController extends Controller
         $image->longitude = $request->longitude;
         $image->kd_ikan = $request->kd_ikan;
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('pemeriksaan_klinis');            
-            $image->url_file = $path;
+            //$path = $request->file('image')->move('img/pemeriksaan_klinis');
+            $file_gambar = $request->file('image');
+            $nama_file = $file_gambar->getClientOriginalName();
+            $tujuan_upload = 'img/pemeriksaan_klinis';
+            $file_gambar->move($tujuan_upload, $nama_file);
+            $image->url_file = $nama_file;
         }
         $image->save();        
         return response()->json([

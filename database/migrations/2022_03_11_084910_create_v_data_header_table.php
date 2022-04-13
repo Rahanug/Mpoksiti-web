@@ -22,6 +22,7 @@ class CreateVDataHeaderTable extends Migration
             $table->string('no_aju_ppk');
             $table->integer('id_trader')->unsigned();
             $table->string('nm_trader');
+            $table->string('al_trader');
             $table->date('tgl_ppk');
             $table->string('kd_kegiatan'); //raha=E afif=K
             $table->string('nm_penerima');

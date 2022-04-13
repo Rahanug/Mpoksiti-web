@@ -25,10 +25,23 @@ class AdminPKController extends Controller
                     $join->on('pemeriksaan_klinis.id_ppk', '=', 'data_view.id_ppk');
                 })
                 ->join('jpp', 'jpp.id', '=', 'pemeriksaan_klinis.id_jpp')
+                ->join('kurir', 'kurir.id', '=', 'jpp.id_kurir')
                 ->join('traders', 'data_view.id_trader', '=', 'traders.id_trader')
-                ->select('jpp.*', 'pemeriksaan_klinis.*', 'data_view.*', 'traders.*') //TODO dont select everything
+                ->select('jpp.*', 'pemeriksaan_klinis.*', 'data_view.*', 'traders.*', 'kurir.namaKurir') //TODO dont select everything
                 ->whereNotNull('pemeriksaan_klinis.status_periksa')
                 ->get();
+        foreach ($pks as $data){
+            $data->ikan = DB::connection('sqlsrv2')->select("
+                SELECT kd_ikan, nm_lokal, nm_umum, nm_latin, satuan, jumlah 
+                FROM v_dtl_pelaporan WHERE id_ppk=".(int)$data->id_ppk
+            );
+            foreach ($data->ikan as $ikan){
+                $ikan->images = DB::table('images')
+                    ->select('*')
+                    ->where('kd_ikan', $ikan->kd_ikan)
+                    ->get();
+            }
+        }
         return view('admin.PK-pemeriksaan_klinis', [
             "title"=>"PKVirtual",
             "pks"=>$pks
@@ -62,6 +75,7 @@ class AdminPKController extends Controller
                 'jadwal_periksa' => date('Y-m-d H:i', strtotime($request->jadwalMeet.' '.$request->jamMeet)),
                 'url_periksa' => $request->linkMeet
             ]);
+            
         return redirect('admin/pemeriksaan_klinis')->with('success', 'Jadwal meet telah dikirim untuk ID PPK '.$request->id_ppk);;
     }
 
