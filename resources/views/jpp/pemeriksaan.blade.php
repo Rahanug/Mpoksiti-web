@@ -70,7 +70,119 @@
               <td style="font-weight:regular; color:#2E2A61;"> {{ $jadwal_string }}</td>
               <td style="font-weight:regular; color:#2E2A61;"> {{ $ppk->no_sertifikat }}</td>
               <td>
-                <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Cek PPK</a>
+                <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark" data-toggle="modal" data-target=<?= '"#cekModal'.$count.'"' ?>>Cek PPK</a>
+                <!-- modal cek ppk -->
+                <div class="modal fade" id=<?= '"cekModal'.$count.'"' ?> tabindex="-1" role="dialog" aria-labelledby=<?= '"#cekModalLabel'.$count.'"' ?> aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id=<?= '"#cekModalLabel'.$count.'"' ?>>Cek No PPK <?= $ppk->no_ppk?> </h5>
+                              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">×</span>
+                              </button>
+                          </div>
+                          <div class="modal-body" id=<?= '"cetakPPK'.$count.'"' ?>>
+                            <div class="container-fluid">
+                              <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row justify-content-center h4" style="font-weight:bold;">PPK (DETAIL PENGIRIMAN KOMODITI PERIKANAN)</div>
+                                    <div class="row justify-content-center h5" style="font-weight:bold;">Asperindo-BBKIPM Jakarta I</div>
+                                    <div class="row justify-content-center h5" style="font-weight:bold;">Nomor Aju PPK: {{ $ppk->no_aju_ppk }}</div>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div class="col-8 col-sm-6">
+                                  <div class="row">PENGIRIM: </div>
+                                  <div class="row">NPWP: </div>
+                                  <div class="row">Nama: {{ $ppk->nm_trader }}</div>
+                                  <div class="row">Alamat: {{ $ppk->al_trader }}</div>
+                                </div>
+                                <div class="col-4 col-sm-6">
+                                  <div class="row">PENERIMA: </div>
+                                  <div class="row">Nama: {{ $ppk->nm_penerima }} </div>
+                                  <div class="row">Alamat: {{ $ppk->alamat }} </div>
+                                </div>
+                              </div>
+                              <br>
+                              
+                              <div class="row">
+                                <div class="col-4 col-sm-12">
+                                  <div class="row">JASA PENYELENGGARA POS: </div>
+                                    <div class="row">JPP: {{ $kurir->namaKurir }} </div>
+                                    <div class="row">Counter: {{ Auth::user()->nama_counter }}</div>
+                                </div>
+                              </div>
+                              <br>
+
+                              <div class="row">
+                                <div class="col-4 col-sm-12">
+                                  <div class="row">DETAIL KOMODITI: </div>
+                                  <table class="table">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">No</th>
+                                        <th scope="col">Komoditi</th>
+                                        <th scope="col">Jumlah</th>
+                                        <th scope="col">Satuan</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <?php $countDataIkan=0; ?>
+                                      @foreach ($ppk->ikan as $data_ikan)                                              
+                                      <tr>
+                                        <td><?= ++$countDataIkan ?></td>
+                                        <td>{{ $data_ikan->nm_lokal }}</td>
+                                        <td>{{ $data_ikan->jumlah }}</td>
+                                        <td>{{ $data_ikan->satuan }}</td>
+                                      </tr>
+                                        @endforeach
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-4 col-sm-12">
+                                  <div class="row">DOKUMENTASI: </div>
+                                  <table class="table">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">No</th>
+                                        <th scope="col">Komoditi</th>
+                                        <th scope="col">Dokumentasi</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <?php $countDataIkan=0; ?>
+                                      @foreach ($ppk->ikan as $data_ikan)                                              
+                                      <tr>
+                                        <td>{{ ++$countDataIkan}}</td>
+                                        <td>{{ $data_ikan->nm_lokal }}</td>
+                                        <td>
+                                          @foreach ($data_ikan->images as $image)
+                                          <figure class="figure">
+                                            <img src="/img/pemeriksaan_klinis/<?= $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
+                                            <figcaption class="figure-caption">Lokasi: <?= $image->latitude.','.$image->longitude ?></figcaption>
+                                            <figcaption class="figure-caption">Waktu Upload: <?= $image->updated_at ?></figcaption>
+                                          </figure>
+                                          @endforeach
+                                        </td>
+                                      </tr>
+                                        @endforeach
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                              <button class="btn btn-link" type="button" data-dismiss="modal">Tutup</button>
+                              <button class="btn btn-primary" onclick=<?= 'printPPK("cetakPPK'.$count.'")' ?>>Cetak</button>
+                          </div>
+                      </div>
+                  </div>
+                </div>
                 <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark" data-toggle="modal" data-target=<?= '"#cetakSegel'.$count.'"' ?>>Cetak Segel</a>
                 <!-- modal cetak segel-->
                 <div class="modal fade" id=<?= '"cetakSegel'.$count.'"' ?> tabindex="-1" role="dialog" aria-labelledby=<?= '"#cetakSegelLabel'.$count.'"' ?> aria-hidden="true">
@@ -106,6 +218,7 @@
                                       {{ $ppk->seri }}<br>
                                       {{ $ppk->tgl_ppk }}<br>
                                       {{ $ppk->nm_penerima }}<br>
+                                      {{ $ppk->alamat }}<br>
                                     </td>
                                   </tr>
                                 </table>
@@ -173,5 +286,20 @@
 
       return true;
     }
+    function printPPK(divName) {
+    var mywindow = window.open('', 'PRINT', 'toolbar=1, scrollbars=1, location=1, statusbar=0, menubar=1, resizable=1,height=720,width=1280');
+    mywindow.document.write('<html><head><title>' + document.title + '-' + divName  + '</title>');
+    //bootstrap
+    mywindow.document.write('<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" type="text/css" media="all">');
+    mywindow.document.write('</head><body >');
+    mywindow.document.write(document.getElementById(divName).innerHTML);
+    mywindow.document.write('</body></html>');
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10
+    mywindow.print();
+    mywindow.close();
+
+    return true;
+  }
   </script>
 @endpush

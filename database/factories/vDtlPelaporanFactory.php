@@ -24,7 +24,7 @@ class vDtlPelaporanFactory extends Factory
             'nm_umum' => ('nm_umum'),
             'nm_latin' => ('nm_latin'),
             'jumlah' => $this->faker->randomDigit,
-            'satuan' => $this->faker->randomDigit,
+            'satuan' => $this->faker->randomElement(['ekor', 'kilo', 'tambak']),
             'hscode' => ('test'),
             'no_urut_hs' => ('test'),
             'kd_tarif' => ('test'),
