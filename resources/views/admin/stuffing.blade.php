@@ -46,7 +46,7 @@
                   <td>{{ $ppk->no_aju_ppk }}</td>
                   <td>{{ $ppk->nm_penerima}}</td>
                   <td>{{ $ppk->negara_penerima}}</td>
-                  <td>{{ $ppk->jadwal_periksa}}</td>
+                  <td>{{ date('Y-m-d H:i A', strtotime($ppk->jadwal_periksa))}}</td>
                   <td>{{ $ppk->url_periksa}}</td>
                   <td style="font-weight: bold">{{ ucfirst($ppk->status)}}</td>
                   <td>

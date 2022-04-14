@@ -20,6 +20,8 @@ class CreateTablePPK extends Migration
             $table->datetime('jadwal_periksa')->nullable();
             $table->string('url_periksa')->nullable();
             $table->string('deskripsi')->nullable();
+            $table->string('no_izin')->nullable();
+            $table->string('tgl_izin')->nullable();
             
         });
     }

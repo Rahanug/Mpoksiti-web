@@ -17,6 +17,8 @@ class Ppk extends Model
         'id_trader',
         'jadwal_periksa',
         'url_periksa',
+        'no_izin',
+        'tgl_izin',
 
     ];
     protected $dates = ['jadwal_periksa'];

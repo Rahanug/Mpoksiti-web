@@ -46,5 +46,21 @@
         document.getElementById("detail").innerText = "Value baru"
         }
       }
+
+      function printDiv(divName) {
+      var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+      mywindow.document.write('<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" type="text/css" media="all">');
+      mywindow.document.write('<html><head><title>' + 'Hasil Stuffing Virtual'  + '</title>');
+      mywindow.document.write('</head><body >');
+      mywindow.document.write('<h1>' + 'Hasil Stuffing Virtual'  + '</h1>');
+      mywindow.document.write(document.getElementById(divName).innerHTML);
+      mywindow.document.write('</body></html>');
+      mywindow.document.close(); // necessary for IE >= 10
+      mywindow.focus(); // necessary for IE >= 10*/
+      mywindow.print();
+      mywindow.close();
+
+      return true;
+    }
   </script>
 @endpush

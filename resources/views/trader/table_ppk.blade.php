@@ -22,8 +22,10 @@
         <td>{{ $ppk->negara_penerima}}</td>
         @if($ppk->status == "Penjadwalan")
         <td><a style="margin: 0 3px" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ajukanModal-{{$ppk->id_ppk}}">Ajukan</a></td>
+        @elseif($ppk->jadwal_periksa == "")
+        <td></td>
         @else
-        <td>{{ $ppk->jadwal_periksa}}</td>
+        <td>{{ date('Y-m-d H:i A', strtotime($ppk->jadwal_periksa))}}</td>
         @endif
         <td>{{ $ppk->url_periksa}}</td>
         <td style="font-weight: bold">{{ ucfirst($ppk->status)}}</td>
@@ -36,9 +38,70 @@
           <a style="margin: 0 3px" class="btn btn-sm btn-outline-dark">Cetak HC</a>
           @endif
           @if ($ppk->status == "Persetujuan")
-          <a style="margin: 0 3px" class="btn btn-sm btn-info" href="/home/form/{{$ppk->id_ppk}}">Hasil</a>
+          <a style="margin: 0 3px" class="btn btn-sm btn-info" data-toggle="modal" data-target="#hasilModal-{{$ppk->id_ppk}}">Hasil</a>
+          
+          <!-- Modal Hasil -->
+          <div class="modal fade" id="hasilModal-{{$ppk->id_ppk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Hasil Pemeriksaan Virtual</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <main class="justify-content-md-center-lg-10 px-md-2">
+                    <div class="chartjs-size-monitor">
+                      <div class="chartjs-size-monitor-expand">
+                        <div class=""></div>
+                      </div>
+                      <div class="chartjs-size-monitor-shrink">
+                        <div class=""></div>
+                      </div>
+                    </div>
+                    <section id="multiple-column-form">
+                      <div class="row match-height">
+                        <div class="col-12">
+                          <div class="card">
+                            <div class="card-content">
+                              <div class="card-body">
+                                <div class="table-responsive" id="tableHasil-{{$ppk->id_ppk}}">
+                                  <table class="table table-bordered">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">Indikator</th>
+                                        <th scope="col">Hasil</th>
+                                        <th scope="col">Keterangan</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      @foreach ($ppk->subform as $f)
+                                      <tr>
+                                        <td>{{ $master[$f->id_masterSubform] }}</td>
+                                        <td>{{ $f->value }}</td>
+                                        <td>{{ $f->keterangan }}</td>
+                                      </tr>
+                                      @endforeach
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  </main>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-link" type="button" data-dismiss="modal">Tutup</button>
+                  <button class="btn btn-primary" onclick=<?= 'printDiv("tableHasil-' . $ppk->id_ppk . '")' ?>>Cetak</button>
+                </div>
+              </div>
+            </div>
+          </div>
           @endif
-          <a style="margin: 0 3px" class="btn btn-sm btn-secondary" id="detail">Detail</a>
         </td>
       </tr>
       <!-- Ajukan Tanggal Modal -->
@@ -82,7 +145,7 @@
                                   @endif
                                   <div class="form-group">
                                     <label for="jadwal_periksa" style="font-weight:500; color:#2E2A61; font-size: 18px;">Jadwal</label>
-                                    <input type="datetime-local" id="jadwal_periksa" value="{{ date('Y-m-d\TH:i', strtotime($ppk->jadwal_periksa))}}" class="form-control" placeholder="Jadwal" name="jadwal_periksa">
+                                    <input type="datetime-local" id="jadwal_periksa" value="{{ date('Y-m-d H:i A', strtotime($ppk->jadwal_periksa))}}" class="form-control" placeholder="Jadwal" name="jadwal_periksa">
                                   </div>
                                 </div>
                                 <div class="col-12 d-flex justify-content-end">

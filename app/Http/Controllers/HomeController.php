@@ -12,11 +12,18 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Models\vDataHeader;
+use App\Models\MasterSubform;
+use App\Models\Subform;
 
 class HomeController extends Controller
 {
     public function index(Request $request)
     {
+        $id_ppk = $request->input('id_ppk');
+        $master = array();
+        foreach (MasterSubform::all() as $item) {
+            $master[$item->id_masterSubform] = $item->indikator;
+        }
         $trader = array();
         foreach (Trader::all() as $item) {
             $trader[$item->id_trader] = $item->nm_trader;
@@ -24,16 +31,23 @@ class HomeController extends Controller
         $ppks = new PpkController();
         $ppkModel = new Ppk();
         $vdataHeader = new vDataHeader();
-        $dbView = DB::connection('sqlsrv')->getDatabaseName().'.dbo';
-        return view('trader.home', [
-            "title" => "Dashboard",
-            // "ppks" => $ppkModel->where("id_trader", Auth::user()->id_trader)->get(),
-            "ppks" => $vdataHeader
+        $dbView = DB::connection('sqlsrv')->getDatabaseName() . '.dbo';
+        $viewPpk = $vdataHeader
             ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', "ppks.id_ppk")
             ->where('v_data_header.kd_kegiatan', 'E')
             ->where("v_data_header.id_trader", Auth::user()->id_trader)
-            ->select('ppks.*', 'v_data_header.*')->get(),
+            ->select('ppks.*', 'v_data_header.*')->get();
+        foreach ($viewPpk as $data) {
+            $data->subform = Subform::rightJoin("$dbView.ppks as ppks", "subform.id_ppk", "ppks.id_ppk")
+                ->select("ppks.*", "subform.*")
+                ->where("subform.id_ppk", $data->id_ppk)
+                ->get();
+        }
+        return view('trader.home', [
+            "title" => "Dashboard",
+            "ppks" => $viewPpk,
             "trader" => $trader,
+            "master" => $master,
         ]);
     }
 
@@ -41,8 +55,8 @@ class HomeController extends Controller
     {
         $ppks = new PpkController();
         $ppk = $ppks->getIf($id_ppk)[0];
-        $dbView = DB::connection('sqlsrv2')->getDatabaseName().'.dbo';
-        
+        $dbView = DB::connection('sqlsrv2')->getDatabaseName() . '.dbo';
+
         $dokumens = new Dokumen();
         $kategoriModel = new KategoriDokumen();
         // $dokumen = $dokumens->getIf($id_dokumen)[0];
@@ -54,7 +68,7 @@ class HomeController extends Controller
         foreach (KategoriDokumen::all() as $item) {
             $kategori[$item->id_kategori] = $item->nama_kategori;
         }
-        $dbView = DB::connection('sqlsrv2')->getDatabaseName().'.dbo';
+        $dbView = DB::connection('sqlsrv2')->getDatabaseName() . '.dbo';
         $masterDokumenModel = new MasterDokumen();
         return view('trader.document', [
             "title" => "Unggah Dokumen",
@@ -64,7 +78,7 @@ class HomeController extends Controller
             "masters" => $masterDokumenModel->where("id_trader", Auth::user()->id_trader)->get(),
             "kategoriMaster" => $kategori,
             "masterDokumens" => $this->getMasterDokumen(),
-            "id_ppk"=>$id_ppk,
+            "id_ppk" => $id_ppk,
             // "delDokumen"=> $dokumens
         ]);
         // echo json_encode( [
@@ -96,8 +110,8 @@ class HomeController extends Controller
     {
         $dokumens = new Dokumen();
         $list_dokumen = $dokumens->where('id_ppk', $id_ppk)
-        ->join('master_dokumens', 'dokumens.id_master', '=', 'master_dokumens.id_master')
-        ->get();
+            ->join('master_dokumens', 'dokumens.id_master', '=', 'master_dokumens.id_master')
+            ->get();
         $result = array();
         foreach ($list_dokumen as $dokumen) {
             $result[$dokumen['id_kategori']] = array('nm_dokumen' => $dokumen['nm_dokumen']);
@@ -109,13 +123,14 @@ class HomeController extends Controller
     }
 
 
-    private function getMasterDokumen(){
+    private function getMasterDokumen()
+    {
         $dokumens = new MasterDokumen();
         $list_dokumen = $dokumens
-                ->where('status', 'Aktif')
-                ->where('tipe_dokumen', 1)
-                ->where('id_trader', Auth::user()->id_trader)
-                ->get();
+            ->where('status', 'Aktif')
+            ->where('tipe_dokumen', 1)
+            ->where('id_trader', Auth::user()->id_trader)
+            ->get();
         $result = array();
         foreach ($list_dokumen as $dokumen) {
             $result[$dokumen['id_kategori']] = array();
@@ -133,8 +148,9 @@ class HomeController extends Controller
     }
 
     // Store Upload Dokumen
-    public function storeDokumen(Request $request){
-        
+    public function storeDokumen(Request $request)
+    {
+
         $messages = [
             'required' => ':attribute wajib diisi ',
             'min' => ':attribute harus diisi minimal :min karakter !!!',
@@ -143,35 +159,35 @@ class HomeController extends Controller
             'email' => ':attribute harus diisi dalam bentuk email !!!',
         ];
 
-        $this->validate($request,[
+        $this->validate($request, [
             "id_kategori" => 'required',
             'no_dokumen' => 'required',
             "tgl_terbit" => 'required',
-        ],$messages);
+        ], $messages);
 
         $nm_dokumen = $request->file('nm_dokumen');
         $name = $nm_dokumen->getClientOriginalName();
         $path = 'files';
         $nm_dokumen->move($path, $name);
-        
+
         DB::beginTransaction();
         $id = MasterDokumen::insertGetId([
             'no_dokumen' => $request->no_dokumen,
-            'nm_dokumen'=> $name,
+            'nm_dokumen' => $name,
             "tgl_terbit" => $request->tgl_terbit,
-            "tgl_expired" =>Carbon::createFromFormat('Y-m-d', $request->tgl_terbit)->addMonth(),
+            "tgl_expired" => Carbon::createFromFormat('Y-m-d', $request->tgl_terbit)->addMonth(),
             "status" => "Aktif",
             "tipe_dokumen" => 0,
             "id_kategori" => $request->id_kategori,
             "id_trader" => Auth::user()->id_trader,
         ]);
         Dokumen::create([
-            'id_master'=> $id,
-            'id_ppk'=> $request->input('id_ppk'),
+            'id_master' => $id,
+            'id_ppk' => $request->input('id_ppk'),
         ]);
         Ppk::updateOrCreate([
-        'id_ppk'=> $request->input('id_ppk'),
-        'status'=> 'verifikasi'
+            'id_ppk' => $request->input('id_ppk'),
+            'status' => 'verifikasi'
         ]);
         DB::commit();
         // $master = new MasterDokumen();
@@ -216,22 +232,28 @@ class HomeController extends Controller
     // }
 
 
-    public function pilihMaster(Request $request){
+    public function pilihMaster(Request $request)
+    {
         $id_master = $request->input('id_master');
         $id_ppk = $request->input('id_ppk');
 
-        if(isset($id_master) && isset($id_ppk)){
+        if (isset($id_master) && isset($id_ppk)) {
+            DB::beginTransaction();
             Dokumen::insert([
-                'id_ppk'=> $id_ppk,
-                'id_master'=>$id_master,
+                'id_ppk' => $id_ppk,
+                'id_master' => $id_master,
             ]);
-            echo json_encode([
-                'error'=>false
+            Ppk::updateOrCreate([
+                'id_ppk' => $request->input('id_ppk'),
+                'status' => 'verifikasi'
             ]);
-        }
-        else{
+            DB::commit();
             echo json_encode([
-                'error'=>true
+                'error' => false
+            ]);
+        } else {
+            echo json_encode([
+                'error' => true
             ]);
         }
         // echo json_encode([
@@ -241,11 +263,12 @@ class HomeController extends Controller
         // ]);
     }
 
-    public function previewDokumen(Request $request, $id_ppk, $id_dokumen){
+    public function previewDokumen(Request $request, $id_ppk, $id_dokumen)
+    {
         $dokumens = new Dokumen();
         $list_dokumen = $dokumens->where('id_ppk', $id_ppk)
-        ->join('master_dokumens', 'dokumens.id_master', '=', 'master_dokumens.id_master')
-        ->get();
+            ->join('master_dokumens', 'dokumens.id_master', '=', 'master_dokumens.id_master')
+            ->get();
         $result = array();
         foreach ($list_dokumen as $dokumen) {
             $result[$dokumen['id_kategori']] = array('nm_dokumen' => $dokumen['nm_dokumen']);
@@ -259,8 +282,9 @@ class HomeController extends Controller
         // }
     }
 
-    public function deleteDokumen($id_ppk, $id_dokumen){
-        if (Dokumen::where('id_dokumen', $id_dokumen)->delete()){
+    public function deleteDokumen($id_ppk, $id_dokumen)
+    {
+        if (Dokumen::where('id_dokumen', $id_dokumen)->delete()) {
             return redirect()->back();
         }
         echo $id_dokumen;
@@ -271,15 +295,14 @@ class HomeController extends Controller
         return Carbon::parse($value)->format('Y-m-d\TH:i');
     }
 
-    public function ajukanTanggal(Request $request, $id_ppk){
+    public function ajukanTanggal(Request $request, $id_ppk)
+    {
         $now = date('Y-m-d H:i');
         Ppk::where('id_ppk', $id_ppk)->update([
-            'status'=>'Menunggu',
-            'jadwal_periksa'=> date('Y-m-d H:i', strtotime($request->jadwal_periksa)),
+            'status' => 'Menunggu',
+            'jadwal_periksa' => date('Y-m-d H:i', strtotime($request->jadwal_periksa)),
             // Carbon::createFromFormat('Y-m-dTHH:MI:SS', $request->jadwal_periksa)->get($request->jadwal_periksa),
         ]);
         return redirect()->back();
     }
-
-    
 }
