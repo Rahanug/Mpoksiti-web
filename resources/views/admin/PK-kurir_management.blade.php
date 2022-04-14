@@ -24,29 +24,12 @@
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <form id="newJPPForm" action="/admin/jasper_management/add_jasper" method="POST">
+                        <form id="newJPPForm" action="/admin/kurir_management/add_kurir" method="POST">
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                <!--<label for="kode_counter" class="col-form-label">Kode Counter (digunakan untuk login): </label>
-                                <input type="text" id="kode_counter" name="kode_counter" class="form-control">
-                                <label for="nama_counter" class="col-form-label">Nama Counter: </label>
-                                <input type="text" id="nama_counter" name="nama_counter" class="form-control">
-                                <label for="penanggungJawab" class="col-form-label">Penanggung Jawab: </label>
-                                <input type="text" id="penanggungJawab" name="penanggungJawab" class="form-control">
-                                <label for="latitude" class="col-form-label">Latitude: </label>
-                                <input type="number" id="latitude" name="latitude" class="form-control" step="any">
-                                <label for="longitude" class="col-form-label">Longitude: </label>
-                                <input type="number" id="longitude" name="longitude" class="form-control" step="any">
-                                <label for="jenis_kurir" class="col-form-label">Kurir: </label>
-                                <select name="jenis_kurir" id="jenis_kurir" class="form-control">
-                                    <option value='' selected>Pilih Kurir</option>
-                                    @foreach ($kurirs as $kurir)
-                                    <option value=<?= $kurir->id ?>>{{ $kurir->namaKurir }}</option>
-                                    @endforeach
-                                </select>
-                                <label for="password" class="col-form-label">Password: </label>
-                                <input type="password" id="password" name="password" class="form-control">-->
+                              <label for="nama_kurir" class="col-form-label">Nama JPP/Kurir: </label>
+                              <input type="text" id="nama_kurir" name="nama_kurir" class="form-control">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -83,7 +66,7 @@
                 <tr>
                     <th scope="col">ID KURIR</th>
                     <th scope="col">Nama Kurir</th>
-                    <th scope="col">Logo Kurir</th>
+                    <!--<th scope="col">Logo Kurir</th>-->
                     <th scope="col">Aksi</th>
                 </tr>
                 </thead>
@@ -94,10 +77,10 @@
                 <tr>
                     <td>{{ $jpp->id }}</td>
                     <td>{{ $jpp->namaKurir }}</td>
-                    <td>{{ $jpp->namaKurir }}</td>
+                    <!--<td>{{ $jpp->namaKurir }}</td>-->
                     <td>
                         <a href="" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark" data-toggle="modal" data-target=<?= '"#updateModal'.$count.'"' ?>>Edit</a>
-                        <!-- modal 
+                        <!-- modal -->
                         <div class="modal fade" id=<?= '"updateModal'.$count.'"' ?> tabindex="-1" role="dialog" aria-labelledby=<?= '"#updateModalLabel'.$count.'"' ?> aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                               <div class="modal-content">
@@ -107,11 +90,14 @@
                                           <span aria-hidden="true">×</span>
                                       </button>
                                   </div>
-                                  <form id=<?= '"updateJPPForm'.$count.'"' ?> action="/admin/jasper_management/update_jasper" method="POST">
+                                  <form id=<?= '"updateJPPForm'.$count.'"' ?> action="/admin/kurir_management/update_kurir" method="POST">
                                   @csrf
                                   <div class="modal-body">
-                                      <div class="form-group">
-                                      </div>
+                                    <div class="form-group">
+                                      <input type="hidden" id="id" name="id" value="{{ $jpp->id }}">
+                                      <label for="nama_kurir" class="col-form-label">Nama JPP/Kurir: </label>
+                                      <input type="text" id="nama_kurir" name="nama_kurir" class="form-control" value="{{ $jpp->namaKurir }}">
+                                    </div>
                                   </div>
                                   <div class="modal-footer">
                                       <button type="submit" class="btn btn-primary">Ubah</button>
@@ -119,7 +105,7 @@
                                   </form>
                               </div>
                           </div>
-                        </div>-->
+                        </div>
                     </td>
                 @endforeach
                 </tbody>

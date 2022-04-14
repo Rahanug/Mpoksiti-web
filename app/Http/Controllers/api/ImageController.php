@@ -24,10 +24,18 @@ class ImageController extends Controller
         $image->longitude = $request->longitude;
         $image->kd_ikan = $request->kd_ikan;
         if ($request->hasFile('image')) {
-            //$path = $request->file('image')->move('img/pemeriksaan_klinis');
             $file_gambar = $request->file('image');
-            $nama_file = $file_gambar->getClientOriginalName();
             $tujuan_upload = 'img/pemeriksaan_klinis';
+            if ($request->is_video == '1'){
+                $nama_file = 'video-'.$file_gambar->getClientOriginalName();
+                if ($request->hasFile('thumb')) {
+                    $file_thumb = $request->file('thumb');
+                    $nama_thumb = "thumb-".$nama_file;
+                    $file_thumb->move($tujuan_upload, $nama_thumb);
+                }
+            }else{
+                $nama_file = 'image-'.$file_gambar->getClientOriginalName();
+            }
             $file_gambar->move($tujuan_upload, $nama_file);
             $image->url_file = $nama_file;
         }

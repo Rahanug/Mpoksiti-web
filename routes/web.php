@@ -92,6 +92,8 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::post('/admin/jasper_management/update_jasper', [App\Http\Controllers\AdminJPPController::class, 'updateJPP']);
         Route::post('/admin/jasper_management/toggle_jasper', [App\Http\Controllers\AdminJPPController::class, 'toggleJPP']);
         Route::get('/admin/kurir_management', [App\Http\Controllers\AdminJPPController::class, 'kurir'])->name('admin.PK-kurir_management');
+        Route::post('/admin/kurir_management/add_kurir', [App\Http\Controllers\AdminJPPController::class, 'addKurir']);
+        Route::post('/admin/kurir_management/update_kurir', [App\Http\Controllers\AdminJPPController::class, 'updateKurir']);
     });
     Route::get('/loginadmin', [\App\Http\Controllers\LoginAdminController::class, 'formLogin'])->name('loginadmin');
     Route::post('/loginadmin', [\App\Http\Controllers\LoginAdminController::class, 'loginAdmin'])->name('loginadmin');

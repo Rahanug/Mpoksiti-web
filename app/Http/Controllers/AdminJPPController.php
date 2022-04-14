@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JenisKurir;
 use Illuminate\Http\Request;
 use App\Models\Jpp;
 use Exception;
@@ -170,5 +171,54 @@ class AdminJPPController extends Controller
             "title"=>"PKKurir",
             "kurirs"=>$kurirs
         ]);
+    }
+
+    public function addKurir(Request $request) {
+        $messages = [
+            'required' => ':attribute wajib diisi ',
+        ];
+        
+        $validator = $request->validate([
+            'nama_kurir' => 'required'
+        ], $messages);
+
+        if($validator==false){
+            return redirect('admin/kurir_management');
+        }
+
+        try {
+            JenisKurir::insert([
+                'namaKurir' => $request->nama_kurir
+            ]);
+        } catch (Exception){
+            return redirect('admin/kurirr_management')->withErrors(['JPP/Kurir '.$request->nama_kurir.' gagal ditambahkan']);
+        }
+        return redirect('admin/kurir_management')->with('success', 'JPP/Kurir '.$request->nama_kurir.' telah ditambahkan');
+    }
+
+    public function updateKurir(Request $request) {
+        $messages = [
+            'required' => ':attribute wajib diisi ',
+        ];
+        
+        $validator = $request->validate([
+            'id' => 'required',
+            'nama_kurir' => 'required'
+        ], $messages);
+
+        if($validator==false){
+            return redirect('admin/kurir_management');
+        }
+
+        try {
+            DB::table('kurir')
+            ->where('id', $request->id)
+            ->update([
+                'namaKurir' => $request->nama_kurir,
+            ]);
+        } catch (Exception){
+            return redirect('admin/kurir_management')->withErrors(['JPP/Kurir gagal diubah']);
+        }
+        return redirect('admin/kurir_management')->with('success', 'JPP/Kurir berhasil diubah');
     }
 }
