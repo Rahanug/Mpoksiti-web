@@ -162,8 +162,22 @@
                                         <td>
                                           @foreach ($data_ikan->images as $image)
                                           <figure class="figure">
+                                            <?php
+                                              $str = explode("-", $image->url_file);
+                                            ?>
+                                            @if ($str[0] == 'video')
+                                            <a href="/img/pemeriksaan_klinis/<?= $image->url_file ?>" target="_blank">
+                                              <i class="fas fa-play fa-3x" style="
+                                                top: 50%;
+                                                left: 50%;
+                                                position: absolute;
+                                                transform: translate(-50%, -50%);">
+                                              </i>
+                                            </a>
+                                            <img src="/img/pemeriksaan_klinis/<?= 'thumb-'.$image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
+                                            @else
                                             <img src="/img/pemeriksaan_klinis/<?= $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
-                                            <figcaption class="figure-caption">Lokasi: <?= $image->latitude.','.$image->longitude ?></figcaption>
+                                            @endif<figcaption class="figure-caption">Lokasi: <?= $image->latitude.','.$image->longitude ?></figcaption>
                                             <figcaption class="figure-caption">Waktu Upload: <?= $image->updated_at ?></figcaption>
                                           </figure>
                                           @endforeach
