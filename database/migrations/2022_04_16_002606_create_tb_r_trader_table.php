@@ -15,12 +15,12 @@ class CreateTbRTraderTable extends Migration
     {
         $this->down();
         Schema::connection('sqlsrv2')->create('tb_r_trader', function (Blueprint $table) {
-            $table->integer('id_trader');
+            $table->integer('id_trader')->unsigned();
             $table->string('nm_trader');
             $table->string('al_trader');
             $table->string('kt_trader');
             $table->string('kd_negara');
-            $table->integer('npwp', 16);
+            $table->bigInteger('npwp');
             $table->string('no_ktp');
             $table->string('no_izin');
             $table->string('email');

@@ -24,7 +24,7 @@
                                 @if ($message = Session::get('error'))
                                     <div style="color: rgb(136, 25, 25); font-weight: bold; padding: 3px 3px"> {{ $message }}</div>
                                 @endif
-                                <form method="POST" action="{{ route('login') }}" class="user">
+                                <form method="POST" action="{{ route('login') }}" class="admin">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                                     <div class="form-group">
@@ -40,6 +40,19 @@
                                         </button>
                                     </div>
                                 </form>
+                                @if (Route::has('password.request'))
+                                    <div class="text-center">
+                                        <a class="small" href="{{ route('password.request') }}">
+                                            Forgot Password
+                                        </a>
+                                    </div>
+                                @endif
+
+                                @if (Route::has('register'))
+                                    <div class="text-center">
+                                        <a class="small" href="{{ route('register') }}">Create An Account</a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

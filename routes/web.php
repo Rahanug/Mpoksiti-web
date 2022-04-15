@@ -38,7 +38,7 @@ Route::group(['middleware' => 'revalidate'], function () {
     });
     // Login untuk trader
     Route::get('/', [\App\Http\Controllers\LoginController::class, 'formLogin'])->name('login');
-    Route::post('/', [\App\Http\Controllers\LoginController::class, 'login'])->name('login');
+    Route::post('/login', [\App\Http\Controllers\LoginController::class, 'login'])->name('login');
     Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
 
     //login untuk admin

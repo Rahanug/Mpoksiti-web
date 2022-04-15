@@ -1,4 +1,4 @@
-@extends('layouts.trader')
+@extends('layouts.cetak')
 
 @section('css')
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">

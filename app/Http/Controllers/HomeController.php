@@ -333,12 +333,20 @@ class HomeController extends Controller
             "trader"=> $trader
             
         ];
+        // $pdf = PDF::loadView('trader.cetakHC', [
+        //     "title" => "Dashboard",
+        //     "ppks" => $viewPpk,
+        //     "trader" => $trader,
+        //     "master" => $master,
+        //     "trader"=> $trader
+        // ])->setOptions(['defaultFont' => 'sans-serif']);
+        // return $pdf->stream();
         return view('trader.cetakHC', [
-            "title" => "Dashboard",
-            "ppks" => $viewPpk,
-            "trader" => $trader,
-            "master" => $master,
-            "trader"=> $trader
+                "title" => "Dashboard",
+                "ppks" => $viewPpk,
+                "trader" => $trader,
+                "master" => $master,
+                "trader"=> $trader
         ]);
     }
 }
