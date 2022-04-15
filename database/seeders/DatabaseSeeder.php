@@ -3,17 +3,15 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
-use App\Models\Jpp;
 use App\Models\JenisKurir;
-use App\Models\Menu;
-use App\Models\Trader;
-use App\Models\Ppk;
+use App\Models\Jpp;
 use App\Models\KategoriDokumen;
+use App\Models\Menu;
+use App\Models\tbRTrader;
+use App\Models\Trader;
+use App\Models\trMstPelaporan;
 use App\Models\vDataHeader;
 use App\Models\vDtlPelaporan;
-use App\Models\FormModel;
-use App\Models\HasilFormModel;
-use App\Models\trMstPelaporan;
 use App\Models\vForQr;
 use Illuminate\Database\Seeder;
 
@@ -39,6 +37,7 @@ class DatabaseSeeder extends Seeder
         vForQr::factory(20)->create();
         trMstPelaporan::factory(20)->create();
         vDtlPelaporan::factory(50)->create();
+        tbRTrader::factory(10)->create();
         // FormModel::factory(5)->create();
     }
 }
