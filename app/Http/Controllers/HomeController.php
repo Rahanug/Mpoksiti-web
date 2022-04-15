@@ -305,4 +305,39 @@ class HomeController extends Controller
         ]);
         return redirect()->back();
     }
+
+
+    public function cetakHC(Request $request, $id_ppk)
+    {
+        $master = array();
+        foreach (MasterSubform::all() as $item) {
+            $master[$item->id_masterSubform] = $item->indikator;
+        }
+        $trader = array();
+        foreach (Trader::all() as $item) {
+            $trader[$item->id_trader] = $item->nm_trader;
+        }
+        $vdataHeader = new vDataHeader();
+        $dbView = DB::connection('sqlsrv')->getDatabaseName() . '.dbo';
+        $viewPpk = $vdataHeader
+            ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', "ppks.id_ppk")
+            ->leftJoin("$dbView.subform as subform", 'v_data_header.id_ppk', '=', "subform.id_ppk")
+            ->where("v_data_header.id_ppk", $id_ppk)
+            ->select('ppks.*', 'v_data_header.*', 'subform.*')->get();
+        $tanggal = $vdataHeader
+            ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', "ppks.id_ppk")
+            ->leftJoin("$dbView.subform as subform", 'v_data_header.id_ppk', '=', "subform.id_ppk")
+            ->where("v_data_header.id_ppk", $id_ppk)
+            ->where('id_masterSubform', 1)
+            ->select('subform.id_masterSubform')->get('value'); 
+        return view('trader.cetakHC', [
+            "title" => "Dashboard",
+            "ppks" => $viewPpk,
+            "trader" => $trader,
+            "master" => $master,
+            "tanggal"=> $tanggal,
+            "trader"=> $trader
+            
+        ]);
+    }
 }

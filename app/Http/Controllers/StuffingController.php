@@ -202,4 +202,17 @@ class StuffingController extends Controller
 
         return redirect('/admin/stuffing')->with('error', 'Jadwal tidak disetujui!');
     }
+
+    public function izin(Request $request, $id_ppk)
+    {
+        // $id_ppk = $request->input('id_ppk');
+        Ppk::where('id_ppk', $id_ppk)->update([
+            "status" => "Cetak HC",
+            "no_izin" => $request->no_izin,
+            "tgl_izin"=> date('Y-m-d H:i', strtotime($request->tgl_izin)),
+        ]);
+
+
+        return redirect('/admin/stuffing')->with('success', "PPK $id_ppk telah disetujui!");
+    }
 }
