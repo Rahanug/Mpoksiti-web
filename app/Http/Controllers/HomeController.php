@@ -14,6 +14,7 @@ use Illuminate\Support\Carbon;
 use App\Models\vDataHeader;
 use App\Models\MasterSubform;
 use App\Models\Subform;
+use PDF;
 
 class HomeController extends Controller
 {
@@ -290,10 +291,10 @@ class HomeController extends Controller
         echo $id_dokumen;
     }
 
-    public function getDateStartAttribute($value)
-    {
-        return Carbon::parse($value)->format('Y-m-d\TH:i');
-    }
+    // public function getDateStartAttribute($value)
+    // {
+    //     return Carbon::parse($value)->format('Y-m-d\TH:i');
+    // }
 
     public function ajukanTanggal(Request $request, $id_ppk)
     {
@@ -324,20 +325,20 @@ class HomeController extends Controller
             ->leftJoin("$dbView.subform as subform", 'v_data_header.id_ppk', '=', "subform.id_ppk")
             ->where("v_data_header.id_ppk", $id_ppk)
             ->select('ppks.*', 'v_data_header.*', 'subform.*')->get();
-        $tanggal = $vdataHeader
-            ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', "ppks.id_ppk")
-            ->leftJoin("$dbView.subform as subform", 'v_data_header.id_ppk', '=', "subform.id_ppk")
-            ->where("v_data_header.id_ppk", $id_ppk)
-            ->where('id_masterSubform', 1)
-            ->select('subform.id_masterSubform')->get('value'); 
+        $data = [
+            "title" => "Dashboard",
+            "ppks" => $viewPpk,
+            "trader" => $trader,
+            "master" => $master,
+            "trader"=> $trader
+            
+        ];
         return view('trader.cetakHC', [
             "title" => "Dashboard",
             "ppks" => $viewPpk,
             "trader" => $trader,
             "master" => $master,
-            "tanggal"=> $tanggal,
             "trader"=> $trader
-            
         ]);
     }
 }

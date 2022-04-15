@@ -34,7 +34,7 @@
           <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="/home/{{$ppk->id_ppk}}">Unggah</a>
           @endif
           @if ($ppk->status == "Cetak HC")
-          <a style="margin: 0 3px" class="btn btn-sm btn-info" data-toggle="modal" data-target="#hasilModal-{{$ppk->id_ppk}}">Hasil</a>
+          <!-- <a style="margin: 0 3px" class="btn btn-sm btn-info" data-toggle="modal" data-target="#hasilModal-{{$ppk->id_ppk}}">Hasil</a> -->
           <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="/home/cetakHC/{{$ppk->id_ppk}}">Cetak HC</a>
           <!-- Modal Hasil -->
           <div class="modal fade" id="hasilModal-{{$ppk->id_ppk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">

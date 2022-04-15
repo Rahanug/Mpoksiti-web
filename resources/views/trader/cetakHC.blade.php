@@ -27,7 +27,7 @@
             <div class="card-body" style="margin: top 10px; padding: 5rem">
                 <div class="row">
                     <div class="col-lg-1">
-                        <img src="" alt="logo BKIPM" />
+                        <img src="/img/logo_header.png" alt="logo BKIPM" />
                     </div>
                     <div class="col-lg-11" style="text-align: center; margin-left:-3rem">
                         <h4 style="color: blue;">KEMENTERIAN KELAUTAN DAN PERIKANAN</h4>
@@ -44,7 +44,7 @@
                     <div class="col-lg-12">
                         <h4 style="text-align: center;">FORM HASIL VERIFIKASI LAPANGAN</h4>
                         <table>
-                        @foreach ($ppks as $f)
+                            @foreach ($ppks as $f)
                             <tr>
                                 @if( ($master[$f->id_masterSubform]) == 'Tanggal verifikasi lapangan')
                                 <td>Tanggal verifikasi lapangan</td>
@@ -52,7 +52,7 @@
                                 @else
                                 <td></td>
                                 @endif
-                                
+
                             </tr>
                             <tr>
                                 @if(($master[$f->id_masterSubform]) == 'No Agenda')
@@ -86,8 +86,8 @@
                             </thead>
                             <tbody>
                                 @foreach ($ppks as $f)
-                                @if(($master[$f->id_masterSubform]) != 'Tanggal verifikasi lapangan' 
-                                && ($master[$f->id_masterSubform]) != 'No Agenda' 
+                                @if(($master[$f->id_masterSubform]) != 'Tanggal verifikasi lapangan'
+                                && ($master[$f->id_masterSubform]) != 'No Agenda'
                                 && ($master[$f->id_masterSubform]) != 'Nama UPI'
                                 && ($master[$f->id_masterSubform]) != 'Nama Petugas'
                                 && ($master[$f->id_masterSubform]) != 'Rekomendasi')
@@ -141,32 +141,32 @@
                             Produk Perikanan (SKIPP) Ekspor , karena</br>
                         </p>
                         <p>
-                        {{$f->keterangan}}
+                            {{$f->keterangan}}
                         </p>
                     </div>
                 </div>
                 @endif
                 @endforeach
                 <div class="row">
-                @foreach ($ppks as $f)
-                @if (($master[$f->id_masterSubform]) == 'Nama Petugas')
+                    @foreach ($ppks as $f)
+                    @if (($master[$f->id_masterSubform]) == 'Nama Petugas')
                     <div class="col-lg-6" style="text-align: center;">
                         <p>Cap dan Tanda Tangan</p>
                         <p>Inspektu Mutu</p>
                         </br></br></br>
                         <p>{{$f->value}}</p>
                     </div>
-                @endif
-                @endforeach
-                @foreach ($ppks as $f)
-                @if (($master[$f->id_masterSubform]) == 'Nama Petugas')
+                    @endif
+                    @endforeach
+                    @foreach ($ppks as $f)
+                    @if (($master[$f->id_masterSubform]) == 'Nama Petugas')
                     <div class="col-lg-6" style="text-align: center;">
                         <p>Cap dan Tanda</p>
                         <p>Tangan UPI</p></br></br></br>
                         <p>{{$trader[$f->id_trader]}}</p>
                     </div>
-                @endif
-                @endforeach    
+                    @endif
+                    @endforeach
                 </div>
             </div>
         </div>
