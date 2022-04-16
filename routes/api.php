@@ -36,4 +36,5 @@ Route::apiResource('/kurirs', 'App\Http\Controllers\api\JenisKurirController');
 Route::apiResource('/addimage', 'App\Http\Controllers\api\ImageController');
 
 
-Route::get('/checkPemeriksaanKlinis/{id}', [App\Http\Controllers\api\NotifAPIController::class, 'check']);
+Route::get('/checkPemeriksaanKlinis', [App\Http\Controllers\api\NotifAPIController::class, 'check']);
+Route::get('/checkPemeriksaanKlinisJPP/{id}', [App\Http\Controllers\api\NotifAPIController::class, 'checkJPP']);

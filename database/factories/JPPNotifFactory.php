@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Jpp;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class NotifFactory extends Factory
+class JPPNotifFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,7 +15,8 @@ class NotifFactory extends Factory
     public function definition()
     {
         return [
-            'updated_at' => date('Y-m-d H:i:s')
+            'id_jpp' => $this->faker->unique()->randomElement(Jpp::all())['id'],
+            'last_notif' => date('Y-m-d H:i:s')
         ];
     }
 }

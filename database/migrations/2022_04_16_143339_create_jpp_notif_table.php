@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableNotif extends Migration
+class CreateJppNotifTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateTableNotif extends Migration
      */
     public function up()
     {
-        Schema::create('notif', function (Blueprint $table) {
-            $table->id();
-            $table->dateTime('updated_at');
+        Schema::create('jpp_notif', function (Blueprint $table) {
+            $table->integer('id_jpp');
+            $table->dateTime('last_notif');
         });
     }
 
@@ -26,6 +26,6 @@ class CreateTableNotif extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notif');
+        Schema::dropIfExists('jpp_notif');
     }
 }

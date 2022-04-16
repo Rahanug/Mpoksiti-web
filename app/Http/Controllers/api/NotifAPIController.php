@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\api;
+
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -10,17 +11,23 @@ use Illuminate\Support\Facades\DB;
 class NotifAPIController extends Controller
 {
 
-    public function check(Request $request)
+    public function check()
     {
-        $data = DB::select("
-                SELECT *
-                FROM notif WHERE updated_at < '2022-04-15 14:53:40.043' AND id = ". $request->id
-            );
-        return response()->json(count($data));
+        $data = DB::select(
+            "SELECT updated_at
+            FROM notif WHERE id = 1"
+        );
+
+        return response()->json($data[0]);
     }
 
-    public function store(Request $request)
+    public function checkJPP(Request $request)
     {
-        //
+        $data = DB::select(
+            "SELECT last_notif
+            FROM jpp_notif WHERE id_jpp =" . $request->id
+        );
+
+        return response()->json($data[0]);
     }
 }

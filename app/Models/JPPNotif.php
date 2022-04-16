@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Notif extends Model
+class JPPNotif extends Model
 {
     use HasFactory;
-    protected $table ="notif";
-    protected $primaryKey='id';
+    protected $table ="jpp_notif";
+    protected $primaryKey='id_jpp';
     public $timestamps = false;
 }
