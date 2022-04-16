@@ -295,6 +295,16 @@
       responsive: true,
     });
   } );
+
+  /*setInterval(function() {
+    $.get('/api/checkPemeriksaanKlinis/1/',
+    function(data) {
+        if (JSON.parse(data) == 1) 
+            // refresh your page
+          window.location.reload()
+    });
+   }, 900000); */
+
   function printDiv(divName) {
     var mywindow = window.open('', 'PRINT', 'toolbar=1, scrollbars=1, location=1, statusbar=0, menubar=1, resizable=1,height=720,width=1280');
     mywindow.document.write('<html><head><title>' + document.title + '-' + divName  + '</title>');
