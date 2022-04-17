@@ -25,12 +25,12 @@ class StuffingController extends Controller
         }
         $ppks = new PpkController();
         $ppkModel = new Ppk();
-        $vdataHeader = new vDataHeader();
+        // $vdataHeader = new vDataHeader();
         $dbView = DB::connection('sqlsrv')->getDatabaseName().'.dbo';
         return view('admin.stuffing', [
             "title" => "Stuffing",
             // "ppks" => $ppkModel->where("id_trader", Auth::user()->id_trader)->get(),
-            "ppks" => $vdataHeader
+            "ppks" => DB::connection('sqlsrv2')->table('v_data_header')
                 ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', 'ppks.id_ppk')
                 ->where('v_data_header.kd_kegiatan', 'E')
                 ->whereNotNull('ppks.status')

@@ -229,7 +229,7 @@
                                               </div>
                                               <div class="form-group">
                                                 <label for="tgl_izin" style="font-weight:500; color:#2E2A61; font-size: 18px;">Tanggal Izin</label>
-                                                <input type="datetime-local" id="tgl_izin" value="{{ date('Y-m-d H:i A', strtotime($ppk->tgl_izin))}}" class="form-control" placeholder="Jadwal" name="jadwal_periksa">
+                                                <input type="datetime-local" id="tgl_izin" value="{{ date('Y-m-d H:i', strtotime($ppk->tgl_izin)) }}" class="form-control" placeholder="Jadwal" name="tgl_izin">
                                               </div>
                                             </div>
                                             <div class="col-12 d-flex justify-content-end">

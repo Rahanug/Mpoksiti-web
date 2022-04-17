@@ -11,7 +11,7 @@ use App\Models\Dokumen;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
-use App\Models\vDataHeader;
+// use App\Models\vDataHeader;
 use App\Models\MasterSubform;
 use App\Models\Subform;
 use PDF;
@@ -31,9 +31,9 @@ class HomeController extends Controller
         }
         $ppks = new PpkController();
         $ppkModel = new Ppk();
-        $vdataHeader = new vDataHeader();
+        // $vdataHeader = new vDataHeader();
         $dbView = DB::connection('sqlsrv')->getDatabaseName() . '.dbo';
-        $viewPpk = $vdataHeader
+        $viewPpk = DB::connection('sqlsrv2')->table('v_data_header')
             ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', "ppks.id_ppk")
             ->where('v_data_header.kd_kegiatan', 'E')
             ->where("v_data_header.id_trader", Auth::user()->id_trader)
@@ -318,9 +318,9 @@ class HomeController extends Controller
         foreach (Trader::all() as $item) {
             $trader[$item->id_trader] = $item->nm_trader;
         }
-        $vdataHeader = new vDataHeader();
+        // $vdataHeader = new vDataHeader();
         $dbView = DB::connection('sqlsrv')->getDatabaseName() . '.dbo';
-        $viewPpk = $vdataHeader
+        $viewPpk = DB::connection('sqlsrv2')->table('v_data_header')
             ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', "ppks.id_ppk")
             ->leftJoin("$dbView.subform as subform", 'v_data_header.id_ppk', '=', "subform.id_ppk")
             ->where("v_data_header.id_ppk", $id_ppk)
@@ -333,20 +333,25 @@ class HomeController extends Controller
             "trader"=> $trader
             
         ];
-        // $pdf = PDF::loadView('trader.cetakHC', [
-        //     "title" => "Dashboard",
-        //     "ppks" => $viewPpk,
-        //     "trader" => $trader,
-        //     "master" => $master,
-        //     "trader"=> $trader
-        // ])->setOptions(['defaultFont' => 'sans-serif']);
-        // return $pdf->stream();
-        return view('trader.cetakHC', [
-                "title" => "Dashboard",
-                "ppks" => $viewPpk,
-                "trader" => $trader,
-                "master" => $master,
-                "trader"=> $trader
+        $pdf = PDF::loadView('trader.cetakHC', [
+            "title" => "Dashboard",
+            "ppks" => $viewPpk,
+            "trader" => $trader,
+            "master" => $master,
+            "trader"=> $trader
+        ])->setOptions([
+            'defaultFont' => 'Times New Roman',
+            'isPhpEnabled', true
         ]);
+        
+        $pdf->render();
+        return $pdf->stream();
+        // return view('trader.cetakHC', [
+        //         "title" => "Dashboard",
+        //         "ppks" => $viewPpk,
+        //         "trader" => $trader,
+        //         "master" => $master,
+        //         "trader"=> $trader
+        // ]);
     }
 }

@@ -7,7 +7,7 @@ use App\Models\Trader;
 use App\Models\Ppk;
 use App\Models\KategoriDokumen;
 use App\Models\MasterDokumen;
-use App\Models\vDataHeader;
+// use App\Models\vDataHeader;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -17,7 +17,7 @@ class MasterDokumenController extends Controller
     // Halaman Trader
     public function index(Request $request)
     {
-        $ppkModel = new vDataHeader();
+        // $ppkModel = new vDataHeader();
         $kategori = array();
         foreach (KategoriDokumen::all() as $item) {
             $kategori[$item->id_kategori] = $item->nama_kategori;
@@ -27,7 +27,7 @@ class MasterDokumenController extends Controller
             "title" => "Dokumen",
             "masters" => $masterDokumenModel->where("id_trader", Auth::user()->id_trader)->where("tipe_dokumen", 1)->get(),
             "kategori" => $kategori,
-            "ppks" => $ppkModel->where("id_trader", Auth::user()->id_trader)->get(),
+            "ppks" => DB::connection('sqlsrv2')->table('v_data_header')->where("id_trader", Auth::user()->id_trader)->get(),
         ]);
     }
 
