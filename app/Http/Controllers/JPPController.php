@@ -12,6 +12,7 @@ class JPPController extends Controller
     public function index(Request $request) {
         return view('jpp.home', [
             "title" => "dashboard",
+            "data" => Auth::user()
         ]);
     }
 

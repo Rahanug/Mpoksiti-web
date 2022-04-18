@@ -25,6 +25,7 @@ class PemeriksaanKlinisAPIController extends Controller
             ->select('v_data_header.id_ppk', 'v_data_header.no_aju_ppk', 'v_data_header.nm_penerima', 'pk.status', 'jpp.nama_counter')
             ->where('id_trader', $request->id_trader)
             ->where('kd_kegiatan', 'K')
+            ->orderBy('pk.status', 'asc')
             ->get();
         foreach ($vDataHeaders as $data){
             $data->ikan = DB::connection('sqlsrv2')->select("
