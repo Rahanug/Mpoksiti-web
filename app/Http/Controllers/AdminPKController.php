@@ -44,7 +44,9 @@ class AdminPKController extends Controller
         }
         return view('admin.PK-pemeriksaan_klinis', [
             "title"=>"PKVirtual",
-            "pks"=>$pks
+            "pks"=>$pks,
+            "lastDate"=> date('Y-m-d'),
+            "lastTime"=> date('H:i:s')
         ]);
     }
     
@@ -75,7 +77,12 @@ class AdminPKController extends Controller
                 'jadwal_periksa' => date('Y-m-d H:i', strtotime($request->jadwalMeet.' '.$request->jamMeet)),
                 'url_periksa' => $request->linkMeet
             ]);
+        
             
+        //notify
+        DB::table('jpp_notif')
+        ->where('id_jpp', $request->id_jpp)
+        ->update(['last_notif' => date('Y-m-d H:i:s')]);
         return redirect('admin/pemeriksaan_klinis')->with('success', 'Jadwal meet telah dikirim untuk ID PPK '.$request->id_ppk);;
     }
 
@@ -89,6 +96,7 @@ class AdminPKController extends Controller
             'id_ppk' => 'required',
             'action' => 'required',
             'keterangan' => 'required|max:200',
+            'id_jpp' => 'required',
         ], $messages);
 
         if($validator==false){
@@ -110,6 +118,11 @@ class AdminPKController extends Controller
                 'status' => $statusPPK,
                 'keterangan' => $request->keterangan
             ]);
+        
+        //notify
+        DB::table('jpp_notif')
+        ->where('id_jpp', $request->id_jpp)
+        ->update(['last_notif' => date('Y-m-d H:i:s')]);
         return redirect('admin/pemeriksaan_klinis')->with('success', 'ID PPK '.$request->id_ppk.' telah '.$text);
     }
 }

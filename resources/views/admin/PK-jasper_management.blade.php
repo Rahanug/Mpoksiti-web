@@ -216,6 +216,18 @@
       responsive: true,
     });
   } );
+
+  
+  setInterval(function() {
+    //window.location.reload()
+    /*$.get('/checkPemeriksaanKlinis/'+YOUR_MODEL_ID,
+    {updated_at: LAST_UPDATED_AT},
+    function(data) {
+        if (JSON.parse(data) == true) 
+            // refresh your page
+          window.location.reload()
+    });*/
+   }, 1000); 
   
 </script>
 @endpush

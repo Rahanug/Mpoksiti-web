@@ -92,6 +92,7 @@
                                     <div class="modal-body">
                                       <div class="form-group">
                                         <input type="hidden" id="id_ppk" name="id_ppk" value=<?= $ppk->id_ppk ?>>
+                                        <input type="hidden" id="id_jpp" name="id_jpp" value=<?= $ppk->id_jpp ?>>
                                         <label for="linkMeet" class="col-form-label">Link Meet Online:</label><br>
                                         <input type="url" id="linkMeet" name="linkMeet" class="form-control"><br>
                                         <label for="jadwalMeet" class="col-form-label">Jadwal Pemeriksaan:</label><br>
@@ -255,6 +256,7 @@
                                     <div class="modal-body">
                                       <div class="form-group">
                                         <input type="hidden" id="id_ppk" name="id_ppk" value=<?= $ppk->id_ppk ?>>
+                                        <input type="hidden" id="id_jpp" name="id_jpp" value=<?= $ppk->id_jpp ?>>
                                         <label for="keterangan" class="col-form-label">Keterangan:</label>
                                         <textarea class="form-control" id="keterangan" name="keterangan" form=<?= '"action-form'.$count.'"' ?>></textarea>
                                       </div>
@@ -295,6 +297,19 @@
       responsive: true,
     });
   } );
+
+  setInterval(function() {
+    $.get('/api/checkPemeriksaanKlinis',
+    function(data) {
+      console.log(data['updated_at']);
+      const lastUpdate = Date.parse(data['updated_at']);
+      const currUpdate = Date.parse('<?= $lastDate.' '.$lastTime?>');
+        if (lastUpdate > currUpdate) 
+            // refresh your page
+          window.location.reload()
+    });
+   }, 600000);
+
   function printDiv(divName) {
     var mywindow = window.open('', 'PRINT', 'toolbar=1, scrollbars=1, location=1, statusbar=0, menubar=1, resizable=1,height=720,width=1280');
     mywindow.document.write('<html><head><title>' + document.title + '-' + divName  + '</title>');

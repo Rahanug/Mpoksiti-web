@@ -55,6 +55,11 @@ class PemeriksaanKlinisAPIController extends Controller
             'id_jpp' => (int)($request->id_jpp)]
         );
 
+        
+        //notify
+        DB::table('jpp_notif')
+        ->where('id_jpp', $request->id_jpp)
+        ->update(['last_notif' => date('Y-m-d H:i:s')]);
         return response()->json('Berhasil');
     }
 }
