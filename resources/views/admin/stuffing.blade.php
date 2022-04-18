@@ -51,7 +51,11 @@
                 @else
                 <td></td>
                 @endif
-                <td>{{ $ppk->url_periksa}}</td>
+                @if($ppk->url_periksa != "" && $ppk->status == "Stuffing")
+                <td><a target="_blank" style="margin: 0 3px" class="btn btn-sm btn-link" href="{{ $ppk->url_periksa}}">Link Meeting</a></td>
+                @else
+                <td></td>
+                @endif
                 <td style="font-weight: bold">{{ ucfirst($ppk->status)}}</td>
                 <td>
                   @if ($ppk->status == "verifikasi")

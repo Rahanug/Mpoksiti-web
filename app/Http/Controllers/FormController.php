@@ -58,7 +58,18 @@ class FormController extends Controller
                     }
                 }
             }
-            
+            if($request->hasFile('images_stuffing'))
+            {
+                foreach($request->file('images_stuffing') as $key => $file)
+                {
+                    $path = $file->store('public/images_stuffing');
+                    $name = $file->getClientOriginalName();
+                    $insert[$key]['images'] = $name;
+                    $insert[$key]['id_ppk'] = $id_ppk;
+                    $file->move(public_path().'images_stuffing', $name);  
+                }
+                DB::table('images_stuffing')->insert($insert);
+            }
             DB::commit();
             return redirect('/admin/stuffing')->with('Success', 'Form telah diisi!!!!!!!!!!!');
         }

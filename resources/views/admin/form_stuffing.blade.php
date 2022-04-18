@@ -105,6 +105,16 @@
                                                 </tbody>
                                                 @endforeach
                                             </table>
+                                            <table class="table">
+                                                <thead>
+                                                    <th>
+                                                        Upload Gambar
+                                                    </th>
+                                                </thead>
+                                                    <tbody>
+                                                        <td><input type="file" name="images_stuffing[]" placeholder="Choose files" multiple></td>
+                                                    </tbody>                                                
+                                            </table>
                                         </div>
                                         <br>
                                         <div class="col-12 d-flex justify-content-end">
