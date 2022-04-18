@@ -37,7 +37,9 @@ class HomeController extends Controller
             ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', "ppks.id_ppk")
             ->where('v_data_header.kd_kegiatan', 'E')
             ->where("v_data_header.id_trader", Auth::user()->id_trader)
-            ->select('ppks.*', 'v_data_header.*')->get();
+            ->select('ppks.*', 'v_data_header.*')
+            ->orderBy('ppks.id_ppk', 'ASC')
+            ->get();
         foreach ($viewPpk as $data) {
             $data->subform = Subform::rightJoin("$dbView.ppks as ppks", "subform.id_ppk", "ppks.id_ppk")
                 ->select("ppks.*", "subform.*")
@@ -298,11 +300,22 @@ class HomeController extends Controller
 
     public function ajukanTanggal(Request $request, $id_ppk)
     {
-        $now = date('Y-m-d H:i');
+        $messages = [
+            'required' => ':attribute wajib diisi ',
+            'jadwal_periksa.required'=> 'Jadwal wajib diisi!!',
+            'min' => ':attribute harus diisi minimal :min karakter !!!',
+            'max' => ':attribute harus diisi maksimal :max karakter !!!',
+            'numeric' => ':attribute harus diisi angka !!!',
+            'email' => ':attribute harus diisi dalam bentuk email !!!',
+        ];
+
+        $this->validate($request, [
+            "jadwal_periksa" => 'required',
+        ], $messages);
+
         Ppk::where('id_ppk', $id_ppk)->update([
             'status' => 'Menunggu',
             'jadwal_periksa' => date('Y-m-d H:i', strtotime($request->jadwal_periksa)),
-            // Carbon::createFromFormat('Y-m-dTHH:MI:SS', $request->jadwal_periksa)->get($request->jadwal_periksa),
         ]);
         return redirect()->back();
     }
@@ -353,5 +366,32 @@ class HomeController extends Controller
         //         "master" => $master,
         //         "trader"=> $trader
         // ]);
+    }
+
+    public function detail(Request $request, $id_ppk)
+    {
+        $dbView = DB::connection('sqlsrv')->getDatabaseName() . '.dbo';
+        $viewPpk = DB::connection('sqlsrv2')->table('v_data_header')
+            ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', "ppks.id_ppk")
+            ->leftJoin("$dbView.subform as subform", 'v_data_header.id_ppk', '=', "subform.id_ppk")
+            ->where("v_data_header.id_ppk", $id_ppk)
+            ->select('ppks.*', 'v_data_header.*', 'subform.*')->get();
+        $detailPpk = DB::connection('sqlsrv2')->table('v_data_header')->where("v_data_header.id_ppk", $id_ppk)->get();
+        $detailStuf = DB::table('Ppks')->where("Ppks.id_ppk", $id_ppk)->get();
+        $dokumen = DB::table('dokumens')
+        ->leftJoin('master_dokumens as master', 'dokumens.id_master', 'master.id_master')
+        ->where('dokumens.id_ppk', $id_ppk)
+        ->select('dokumens.*', 'master.*')->get();
+        $kategori = array();
+        foreach (KategoriDokumen::all() as $item) {
+            $kategori[$item->id_kategori] = $item->nama_kategori;
+        }
+        return view('trader.detail', [
+            "title"=> "Detail Stuffing",
+            "details"=>$detailPpk,
+            "stuffing"=>$detailStuf,
+            "dokumen"=>$dokumen,
+            "kategori"=>$kategori,
+        ]);
     }
 }

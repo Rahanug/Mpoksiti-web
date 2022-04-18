@@ -34,7 +34,9 @@ class StuffingController extends Controller
                 ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', 'ppks.id_ppk')
                 ->where('v_data_header.kd_kegiatan', 'E')
                 ->whereNotNull('ppks.status')
-                ->select('ppks.*', 'v_data_header.*')->get(),
+                ->select('ppks.*', 'v_data_header.*')
+                ->orderBy('ppks.id', 'DESC')
+                ->get(),
             "trader" => $trader,
         ]);
     }
@@ -145,6 +147,18 @@ class StuffingController extends Controller
 
     public function decline(Request $request, $id_ppk)
     {
+        $messages = [
+            'required' => ':attribute wajib diisi ',
+            'min' => ':attribute harus diisi minimal :min karakter !!!',
+            'max' => ':attribute harus diisi maksimal :max karakter !!!',
+            'numeric' => ':attribute harus diisi angka !!!',
+            'email' => ':attribute harus diisi dalam bentuk email !!!',
+        ];
+
+        $this->validate($request, [
+            "deskripsi" => 'required',
+        ], $messages);
+
         // $id_master = $request->input('id_master');
         Ppk::where('id_ppk', $id_ppk)->update([
             "status" => "Gagal",
@@ -158,7 +172,19 @@ class StuffingController extends Controller
     // Untuk Terima dan Tolak Jadwal
     public function terima(Request $request, $id_ppk)
     {
-        // $id_ppk = $request->input('id_ppk');
+        $messages = [
+            'required' => ':attribute wajib diisi ',
+            'url_periksa.required' => 'Link meeting wajib diisi ',
+            'min' => ':attribute harus diisi minimal :min karakter !!!',
+            'max' => ':attribute harus diisi maksimal :max karakter !!!',
+            'numeric' => ':attribute harus diisi angka !!!',
+            'email' => ':attribute harus diisi dalam bentuk email !!!',
+        ];
+
+        $this->validate($request, [
+            "url_periksa" => 'required',
+        ], $messages);
+
         Ppk::where('id_ppk', $id_ppk)->update([
             "status" => "Stuffing",
             "deskripsi" => null,
@@ -192,7 +218,19 @@ class StuffingController extends Controller
 
     public function tolak(Request $request, $id_ppk)
     {
-        // $id_ppk = $request->input('id_ppk');
+
+        $messages = [
+            'required' => ':attribute wajib diisi ',
+            'min' => ':attribute harus diisi minimal :min karakter !!!',
+            'max' => ':attribute harus diisi maksimal :max karakter !!!',
+            'numeric' => ':attribute harus diisi angka !!!',
+            'email' => ':attribute harus diisi dalam bentuk email !!!',
+        ];
+
+        $this->validate($request, [
+            "deskripsi" => 'required',
+        ], $messages);
+
         Ppk::where('id_ppk', $id_ppk)->update([
             "status" => "Ditolak",
             "deskripsi" => $request->deskripsi,
@@ -205,7 +243,22 @@ class StuffingController extends Controller
 
     public function izin(Request $request, $id_ppk)
     {
-        // $id_ppk = $request->input('id_ppk');
+        $messages = [
+            'required' => ':attribute wajib diisi ',
+            'no_izin.required' => 'Nomor izin wajib diisi ',
+            'tgl_izin.required' => 'Tanggal izin wajib diisi ',
+            'required' => ':attribute wajib diisi ',
+            'min' => ':attribute harus diisi minimal :min karakter !!!',
+            'max' => ':attribute harus diisi maksimal :max karakter !!!',
+            'numeric' => ':attribute harus diisi angka !!!',
+            'email' => ':attribute harus diisi dalam bentuk email !!!',
+        ];
+
+        $this->validate($request, [
+            "no_izin" => 'required',
+            "tgl_izin" => 'required',
+        ], $messages);
+        
         Ppk::where('id_ppk', $id_ppk)->update([
             "status" => "Cetak HC",
             "no_izin" => $request->no_izin,
@@ -214,5 +267,32 @@ class StuffingController extends Controller
 
 
         return redirect('/admin/stuffing')->with('success', "PPK $id_ppk telah disetujui!");
+    }
+
+    public function detail(Request $request, $id_ppk)
+    {
+        $dbView = DB::connection('sqlsrv')->getDatabaseName() . '.dbo';
+        $viewPpk = DB::connection('sqlsrv2')->table('v_data_header')
+            ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', "ppks.id_ppk")
+            ->leftJoin("$dbView.subform as subform", 'v_data_header.id_ppk', '=', "subform.id_ppk")
+            ->where("v_data_header.id_ppk", $id_ppk)
+            ->select('ppks.*', 'v_data_header.*', 'subform.*')->get();
+        $detailPpk = DB::connection('sqlsrv2')->table('v_data_header')->where("v_data_header.id_ppk", $id_ppk)->get();
+        $detailStuf = DB::table('Ppks')->where("Ppks.id_ppk", $id_ppk)->get();
+        $dokumen = DB::table('dokumens')
+        ->leftJoin('master_dokumens as master', 'dokumens.id_master', 'master.id_master')
+        ->where('dokumens.id_ppk', $id_ppk)
+        ->select('dokumens.*', 'master.*')->get();
+        $kategori = array();
+        foreach (KategoriDokumen::all() as $item) {
+            $kategori[$item->id_kategori] = $item->nama_kategori;
+        }
+        return view('admin.detail', [
+            "title"=> "Detail Stuffing",
+            "details"=>$detailPpk,
+            "stuffing"=>$detailStuf,
+            "dokumen"=>$dokumen,
+            "kategori"=>$kategori,
+        ]);
     }
 }

@@ -24,6 +24,7 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::get('/home/{id_ppk}/preview/{id_dokumen}', [App\Http\Controllers\HomeController::class, 'previewDokumen'])->name('previewDokumen');
         Route::post('/home/ajukan/{id_ppk}', [App\Http\Controllers\HomeController::class, 'ajukanTanggal'])->name('ajukanTanggal');
         Route::get('/home/cetakHC/{id_ppk}', [App\Http\Controllers\HomeController::class, 'cetakHC'])->name('trader.cetakHC');
+        Route::get('/home/detail/{id_ppk}', [App\Http\Controllers\HomeController::class, 'detail'])->name('trader.detail');
 
         Route::post('/home/storeDokumen', [App\Http\Controllers\HomeController::class, 'storeDokumen'])->name('trader.storeDocument');
         Route::post('/home/dokumen/pilihMaster', [App\Http\Controllers\HomeController::class, 'pilihMaster'])->name('trader.pilihMaster');
@@ -37,7 +38,7 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::get('/home/form/{id_ppk}', [App\Http\Controllers\FormController::class, 'Hasil'])->name('trader.hasil_form');
     });
     // Login untuk trader
-    Route::get('/', [\App\Http\Controllers\LoginController::class, 'formLogin'])->name('login');
+    Route::get('/login', [\App\Http\Controllers\LoginController::class, 'formLogin'])->name('login');
     Route::post('/login', [\App\Http\Controllers\LoginController::class, 'login'])->name('login');
     Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
 
@@ -71,6 +72,7 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::get('/admin/stuffing/form/{id_ppk}', [App\Http\Controllers\FormController::class, 'index'])->name('admin.form_stuffing');
         Route::post('/admin/stuffing/form/{id_ppk}/storeSubform', [App\Http\Controllers\FormController::class, 'storeSubform'])->name('admin.form_stuffing');
         Route::post('/admin/stuffing/{id_ppk}/izin', [App\Http\Controllers\StuffingController::class, 'izin'])->name('admin.stuffing');
+        Route::get('/admin/stuffing/detail/{id_ppk}', [App\Http\Controllers\StuffingController::class, 'detail'])->name('admin.detail');
 
         // Kategori
         Route::get('/admin/kategori', [App\Http\Controllers\KategoriController::class, 'index'])->name('admin.kategori_dokumen');

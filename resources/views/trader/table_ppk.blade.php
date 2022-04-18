@@ -10,6 +10,7 @@
         <th scope="col">Link</th>
         <th scope="col">Status</th>
         <th scope="col">Aksi</th>
+        <th scope="col">Detail</th>
       </tr>
     </thead>
     <tbody>
@@ -20,14 +21,18 @@
         <td>{{ $ppk->no_aju_ppk }}</td>
         <td>{{ $ppk->nm_penerima}}</td>
         <td>{{ $ppk->negara_penerima}}</td>
-        @if($ppk->status == "Penjadwalan")
+        @if($ppk->status == "Penjadwalan" || $ppk->status == "Ditolak")
         <td><a style="margin: 0 3px" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ajukanModal-{{$ppk->id_ppk}}">Ajukan</a></td>
         @elseif($ppk->jadwal_periksa == "")
         <td></td>
         @else
         <td>{{ date('Y-m-d H:i A', strtotime($ppk->jadwal_periksa))}}</td>
         @endif
-        <td>{{ $ppk->url_periksa}}</td>
+        @if($ppk->url_periksa != "" && $ppk->status == "Stuffing")
+        <td><a target="_blank" style="margin: 0 3px" class="btn btn-sm btn-link" href="{{ $ppk->url_periksa}}">Link Meeting</a></td>
+        @else
+        <td></td>
+        @endif
         <td style="font-weight: bold">{{ ucfirst($ppk->status)}}</td>
         <td>
           @if ($ppk->status == "" || $ppk->status == "verifikasi")
@@ -99,6 +104,8 @@
           </div>
           @endif
         </td>
+        <!-- Detail -->
+        <td><a style="margin: 0 3px" class="btn btn-sm btn-secondary" href="/home/detail/{{$ppk->id_ppk}}">Detail</a></td>
       </tr>
       <!-- Ajukan Tanggal Modal -->
       <div class="modal fade" id="ajukanModal-{{$ppk->id_ppk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -159,6 +166,7 @@
           </div>
         </div>
       </div>
+      
       @endforeach
     </tbody>
   </table>

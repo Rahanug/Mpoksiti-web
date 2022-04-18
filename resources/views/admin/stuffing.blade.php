@@ -248,7 +248,7 @@
                     </div>
                   </div>
                   @endif
-                  <a style="margin: 0 3px" class="btn btn-sm btn-secondary" id="detail">Detail</a>
+                  <a style="margin: 0 3px" class="btn btn-sm btn-secondary" id="detail" href="/admin/stuffing/detail/{{$ppk->id_ppk}}">Detail</a>
                 </td>
               </tr>
               @endforeach

@@ -24,7 +24,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+Route::apiResource('/stuffing', 'App\Http\Controllers\api\StuffingController');
 Route::apiResource('/jpp', 'App\Http\Controllers\api\JPPController');
 Route::apiResource('/pemeriksaan_klinis', 'App\Http\Controllers\api\PemeriksaanKlinisAPIController');
 Route::apiResource('/kurirs', 'App\Http\Controllers\api\JenisKurirController');
