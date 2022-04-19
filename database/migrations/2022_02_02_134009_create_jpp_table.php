@@ -17,6 +17,7 @@ class CreateJppTable extends Migration
             $table->id();
             $table->string('kode_counter')->unique();
             $table->string('nama_counter');
+            $table->string('alamat_counter');
             $table->float('latitude');
             $table->float('longitude');
             $table->string('penanggungJawab');

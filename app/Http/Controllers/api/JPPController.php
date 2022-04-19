@@ -18,7 +18,7 @@ class JPPController extends Controller
     {
         //
         $jpp = DB::table('jpp')
-                ->select('id', 'kode_counter', 'nama_counter', 'latitude', 'longitude', 'penanggungJawab', 'id_kurir', 'is_active')
+                ->select('id', 'kode_counter', 'nama_counter', 'alamat_counter', 'latitude', 'longitude', 'penanggungJawab', 'id_kurir', 'is_active')
                 ->get();
 
         return response()->json($jpp);

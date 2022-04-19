@@ -15,6 +15,7 @@ class Jpp extends Authenticatable
     protected $fillable = [
         'kode_counter',
         'nama_counter',
+        'alamat_counter',
         'latitude',
         'longitude',
         'penanggungJawab',

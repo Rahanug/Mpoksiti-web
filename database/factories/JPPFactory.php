@@ -16,6 +16,7 @@ class JPPFactory extends Factory
         return [
             'kode_counter' => $this->faker->unique()->randomNumber(8, true),
             'nama_counter' => $this->faker->unique()->numerify('Jasper-#########'),
+            'alamat_counter' => $this->faker->address,
             'latitude' => $this->faker->latitude(),
             'longitude' => $this->faker->longitude(),
             'penanggungJawab' => $this->faker->name,

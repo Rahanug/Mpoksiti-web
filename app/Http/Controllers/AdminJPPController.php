@@ -39,6 +39,7 @@ class AdminJPPController extends Controller
         $validator = $request->validate([
             'kode_counter' => 'required',
             'nama_counter' => 'required|max:16',
+            'alamat_counter' => 'required',
             'latitude' => 'required',
             'longitude' => 'required',
             'penanggungJawab' => 'required|max:16',
@@ -54,10 +55,12 @@ class AdminJPPController extends Controller
             Jpp::insert([
                 'kode_counter' => $request->kode_counter,
                 'nama_counter' => $request->nama_counter,
+                'alamat_counter' => $request->alamat_counter,
                 'latitude' => $request->latitude,
                 'longitude' => $request->longitude,
                 'penanggungJawab' => $request->penanggungJawab,
                 'id_kurir' => $request->jenis_kurir,
+                'is_active' => 1,
                 'password' => Hash::make($request->password)
             ]);
         } catch (Exception){
@@ -75,6 +78,7 @@ class AdminJPPController extends Controller
         $validator = $request->validate([
             'id' => 'required',
             'nama_counter' => 'required|max:16',
+            'alamat_counter' => 'required',
             'latitude' => 'required',
             'longitude' => 'required',
             'penanggungJawab' => 'required|max:16',
@@ -92,6 +96,10 @@ class AdminJPPController extends Controller
         $suksesMsg = "";
         if ($currentJpp->nama_counter != $request->nama_counter ){
             $suksesMsg .= "- Nama counter = ".$request->nama_counter."\n";
+            $adaPerubahan=true;
+        }
+        if ($currentJpp->alamat_counter != $request->alamat_counter ){
+            $suksesMsg .= "- Alamat counter = ".$request->alamat_counter."\n";
             $adaPerubahan=true;
         }
         if ($currentJpp->latitude != $request->latitude){
@@ -125,17 +133,19 @@ class AdminJPPController extends Controller
                 ->where('id', $request->id)
                 ->update([
                     'nama_counter' => $request->nama_counter,
+                    'alamat_counter' => $request->alamat_counter,
                     'latitude' => $request->latitude,
                     'longitude' => $request->longitude,
                     'penanggungJawab' => $request->penanggungJawab,
                     'id_kurir' => $request->jenis_kurir,
-                    'password' => Hash::make($request->password) 
+                    'password' => Hash::make($request->password)
                 ]);
             }else{
                 DB::table('jpp')
                 ->where('id', $request->id)
                 ->update([
                     'nama_counter' => $request->nama_counter,
+                    'alamat_counter' => $request->alamat_counter,
                     'latitude' => $request->latitude,
                     'longitude' => $request->longitude,
                     'penanggungJawab' => $request->penanggungJawab,
