@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JenisKurir;
 use Illuminate\Http\Request;
 use App\Models\Trader;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +19,10 @@ class JPPController extends Controller
 
     public function pemeriksaan() {
         $dbView = DB::connection('sqlsrv2')->getDatabaseName().'.dbo';
-        $kurir = Auth::user();
+        $kurir = DB::table('kurir')
+        ->select('namaKurir')
+        ->where('id', Auth::user()->id_kurir)
+        ->first();
         $list_ppk = DB::table("pemeriksaan_klinis")
             ->joinSub("SELECT v_data_header.*, v_for_qr.seri, v_for_qr.no_sertifikat, v_for_qr.tgl_sertifikat 
                 FROM $dbView.v_data_header 
@@ -50,11 +54,15 @@ class JPPController extends Controller
                 FROM v_dtl_pelaporan WHERE id_ppk=".(int)$data->id_ppk
             );
             foreach ($data->ikan as $ikan){
-                $ikan->images = DB::table('images')
+                $ikan->images = DB::table('images_pk')
                     ->select('*')
                     ->where('kd_ikan', $ikan->kd_ikan)
                     ->get();
             }
+            $data->images_dokumentasi = DB::table('images_admin')
+                ->select('url_file')
+                ->where('id_ppk', $data->id_ppk)
+                ->get();
         }
             
         return view('jpp.pemeriksaan', [

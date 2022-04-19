@@ -104,7 +104,7 @@
                             <div class="row">
                               <div class="col-8 col-sm-6">
                                 <div class="row">PENGIRIM: </div>
-                                <div class="row">NPWP: </div>
+                                <div class="row">NPWP: {{ $ppk->npwp }}</div>
                                 <div class="row">Nama: {{ $ppk->nm_trader }}</div>
                                 <div class="row">Alamat: {{ $ppk->al_trader }}</div>
                               </div>
@@ -176,21 +176,51 @@
                                           $str = explode("-", $image->url_file);
                                           ?>
                                           @if ($str[0] == 'video')
-                                          <a href="/img/pemeriksaan_klinis/<?= $image->url_file ?>" target="_blank">
-                                            <i class="fas fa-play fa-3x" style="
-                                                top: 50%;
-                                                left: 50%;
+                                          <a href="/img/pemeriksaan_klinis/<?= $image->url_file ?>" target="_blank" style="position: relative;">
+                                            <img src="/img/pemeriksaan_klinis/<?= 'thumb-' . $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
+                                            <div class="icon-wrap" style="
+                                                width: 100%;
+                                                height: 100%;
                                                 position: absolute;
-                                                transform: translate(-50%, -50%);">
-                                            </i>
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: center;">
+                                              <i class="fa fa-play-circle fa-4x"></i>
+                                            </div>
                                           </a>
-                                          <img src="/img/pemeriksaan_klinis/<?= 'thumb-' . $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
                                           @else
                                           <img src="/img/pemeriksaan_klinis/<?= $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
-                                          @endif<figcaption class="figure-caption">Lokasi: <?= $image->latitude . ',' . $image->longitude ?></figcaption>
+                                          @endif
+                                          <figcaption class="figure-caption">Lokasi: <?= $image->latitude . ',' . $image->longitude ?></figcaption>
                                           <figcaption class="figure-caption">Waktu Upload: <?= $image->updated_at ?></figcaption>
                                         </figure>
                                         @endforeach
+                                      </td>
+                                    </tr>
+                                    @endforeach
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+
+                            <br>
+                            <div class="row">
+                              <div class="col-4 col-sm-12">
+                                <div class="row">DOKUMENTASI PEMERIKSAAN: </div>
+                                <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">No</th>
+                                      <th scope="col">Dokumentasi</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <?php $countDokumentasi = 0; ?>
+                                    @foreach ($ppk->images_dokumentasi as $image)
+                                    <tr>
+                                      <td>{{ ++$countDokumentasi}}</td>
+                                      <td>
+                                        <img src="/img/pemeriksaan_klinis/<?= $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
                                       </td>
                                     </tr>
                                     @endforeach
