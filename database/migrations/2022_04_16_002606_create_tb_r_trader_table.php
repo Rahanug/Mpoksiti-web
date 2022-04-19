@@ -24,6 +24,8 @@ class CreateTbRTraderTable extends Migration
             $table->string('no_ktp');
             $table->string('no_izin');
             $table->string('email');
+            $table->float('latitude');
+            $table->float('longitude');
         });
     }
 

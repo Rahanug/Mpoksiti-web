@@ -22,5 +22,7 @@ class tbRTrader extends Model
         'no_ktp',
         'no_izin',
         'email',
+        'latitude',
+        'longitude'
     ];
 }
