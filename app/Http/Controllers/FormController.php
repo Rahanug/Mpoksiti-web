@@ -66,7 +66,7 @@ class FormController extends Controller
                     $name = $file->getClientOriginalName();
                     $insert[$key]['images'] = $name;
                     $insert[$key]['id_ppk'] = $id_ppk;
-                    $file->move(public_path().'images_stuffing', $name);  
+                    $file->move(public_path().'/images_stuffing', $name);  
                 }
                 DB::table('images_stuffing')->insert($insert);
             }
