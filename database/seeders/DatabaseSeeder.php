@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
         vForQr::factory(20)->create();
         trMstPelaporan::factory(20)->create();
         vDtlPelaporan::factory(50)->create();
-        tbRTrader::factory(10)->create();
+        tbRTrader::factory(5)->create();
         Notif::factory(2)->create();
         // FormModel::factory(5)->create();
     }
