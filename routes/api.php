@@ -21,7 +21,7 @@ use App\Http\Controllers\api\ImageController;
 Route::post('/regisuser', [App\Http\Controllers\api\AuthController::class, 'register'])->name('mobile.regis');
 Route::post('/loginuser', [App\Http\Controllers\api\AuthController::class, 'login'])->name('mobile.login');
 Route::post('/npwp', [App\Http\Controllers\api\AuthController::class, 'checknpwp'])->name('mobile.checknpwp');
-Route::get('/farm', [App\Http\Controllers\api\AuthController::class, 'getFarmLocation'])->name('mobile.checkfarm');
+Route::post('/farm', [App\Http\Controllers\api\AuthController::class, 'getFarmLocation'])->name('mobile.checkfarm');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/logoutuser', [App\Http\Controllers\api\AuthController::class, 'logout'])->name('mobile.logout');
