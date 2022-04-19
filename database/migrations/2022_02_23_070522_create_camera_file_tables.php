@@ -13,7 +13,7 @@ class CreateCameraFileTables extends Migration
      */
     public function up()
     {
-        Schema::create('images', function (Blueprint $table) {
+        Schema::create('images_pk', function (Blueprint $table) {
             $table->id();
             $table->integer('id_ppk');
             $table->string('no_aju_ppk');
@@ -33,6 +33,6 @@ class CreateCameraFileTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('images_pk');
     }
 }

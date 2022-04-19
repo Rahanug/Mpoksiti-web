@@ -134,7 +134,7 @@
                                       <div class="row">
                                         <div class="col-8 col-sm-6">
                                           <div class="row">PENGIRIM: </div>
-                                          <div class="row">NPWP: </div>
+                                          <div class="row">NPWP: {{ $ppk->npwp }}</div>
                                           <div class="row">Nama: {{ $ppk->nm_trader }}</div>
                                           <div class="row">Alamat: {{ $ppk->al_trader }}</div>
                                         </div>
@@ -184,7 +184,7 @@
 
                                       <div class="row">
                                         <div class="col-4 col-sm-12">
-                                          <div class="row">DOKUMENTASI: </div>
+                                          <div class="row">DOKUMENTASI PENGGUNA: </div>
                                           <table class="table">
                                             <thead>
                                               <tr>
@@ -206,15 +206,18 @@
                                                       $str = explode("-", $image->url_file);
                                                     ?>
                                                     @if ($str[0] == 'video')
-                                                    <a href="/img/pemeriksaan_klinis/<?= $image->url_file ?>" target="_blank">
-                                                      <i class="fas fa-play fa-3x" style="
-                                                        top: 50%;
-                                                        left: 50%;
-                                                        position: absolute;
-                                                        transform: translate(-50%, -50%);">
-                                                      </i>
+                                                    <a href="/img/pemeriksaan_klinis/<?= $image->url_file ?>" target="_blank" style="position: relative;">
+                                                      <img src="/img/pemeriksaan_klinis/<?= 'thumb-' . $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
+                                                      <div class="icon-wrap" style="
+                                                          width: 100%;
+                                                          height: 100%;
+                                                          position: absolute;
+                                                          display: flex;
+                                                          align-items: center;
+                                                          justify-content: center;">
+                                                        <i class="fa fa-play-circle fa-4x"></i>
+                                                      </div>
                                                     </a>
-                                                    <img src="/img/pemeriksaan_klinis/<?= 'thumb-'.$image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
                                                     @else
                                                     <img src="/img/pemeriksaan_klinis/<?= $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
                                                     @endif
@@ -222,6 +225,32 @@
                                                     <figcaption class="figure-caption">Waktu Upload: <?= $image->updated_at ?></figcaption>
                                                   </figure>
                                                   @endforeach
+                                                </td>
+                                              </tr>
+                                               @endforeach
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
+
+                                      <br>
+                                      <div class="row">
+                                        <div class="col-4 col-sm-12">
+                                          <div class="row">DOKUMENTASI PEMERIKSAAN: </div>
+                                          <table class="table">
+                                            <thead>
+                                              <tr>
+                                                <th scope="col">No</th>
+                                                <th scope="col">Dokumentasi</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              <?php $countDokumentasi=0; ?>
+                                              @foreach ($ppk->images_dokumentasi as $image)                                              
+                                              <tr>
+                                                <td>{{ ++$countDokumentasi}}</td>
+                                                <td>
+                                                  <img src="/img/pemeriksaan_klinis/<?= $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
                                                 </td>
                                               </tr>
                                                @endforeach
@@ -251,14 +280,16 @@
                                           <span aria-hidden="true">×</span>
                                       </button>
                                   </div>
-                                  <form id=<?= '"action-form'.$count.'"' ?> action="/admin/pemeriksaan_klinis/action" method="POST">
+                                  <form id=<?= '"action-form'.$count.'"' ?> action="/admin/pemeriksaan_klinis/action" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="modal-body">
                                       <div class="form-group">
                                         <input type="hidden" id="id_ppk" name="id_ppk" value=<?= $ppk->id_ppk ?>>
                                         <input type="hidden" id="id_jpp" name="id_jpp" value=<?= $ppk->id_jpp ?>>
+                                        <label for="file_gambar" style="font-weight:500; color:#2E2A61; font-size: 18px;">File Gambar</label>
+                                        <input type="file" class="form-control" name="files[]" multiple required>
                                         <label for="keterangan" class="col-form-label">Keterangan:</label>
-                                        <textarea class="form-control" id="keterangan" name="keterangan" form=<?= '"action-form'.$count.'"' ?>></textarea>
+                                        <textarea class="form-control" id="keterangan" name="keterangan" required form=<?= '"action-form'.$count.'"' ?>></textarea>
                                       </div>
                                     </div>
                                     <div class="modal-footer">

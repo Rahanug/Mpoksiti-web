@@ -5,17 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Image extends Model
+class ImageAdmin extends Model
 {
     use HasFactory;
-    protected $table = 'images_pk';
+    protected $table ="images_admin";
+    protected $primaryKey='id';
     protected $fillable = [
-        'id_ppk',
-        'no_aju_ppk', 
-        'kd_ikan',
         'url_file',
-        'latitude',
-        'longitude',
-        'id_trader'
+        'id_ppk',
     ];
+    public $timestamps = false;
 }
