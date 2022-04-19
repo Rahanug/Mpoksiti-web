@@ -8,6 +8,7 @@ use App\Models\Trader;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -104,5 +105,16 @@ class AuthController extends Controller
         return [
             'message' => 'Logged out',
         ];
+    }
+
+    public function getFarmLocation(Request $request){
+        //TODO nanti didelete saat auth selesai
+        $trader = DB::connection('sqlsrv2')
+            ->table('tb_r_trader')
+            ->select('latitude', 'longitude')
+            ->where('id_trader', $request->id_trader)
+            ->first();
+        
+        return response()->json($trader);
     }
 }

@@ -22,6 +22,9 @@
             <th scope="col">Nama Konter: {{ $data->nama_counter }}</th>
         </tr>
         <tr>
+            <th scope="col">Alamat: {{ $data->alamat_counter }}</th>
+        </tr>
+        <tr>
             <th scope="col">Penanggung Jawab: {{ $data->penanggungJawab }}</th>
         </tr>
         <tr>

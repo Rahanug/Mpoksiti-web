@@ -15,7 +15,7 @@ class tbRTraderFactory extends Factory
     public function definition()
     {
         return [
-            'id_trader' => $this->faker->randomElement(Trader::all())['id_trader'],
+            'id_trader' => $this->faker->unique()->randomElement(Trader::all())['id_trader'],
             'nm_trader' => $this->faker->name,
             'al_trader' => $this->faker->address,
             'kt_trader' => $this->faker->numerify('####'),
@@ -24,6 +24,8 @@ class tbRTraderFactory extends Factory
             'no_ktp' => $this->faker->numerify('################'),
             'no_izin' => $this->faker->numerify('###/##/II/####-PM'),
             'email' => $this->faker->email,
+            'latitude' => $this->faker->latitude(),
+            'longitude' => $this->faker->longitude(),
         ];
     }
 }

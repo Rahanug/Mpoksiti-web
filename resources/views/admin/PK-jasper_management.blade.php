@@ -32,6 +32,8 @@
                                 <input type="text" id="kode_counter" name="kode_counter" class="form-control">
                                 <label for="nama_counter" class="col-form-label">Nama Counter: </label>
                                 <input type="text" id="nama_counter" name="nama_counter" class="form-control">
+                                <label for="alamat" class="col-form-label">Alamat: </label>
+                                <input type="text" id="alamat_counter" name="alamat_counter" class="form-control">
                                 <label for="penanggungJawab" class="col-form-label">Penanggung Jawab: </label>
                                 <input type="text" id="penanggungJawab" name="penanggungJawab" class="form-control">
                                 <label for="latitude" class="col-form-label">Latitude: </label>
@@ -125,6 +127,8 @@
                                           <input type="text" id="kode_counter" name="kode_counter" class="form-control" value=<?= $jpp->kode_counter?> disabled readonly>
                                           <label for="nama_counter" class="col-form-label">Nama Counter: </label>
                                           <input type="text" id="nama_counter" name="nama_counter" class="form-control" value=<?= '"'.$jpp->nama_counter.'"'?>>
+                                          <label for="alamat" class="col-form-label">Alamat: </label>
+                                          <input type="text" id="alamat_counter" name="alamat_counter" class="form-control" value=<?= '"'.$jpp->alamat_counter.'"'?>>
                                           <label for="penanggungJawab" class="col-form-label">Penanggung Jawab: </label>
                                           <input type="text" id="penanggungJawab" name="penanggungJawab" class="form-control" value=<?= '"'.$jpp->penanggungJawab.'"'?>>
                                           <label for="latitude" class="col-form-label">Latitude: </label>
