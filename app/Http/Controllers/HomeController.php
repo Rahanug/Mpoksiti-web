@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Trader;
-use App\Models\Ppk;
+use App\Models\Dokumen;
 use App\Models\KategoriDokumen;
 use App\Models\MasterDokumen;
-use App\Models\Dokumen;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
+use App\Models\MasterSubform;
+use App\Models\Ppk;
+use App\Models\Subform;
+use App\Models\Trader;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 // use App\Models\vDataHeader;
-use App\Models\MasterSubform;
-use App\Models\Subform;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use PDF;
 
 class HomeController extends Controller
@@ -32,8 +32,8 @@ class HomeController extends Controller
         $ppks = new PpkController();
         $ppkModel = new Ppk();
         // $vdataHeader = new vDataHeader();
-        $dbView = DB::connection('sqlsrv')->getDatabaseName() . '.dbo';
-        $viewPpk = DB::connection('sqlsrv2')->table('v_data_header')
+        $dbView = DB::connection('mysql')->getDatabaseName() . '.dbo';
+        $viewPpk = DB::connection('mysql2')->table('v_data_header')
             ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', "ppks.id_ppk")
             ->where('v_data_header.kd_kegiatan', 'E')
             ->where("v_data_header.id_trader", Auth::user()->id_trader)
@@ -58,7 +58,7 @@ class HomeController extends Controller
     {
         $ppks = new PpkController();
         $ppk = $ppks->getIf($id_ppk)[0];
-        $dbView = DB::connection('sqlsrv2')->getDatabaseName() . '.dbo';
+        $dbView = DB::connection('mysql2')->getDatabaseName() . '.dbo';
 
         $dokumens = new Dokumen();
         $kategoriModel = new KategoriDokumen();
@@ -71,7 +71,7 @@ class HomeController extends Controller
         foreach (KategoriDokumen::all() as $item) {
             $kategori[$item->id_kategori] = $item->nama_kategori;
         }
-        $dbView = DB::connection('sqlsrv2')->getDatabaseName() . '.dbo';
+        $dbView = DB::connection('mysql2')->getDatabaseName() . '.dbo';
         $masterDokumenModel = new MasterDokumen();
         return view('trader.document', [
             "title" => "Unggah Dokumen",
@@ -96,7 +96,7 @@ class HomeController extends Controller
         // ]);
     }
 
-    // Tidak dipakai karena yg dipakai get detail dokumen 
+    // Tidak dipakai karena yg dipakai get detail dokumen
     // private function getNamaDokumen($id_ppk)
     // {
     //     $dokumens = new Dokumen();
@@ -124,7 +124,6 @@ class HomeController extends Controller
         }
         return $result;
     }
-
 
     private function getMasterDokumen()
     {
@@ -190,7 +189,7 @@ class HomeController extends Controller
         ]);
         Ppk::updateOrCreate([
             'id_ppk' => $request->input('id_ppk'),
-            'status' => 'verifikasi'
+            'status' => 'verifikasi',
         ]);
         DB::commit();
         // $master = new MasterDokumen();
@@ -234,7 +233,6 @@ class HomeController extends Controller
     //     return redirect('/home')->with('status', 'File Success');
     // }
 
-
     public function pilihMaster(Request $request)
     {
         $id_master = $request->input('id_master');
@@ -248,15 +246,15 @@ class HomeController extends Controller
             ]);
             Ppk::updateOrCreate([
                 'id_ppk' => $request->input('id_ppk'),
-                'status' => 'verifikasi'
+                'status' => 'verifikasi',
             ]);
             DB::commit();
             echo json_encode([
-                'error' => false
+                'error' => false,
             ]);
         } else {
             echo json_encode([
-                'error' => true
+                'error' => true,
             ]);
         }
         // echo json_encode([
@@ -302,7 +300,7 @@ class HomeController extends Controller
     {
         $messages = [
             'required' => ':attribute wajib diisi ',
-            'jadwal_periksa.required'=> 'Jadwal wajib diisi!!',
+            'jadwal_periksa.required' => 'Jadwal wajib diisi!!',
             'min' => ':attribute harus diisi minimal :min karakter !!!',
             'max' => ':attribute harus diisi maksimal :max karakter !!!',
             'numeric' => ':attribute harus diisi angka !!!',
@@ -320,7 +318,6 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
-
     public function cetakHC(Request $request, $id_ppk)
     {
         $master = array();
@@ -332,8 +329,8 @@ class HomeController extends Controller
             $trader[$item->id_trader] = $item->nm_trader;
         }
         // $vdataHeader = new vDataHeader();
-        $dbView = DB::connection('sqlsrv')->getDatabaseName() . '.dbo';
-        $viewPpk = DB::connection('sqlsrv2')->table('v_data_header')
+        $dbView = DB::connection('mysql')->getDatabaseName() . '.dbo';
+        $viewPpk = DB::connection('mysql2')->table('v_data_header')
             ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', "ppks.id_ppk")
             ->leftJoin("$dbView.subform as subform", 'v_data_header.id_ppk', '=', "subform.id_ppk")
             ->where("v_data_header.id_ppk", $id_ppk)
@@ -343,20 +340,20 @@ class HomeController extends Controller
             "ppks" => $viewPpk,
             "trader" => $trader,
             "master" => $master,
-            "trader"=> $trader
-            
+            "trader" => $trader,
+
         ];
         $pdf = PDF::loadView('trader.cetakHC', [
             "title" => "Dashboard",
             "ppks" => $viewPpk,
             "trader" => $trader,
             "master" => $master,
-            "trader"=> $trader
+            "trader" => $trader,
         ])->setOptions([
             'defaultFont' => 'Times New Roman',
-            'isPhpEnabled', true
+            'isPhpEnabled', true,
         ]);
-        
+
         $pdf->render();
         return $pdf->stream();
         // return view('trader.cetakHC', [
@@ -370,28 +367,28 @@ class HomeController extends Controller
 
     public function detail(Request $request, $id_ppk)
     {
-        $dbView = DB::connection('sqlsrv')->getDatabaseName() . '.dbo';
-        $viewPpk = DB::connection('sqlsrv2')->table('v_data_header')
+        $dbView = DB::connection('mysql')->getDatabaseName() . '.dbo';
+        $viewPpk = DB::connection('mysql2')->table('v_data_header')
             ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', "ppks.id_ppk")
             ->leftJoin("$dbView.subform as subform", 'v_data_header.id_ppk', '=', "subform.id_ppk")
             ->where("v_data_header.id_ppk", $id_ppk)
             ->select('ppks.*', 'v_data_header.*', 'subform.*')->get();
-        $detailPpk = DB::connection('sqlsrv2')->table('v_data_header')->where("v_data_header.id_ppk", $id_ppk)->get();
+        $detailPpk = DB::connection('mysql2')->table('v_data_header')->where("v_data_header.id_ppk", $id_ppk)->get();
         $detailStuf = DB::table('Ppks')->where("Ppks.id_ppk", $id_ppk)->get();
         $dokumen = DB::table('dokumens')
-        ->leftJoin('master_dokumens as master', 'dokumens.id_master', 'master.id_master')
-        ->where('dokumens.id_ppk', $id_ppk)
-        ->select('dokumens.*', 'master.*')->get();
+            ->leftJoin('master_dokumens as master', 'dokumens.id_master', 'master.id_master')
+            ->where('dokumens.id_ppk', $id_ppk)
+            ->select('dokumens.*', 'master.*')->get();
         $kategori = array();
         foreach (KategoriDokumen::all() as $item) {
             $kategori[$item->id_kategori] = $item->nama_kategori;
         }
         return view('trader.detail', [
-            "title"=> "Detail Stuffing",
-            "details"=>$detailPpk,
-            "stuffing"=>$detailStuf,
-            "dokumen"=>$dokumen,
-            "kategori"=>$kategori,
+            "title" => "Detail Stuffing",
+            "details" => $detailPpk,
+            "stuffing" => $detailStuf,
+            "dokumen" => $dokumen,
+            "kategori" => $kategori,
         ]);
     }
 }

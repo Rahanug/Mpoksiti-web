@@ -14,7 +14,7 @@ class CreateTbRTraderTable extends Migration
     public function up()
     {
         $this->down();
-        Schema::connection('sqlsrv2')->create('tb_r_trader', function (Blueprint $table) {
+        Schema::connection('mysql2')->create('tb_r_trader', function (Blueprint $table) {
             $table->integer('id_trader')->unsigned();
             $table->string('nm_trader');
             $table->string('al_trader');
@@ -34,6 +34,6 @@ class CreateTbRTraderTable extends Migration
      */
     public function down()
     {
-        Schema::connection('sqlsrv2')->dropIfExists('tb_r_trader');
+        Schema::connection('mysql2')->dropIfExists('tb_r_trader');
     }
 }

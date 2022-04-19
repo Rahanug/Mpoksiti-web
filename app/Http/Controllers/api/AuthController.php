@@ -35,7 +35,7 @@ class AuthController extends Controller
             ], 400);
         }
 
-        // $checkNPWP = DB::connection('sqlsrv2')->select(
+        // $checkNPWP = DB::connection('mysql2')->select(
         //     "SELECT COUNT(*) FROM tb_r_trader WHERE npwp = $npwp"
         // );
         // if ($checkNPWP == '1') {

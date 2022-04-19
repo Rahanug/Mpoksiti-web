@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateVDtlPelaporanTable extends Migration
 {
-    protected $connection = 'sqlsrv2';
+    protected $connection = 'mysql2';
     /**
      * Run the migrations.
      *
@@ -16,7 +16,7 @@ class CreateVDtlPelaporanTable extends Migration
     {
         $this->down();
         /// Tabel ini digunakan AZIZ untuk mencari jenis ikan yang akan dikirim oleh id_ppk tertentu
-        Schema::connection('sqlsrv2')->create('v_dtl_pelaporan', function (Blueprint $table) {
+        Schema::connection('mysql2')->create('v_dtl_pelaporan', function (Blueprint $table) {
             $table->integer('id_ppk');
             $table->string('id_kd_ikan');
             $table->string('kd_ikan_lokal_ol');
@@ -86,6 +86,6 @@ class CreateVDtlPelaporanTable extends Migration
      */
     public function down()
     {
-        Schema::connection('sqlsrv2')->dropIfExists('v_dtl_pelaporan');
+        Schema::connection('mysql2')->dropIfExists('v_dtl_pelaporan');
     }
 }

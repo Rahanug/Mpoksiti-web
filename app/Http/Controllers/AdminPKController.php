@@ -6,16 +6,15 @@ use App\Models\ImageAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-
 class AdminPKController extends Controller
 {
-    /// 
+    ///
     /// Pemeriksaan Klinis Virtual
     ///
 
     public function index()
     {
-        $dbView = DB::connection('sqlsrv2')->getDatabaseName() . '.dbo';
+        $dbView = DB::connection('mysql2')->getDatabaseName() . '.dbo';
         $pks = DB::table('pemeriksaan_klinis')
             ->joinSub("SELECT * FROM $dbView.v_data_header", 'data_view', function ($join) {
                 $join->on('pemeriksaan_klinis.id_ppk', '=', 'data_view.id_ppk');
@@ -27,10 +26,10 @@ class AdminPKController extends Controller
             ->whereNotNull('pemeriksaan_klinis.status_periksa')
             ->get();
         foreach ($pks as $data) {
-            $data->ikan = DB::connection('sqlsrv2')->select(
+            $data->ikan = DB::connection('mysql2')->select(
                 "
-                SELECT kd_ikan, nm_lokal, nm_umum, nm_latin, satuan, jumlah 
-                FROM v_dtl_pelaporan WHERE id_ppk=" . (int)$data->id_ppk
+                SELECT kd_ikan, nm_lokal, nm_umum, nm_latin, satuan, jumlah
+                FROM v_dtl_pelaporan WHERE id_ppk=" . (int) $data->id_ppk
             );
             foreach ($data->ikan as $ikan) {
                 $ikan->images = DB::table('images_pk')
@@ -47,7 +46,7 @@ class AdminPKController extends Controller
             "title" => "PKVirtual",
             "pks" => $pks,
             "lastDate" => date('Y-m-d'),
-            "lastTime" => date('H:i:s')
+            "lastTime" => date('H:i:s'),
         ]);
     }
 
@@ -77,15 +76,14 @@ class AdminPKController extends Controller
             ->update([
                 'status_periksa' => 2,
                 'jadwal_periksa' => date('Y-m-d H:i', strtotime($request->jadwalMeet . ' ' . $request->jamMeet)),
-                'url_periksa' => $request->linkMeet
+                'url_periksa' => $request->linkMeet,
             ]);
-
 
         //notify
         DB::table('jpp_notif')
             ->where('id_jpp', $request->id_jpp)
             ->update(['last_notif' => date('Y-m-d H:i:s')]);
-        return redirect('admin/pemeriksaan_klinis')->with('success', 'Jadwal meet telah dikirim untuk ID PPK ' . $request->id_ppk);;
+        return redirect('admin/pemeriksaan_klinis')->with('success', 'Jadwal meet telah dikirim untuk ID PPK ' . $request->id_ppk);
     }
 
     public function sendAction(Request $request)
@@ -107,21 +105,21 @@ class AdminPKController extends Controller
             return redirect('admin/pemeriksaan_klinis')->withErrors(['msg' => 'keterangan singkat wajib diisi']);
         }
 
-        if ($request->hasfile('files')) { 
+        if ($request->hasfile('files')) {
             $files = [];
             foreach ($request->file('files') as $file) {
                 if ($file->isValid()) {
-                    $filename = 'admin-'.$file->getClientOriginalName(); 
+                    $filename = 'admin-' . $file->getClientOriginalName();
                     $tujuan_upload = 'img/pemeriksaan_klinis';
-                    $file->move($tujuan_upload, $filename);                 
+                    $file->move($tujuan_upload, $filename);
                     $files[] = [
                         'url_file' => $filename,
-                        'id_ppk' => $request->id_ppk
+                        'id_ppk' => $request->id_ppk,
                     ];
                 }
             }
             ImageAdmin::insert($files);
-        }else{
+        } else {
             return redirect('admin/pemeriksaan_klinis')->withErrors(['msg' => 'upload file gagal']);
         }
 
@@ -138,7 +136,7 @@ class AdminPKController extends Controller
             ->where('id_ppk', $request->id_ppk)
             ->update([
                 'status' => $statusPPK,
-                'keterangan' => $request->keterangan
+                'keterangan' => $request->keterangan,
             ]);
 
         //notify

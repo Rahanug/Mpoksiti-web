@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Trader;
-use App\Models\Ppk;
+use App\Models\Dokumen;
 use App\Models\KategoriDokumen;
 use App\Models\MasterDokumen;
-use App\Models\Dokumen;
 use App\Models\MasterSubform;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Carbon;
-use App\Models\vDataHeader;
+use App\Models\Ppk;
 use App\Models\Subform;
+use App\Models\Trader;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class StuffingController extends Controller
 {
@@ -26,11 +24,11 @@ class StuffingController extends Controller
         $ppks = new PpkController();
         $ppkModel = new Ppk();
         // $vdataHeader = new vDataHeader();
-        $dbView = DB::connection('sqlsrv')->getDatabaseName().'.dbo';
+        $dbView = DB::connection('mysql')->getDatabaseName() . '.dbo';
         return view('admin.stuffing', [
             "title" => "Stuffing",
             // "ppks" => $ppkModel->where("id_trader", Auth::user()->id_trader)->get(),
-            "ppks" => DB::connection('sqlsrv2')->table('v_data_header')
+            "ppks" => DB::connection('mysql2')->table('v_data_header')
                 ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', 'ppks.id_ppk')
                 ->where('v_data_header.kd_kegiatan', 'E')
                 ->whereNotNull('ppks.status')
@@ -80,7 +78,7 @@ class StuffingController extends Controller
         // ]);
     }
 
-    // Tidak dipakai karena yg dipakai get detail dokumen 
+    // Tidak dipakai karena yg dipakai get detail dokumen
     // private function getNamaDokumen($id_ppk)
     // {
     //     $dokumens = new Dokumen();
@@ -108,7 +106,6 @@ class StuffingController extends Controller
         }
         return $result;
     }
-
 
     private function getMasterDokumen()
     {
@@ -138,9 +135,8 @@ class StuffingController extends Controller
         // $id_master = $request->input('id_master');
         Ppk::where('id_ppk', $id_ppk)->update([
             "status" => "Penjadwalan",
-            "deskripsi" => null
+            "deskripsi" => null,
         ]);
-
 
         return redirect('/admin/stuffing')->with('success', 'Dokumen telah disetujui!');
     }
@@ -162,9 +158,8 @@ class StuffingController extends Controller
         // $id_master = $request->input('id_master');
         Ppk::where('id_ppk', $id_ppk)->update([
             "status" => "Gagal",
-            "deskripsi" => $request->deskripsi
+            "deskripsi" => $request->deskripsi,
         ]);
-
 
         return redirect('/admin/stuffing')->with('error', 'Dokumen tidak disetujui!');
     }
@@ -188,25 +183,25 @@ class StuffingController extends Controller
         Ppk::where('id_ppk', $id_ppk)->update([
             "status" => "Stuffing",
             "deskripsi" => null,
-            "url_periksa"=> $request->url_periksa
+            "url_periksa" => $request->url_periksa,
         ]);
 
         // Validasi jangan lupa
         // Select dari table subform where id ppk = id ppk
         // if number of row lebih dari 0, empty
         // else select(*) from master, nanti dapet id_masternya terus pake
-        // 
+        //
         $count = Subform::where('id_ppk', $id_ppk)->count();
-        if($count == 0){
+        if ($count == 0) {
             $master = MasterSubform::all();
             DB::beginTransaction();
-            foreach($master as $key=>$m){
+            foreach ($master as $key => $m) {
                 Subform::insert([
-                    'urutan'=>++$key,
-                    'value'=>'',
-                    'visibility'=>'show',
-                    'id_masterSubform'=>$m->id_masterSubform,
-                    'id_ppk'=>$id_ppk,
+                    'urutan' => ++$key,
+                    'value' => '',
+                    'visibility' => 'show',
+                    'id_masterSubform' => $m->id_masterSubform,
+                    'id_ppk' => $id_ppk,
                 ]);
             }
             DB::commit();
@@ -234,9 +229,8 @@ class StuffingController extends Controller
         Ppk::where('id_ppk', $id_ppk)->update([
             "status" => "Ditolak",
             "deskripsi" => $request->deskripsi,
-            "url_periksa"=> null,
+            "url_periksa" => null,
         ]);
-
 
         return redirect('/admin/stuffing')->with('error', 'Jadwal tidak disetujui!');
     }
@@ -258,41 +252,40 @@ class StuffingController extends Controller
             "no_izin" => 'required',
             "tgl_izin" => 'required',
         ], $messages);
-        
+
         Ppk::where('id_ppk', $id_ppk)->update([
             "status" => "Cetak HC",
             "no_izin" => $request->no_izin,
-            "tgl_izin"=> date('Y-m-d H:i', strtotime($request->tgl_izin)),
+            "tgl_izin" => date('Y-m-d H:i', strtotime($request->tgl_izin)),
         ]);
-
 
         return redirect('/admin/stuffing')->with('success', "PPK $id_ppk telah disetujui!");
     }
 
     public function detail(Request $request, $id_ppk)
     {
-        $dbView = DB::connection('sqlsrv')->getDatabaseName() . '.dbo';
-        $viewPpk = DB::connection('sqlsrv2')->table('v_data_header')
+        $dbView = DB::connection('mysql')->getDatabaseName() . '.dbo';
+        $viewPpk = DB::connection('mysql2')->table('v_data_header')
             ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', "ppks.id_ppk")
             ->leftJoin("$dbView.subform as subform", 'v_data_header.id_ppk', '=', "subform.id_ppk")
             ->where("v_data_header.id_ppk", $id_ppk)
             ->select('ppks.*', 'v_data_header.*', 'subform.*')->get();
-        $detailPpk = DB::connection('sqlsrv2')->table('v_data_header')->where("v_data_header.id_ppk", $id_ppk)->get();
+        $detailPpk = DB::connection('mysql2')->table('v_data_header')->where("v_data_header.id_ppk", $id_ppk)->get();
         $detailStuf = DB::table('Ppks')->where("Ppks.id_ppk", $id_ppk)->get();
         $dokumen = DB::table('dokumens')
-        ->leftJoin('master_dokumens as master', 'dokumens.id_master', 'master.id_master')
-        ->where('dokumens.id_ppk', $id_ppk)
-        ->select('dokumens.*', 'master.*')->get();
+            ->leftJoin('master_dokumens as master', 'dokumens.id_master', 'master.id_master')
+            ->where('dokumens.id_ppk', $id_ppk)
+            ->select('dokumens.*', 'master.*')->get();
         $kategori = array();
         foreach (KategoriDokumen::all() as $item) {
             $kategori[$item->id_kategori] = $item->nama_kategori;
         }
         return view('admin.detail', [
-            "title"=> "Detail Stuffing",
-            "details"=>$detailPpk,
-            "stuffing"=>$detailStuf,
-            "dokumen"=>$dokumen,
-            "kategori"=>$kategori,
+            "title" => "Detail Stuffing",
+            "details" => $detailPpk,
+            "stuffing" => $detailStuf,
+            "dokumen" => $dokumen,
+            "kategori" => $kategori,
         ]);
     }
 }

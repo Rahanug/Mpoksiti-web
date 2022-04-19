@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class trMstPelaporan extends Model
 {
     use HasFactory;
-    protected $connection = 'sqlsrv2';
-    protected $table ="tr_mst_pelaporan";
-    protected $primaryKey='id_ppk';
+    protected $connection = 'mysql2';
+    protected $table = "tr_mst_pelaporan";
+    protected $primaryKey = 'id_ppk';
     public $timestamps = false;
     protected $fillable = [
         'code_qr',

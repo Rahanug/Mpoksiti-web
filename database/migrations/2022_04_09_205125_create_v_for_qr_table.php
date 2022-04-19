@@ -14,7 +14,7 @@ class CreateVForQrTable extends Migration
     public function up()
     {
         $this->down();
-        Schema::connection('sqlsrv2')->create('v_for_qr', function (Blueprint $table) {
+        Schema::connection('mysql2')->create('v_for_qr', function (Blueprint $table) {
             $table->integer('id_ppk');
             $table->string('nm_kegiatan');
             $table->string('id_sertifikat');
@@ -24,19 +24,19 @@ class CreateVForQrTable extends Migration
             $table->string('kd_pel_muat');
             $table->string('kd_pel_bongkar');
             /*
-            id_ppk	
-            no_ppk	
-            kd_kegiatan	
-            nm_kegiatan	
-            sts_syarat	
-            id_sertifikat	
-            no_sertifikat	
-            tgl_sertifikat	
-            seri	
-            nama	
-            kd_pel_muat	
-            kd_pel_bongkar
-            */
+        id_ppk
+        no_ppk
+        kd_kegiatan
+        nm_kegiatan
+        sts_syarat
+        id_sertifikat
+        no_sertifikat
+        tgl_sertifikat
+        seri
+        nama
+        kd_pel_muat
+        kd_pel_bongkar
+         */
         });
     }
 
@@ -47,6 +47,6 @@ class CreateVForQrTable extends Migration
      */
     public function down()
     {
-        Schema::connection('sqlsrv2')->dropIfExists('v_for_qr');
+        Schema::connection('mysql2')->dropIfExists('v_for_qr');
     }
 }

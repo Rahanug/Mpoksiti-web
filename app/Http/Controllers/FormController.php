@@ -2,19 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Trader;
-use App\Models\Ppk;
-use App\Models\KategoriDokumen;
-use App\Models\MasterDokumen;
-use App\Models\Dokumen;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Carbon;
-use App\Models\vDataHeader;
-use App\Models\Subform;
 use App\Models\MasterSubform;
+use App\Models\Ppk;
+use App\Models\Subform;
 use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\Console\Input\Input;
 
 class FormController extends Controller
@@ -43,30 +36,28 @@ class FormController extends Controller
             DB::beginTransaction();
             foreach ($input as $i) {
                 Subform::where('id_subform', $i['idsubform'])->update([
-                    'value'=>$i['value'],
-                    'keterangan'=>$i['keterangan']
+                    'value' => $i['value'],
+                    'keterangan' => $i['keterangan'],
                 ]);
-                if($i['tipe_data'] == 'rekomendasi'){
-                    if($i['value'] == 'Sesuai'){
+                if ($i['tipe_data'] == 'rekomendasi') {
+                    if ($i['value'] == 'Sesuai') {
                         Ppk::where('id_ppk', $id_ppk)->update([
                             "status" => "Persetujuan",
                         ]);
-                    }else{
+                    } else {
                         Ppk::where('id_ppk', $id_ppk)->update([
                             "status" => "Ditolak",
                         ]);
                     }
                 }
             }
-            if($request->hasFile('images_stuffing'))
-            {
-                foreach($request->file('images_stuffing') as $key => $file)
-                {
+            if ($request->hasFile('images_stuffing')) {
+                foreach ($request->file('images_stuffing') as $key => $file) {
                     $path = $file->store('public/images_stuffing');
                     $name = $file->getClientOriginalName();
                     $insert[$key]['images'] = $name;
                     $insert[$key]['id_ppk'] = $id_ppk;
-                    $file->move(public_path().'/images_stuffing', $name);  
+                    $file->move(public_path() . '/images_stuffing', $name);
                 }
                 DB::table('images_stuffing')->insert($insert);
             }
@@ -93,8 +84,7 @@ class FormController extends Controller
                         break;
                     }
                 }
-            }
-            else if ($j->tipe_data == 'rekomendasi') {
+            } else if ($j->tipe_data == 'rekomendasi') {
                 if (!isset($data['keterangan'])) {
                     throw new Exception('Semua Indikator harus diisi');
                     break;
@@ -111,15 +101,16 @@ class FormController extends Controller
     }
     // select leftjoin master m (select urutan id_master from subform where id_ppk = id_ppk) s on m.id_master = s.id_master
 
-    public function Hasil($id_ppk){
+    public function Hasil($id_ppk)
+    {
         $master = array();
         foreach (MasterSubform::all() as $item) {
             $master[$item->id_masterSubform] = $item->indikator;
         }
         return view('trader.hasil_form', [
-            "title"=>'Hasil Stuffing Virtual',
-            "form"=>Subform::where('id_ppk', $id_ppk)->get(),
-            "master"=>$master,
+            "title" => 'Hasil Stuffing Virtual',
+            "form" => Subform::where('id_ppk', $id_ppk)->get(),
+            "master" => $master,
         ]);
     }
 }

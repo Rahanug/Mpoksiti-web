@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class vDtlPelaporan extends Model
 {
     use HasFactory;
-    protected $connection = 'sqlsrv2';
-    protected $table ="v_dtl_pelaporan";
+    protected $connection = 'mysql2';
+    protected $table = "v_dtl_pelaporan";
     public $timestamps = false;
     protected $fillable = [
         'id_ppk',

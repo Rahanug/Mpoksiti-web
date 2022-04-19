@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class vForQr extends Model
 {
     use HasFactory;
-    protected $connection = 'sqlsrv2';
-    protected $table ="v_for_qr";
-    protected $primaryKey='id_ppk';
+    protected $connection = 'mysql2';
+    protected $table = "v_for_qr";
+    protected $primaryKey = 'id_ppk';
     public $timestamps = false;
     protected $fillable = [
         'nm_kegiatan',
@@ -19,6 +19,6 @@ class vForQr extends Model
         'tgl_sertifikat',
         'seri',
         'kd_pel_muat',
-        'kd_pel_bongkar'
+        'kd_pel_bongkar',
     ];
 }

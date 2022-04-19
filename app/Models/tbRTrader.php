@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class tbRTrader extends Model
 {
     use HasFactory;
-    protected $connection = 'sqlsrv2';
+    protected $connection = 'mysql2';
     protected $table = "tb_r_trader";
     protected $primaryKey = "npwp";
     public $timestamps = false;
