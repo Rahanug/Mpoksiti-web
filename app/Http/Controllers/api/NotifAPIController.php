@@ -13,10 +13,10 @@ class NotifAPIController extends Controller
 
     public function check()
     {
-        $data = DB::select(
-            "SELECT updated_at
-            FROM notif WHERE id = 1"
-        );
+        $data = DB::table('notif')
+        ->select('updated_at')
+        ->where('kd_proses', 'PK')
+        ->get();
 
         return response()->json($data[0]);
     }

@@ -15,6 +15,7 @@ class CreateTableNotif extends Migration
     {
         Schema::create('notif', function (Blueprint $table) {
             $table->id();
+            $table->string('kd_proses');
             $table->dateTime('updated_at');
         });
     }

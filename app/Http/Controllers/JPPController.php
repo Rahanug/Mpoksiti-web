@@ -81,8 +81,10 @@ class JPPController extends Controller
 
         //notify
         DB::table('notif')
-        ->where('id', 1)
-        ->update(['updated_at' => date('Y-m-d H:i:s')]);
+        ->where('kd_proses', 'PK')
+        ->updateOrInsert([
+            'kd_proses' => 'PK',
+            'updated_at' => date('Y-m-d H:i:s')]);
         return redirect('/jpp/pemeriksaan');
     }
     
