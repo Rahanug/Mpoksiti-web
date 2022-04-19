@@ -121,6 +121,7 @@
                                 <div class="row">JASA PENYELENGGARA POS: </div>
                                 <div class="row">JPP: {{ $kurir->namaKurir }} </div>
                                 <div class="row">Counter: {{ Auth::user()->nama_counter }}</div>
+                                <div class="row">Alamat: {{ Auth::user()->alamat_counter }}</div>
                               </div>
                             </div>
                             <br>

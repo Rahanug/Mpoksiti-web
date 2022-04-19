@@ -151,6 +151,7 @@
                                           <div class="row">JASA PENYELENGGARA POS: </div>
                                           <div class="row">JPP: {{ $ppk->namaKurir }} </div>
                                           <div class="row">Counter: {{ $ppk->nama_counter }}</div>
+                                          <div class="row">Alamat: {{ $ppk->alamat_counter }}</div>
                                         </div>
                                       </div>
                                       <br>
