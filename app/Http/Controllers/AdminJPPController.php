@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\JenisKurir;
 use Illuminate\Http\Request;
 use App\Models\Jpp;
+use App\Models\JPPNotif;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -52,7 +53,7 @@ class AdminJPPController extends Controller
         }
 
         try {
-            Jpp::insert([
+            $id = Jpp::insertGetId([
                 'kode_counter' => $request->kode_counter,
                 'nama_counter' => $request->nama_counter,
                 'alamat_counter' => $request->alamat_counter,
@@ -62,6 +63,10 @@ class AdminJPPController extends Controller
                 'id_kurir' => $request->jenis_kurir,
                 'is_active' => 1,
                 'password' => Hash::make($request->password)
+            ]);
+            JPPNotif::insert([
+                'id_jpp' => $id,
+                'last_notif' => date('Y-m-d H:i:s')
             ]);
         } catch (Exception){
             return redirect('admin/jasper_management')->withErrors(['Konter '.$request->nama_counter.' gagal ditambahkan']);
