@@ -98,6 +98,22 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::get('/admin/kurir_management', [App\Http\Controllers\AdminJPPController::class, 'kurir'])->name('admin.PK-kurir_management');
         Route::post('/admin/kurir_management/add_kurir', [App\Http\Controllers\AdminJPPController::class, 'addKurir']);
         Route::post('/admin/kurir_management/update_kurir', [App\Http\Controllers\AdminJPPController::class, 'updateKurir']);
+
+        // Chatbot
+        Route::get('/admin/command', [App\Http\Controllers\Dashboard::class, 'index'])->name('admin.tabelCommand');
+        Route::get('/admin/command/deleteCommand/{id}', [App\Http\Controllers\Dashboard::class, 'deleteCommand'])->name('admin.deleteCommand');
+        Route::get('/admin/command/deleteAll', [App\Http\Controllers\Dashboard::class, 'deleteAll'])->name('admin.deleteAllCommand');
+
+
+        Route::get('/admin/admin-chatbot', [App\Http\Controllers\ChatbotAdminController::class, 'index'])->name('admin.tabelDaftarAdmin');
+
+        Route::get('/admin/admin-chatbot/deleteAdmin/{id}', [App\Http\Controllers\ChatbotAdminController::class, 'deleteAdmin'])->name('admin.deleteAdmin');
+
+        Route::get('/admin/admin-chatbot/addAdmins', [App\Http\Controllers\ChatbotAdminController::class, 'master'])->name('admin.addAdmin');
+        Route::post('/admin/admin-chatbot/addAdmins/storeAdmins', [App\Http\Controllers\ChatbotAdminController::class, 'storeAdmin'])->name('admin.storeAdmin');
+
+        Route::get('/admin-chatbot/updateAdmins/{id}', [App\Http\Controllers\ChatbotAdminController::class, 'masterEdit'])->name('admin.updateAdmin');
+        Route::post('/admin/admin-chatbot/updateAdmins/{id}/update', [App\Http\Controllers\ChatbotAdminController::class, 'updateAdmin'])->name('admin.update');
     });
     Route::get('/loginadmin', [\App\Http\Controllers\LoginAdminController::class, 'formLogin'])->name('loginadmin');
     Route::post('/loginadmin', [\App\Http\Controllers\LoginAdminController::class, 'loginAdmin'])->name('loginadmin');
@@ -112,4 +128,6 @@ Route::group(['middleware' => 'revalidate'], function () {
     Route::get('/loginjpp', [\App\Http\Controllers\LoginJPPController::class, 'formLogin'])->name('loginjpp');
     Route::post('/loginjpp', [\App\Http\Controllers\LoginJPPController::class, 'login'])->name('loginjpp');
     Route::get('/logoutjpp', [\App\Http\Controllers\LoginJPPController::class, 'logout'])->name('logoutjpp');
+
+    Route::post('/webhook', [App\Http\Controllers\Webhookdua::class, 'index'])->name('Webhook');
 });
