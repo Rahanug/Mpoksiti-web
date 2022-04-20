@@ -116,6 +116,19 @@
                     </div>
                 </div>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link {{ $title==='Chatbot Command'? 'active' : '' }}" href="/admin/command">
+            <i class="fas fa-fw fa-mobile"></i>
+            <span>Command Chatbot</span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {{ $title==='Chatbot Admin'? 'active' : '' }}" href="/admin/admin-chatbot">
+            <i class="fas fa-fw fa-mobile"></i>
+            <span>Admin Chatbot</span></a>
+        </li>
+
         <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
