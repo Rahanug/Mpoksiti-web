@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class AuthController extends Controller
 {
@@ -79,9 +82,10 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $user = Trader::where('email', $fields['email'])->first();
+        $user_check = Trader::where('email', $fields['email'])->first();
+        $user = Trader::select('npwp', 'id_trader')->where('email', $fields['email'])->first();
 
-        if (!$user || !Hash::check($fields['password'], $user->password)) {
+        if (!$user_check || !Hash::check($fields['password'], $user_check->password)) {
             return response([
                 'message' => 'Bad Creds',
             ], 401);
@@ -108,13 +112,21 @@ class AuthController extends Controller
     }
 
     public function getFarmLocation(Request $request){
-        //TODO nanti didelete saat auth selesai
+        //farm location from token
+        $id = auth()->user()->id_trader;
         $trader = DB::connection('sqlsrv2')
             ->table('tb_r_trader')
             ->select('latitude', 'longitude')
-            ->where('id_trader', $request->id_trader)
+            ->where('id_trader', $id)
             ->first();
         
+        
         return response()->json($trader);
+    }
+
+    public function getUserData(Request $request){
+        //user from token
+        $user = Trader::select('id_trader', 'npwp')->where('npwp', auth()->user()->npwp)->first();
+        return response()->json($user);
     }
 }
