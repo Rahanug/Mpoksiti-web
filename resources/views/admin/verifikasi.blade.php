@@ -65,8 +65,8 @@
                   </td>
                   <td>
                     @if($master->status == 'non-Aktif')
-                    <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="/admin/master/accept/{{$master->id_master}}">Setuju</a>
-                    <a style="margin: 0 3px" class="btn btn-sm btn-danger" href="/admin/master/decline/{{$master->id_master}}">Tidak Setuju</a>
+                    <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="{{route('admin.acceptVerifikasi', [$master->id_master])}}">Setuju</a>
+                    <a style="margin: 0 3px" class="btn btn-sm btn-danger" href="{{route('admin.declineVerifikasi', [$master->id_master])}}">Tidak Setuju</a>
                     @endif
                   </td>
                 </tr>

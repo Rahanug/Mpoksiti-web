@@ -20,10 +20,10 @@
     </div>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2" style="font-weight:bold; color:#2E2A61;">Master Subform</h1>
-    </div>
-    <div class="d-flex justify-content-left flex-wrap flex-md-nowrap align-items-center pt-3 pb-2">
-        <div class="btn-group">
-            <button type="button" class="btn btn-sm btn btn-outline-primary" style="font-weight: bold;" onclick="location.href='/admin/subform/TambahSubform'">Tambah Subform</button>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="mr-2">
+            <button type="button" class="btn btn-outline-primary" style="font-weight: bold;" onclick="location.href='subform/TambahSubform'">Tambah Subform</button>
+            </div>
         </div>
     </div>
     <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
@@ -80,7 +80,7 @@
                                         break;    
                                 } ?>
                                 <td>
-                                    <a style="margin: 0 3px" class="btn btn-sm btn-secondary" href="/admin/subform/EditSubform/{{$master->id_masterSubform}}">Edit</a>
+                                    <a style="margin: 0 3px" class="btn btn-sm btn-secondary" href="{{route('admin.editSubform', [$master->id_masterSubform])}}">Edit</a>
                                 </td>
                             </tr>
                             @endforeach

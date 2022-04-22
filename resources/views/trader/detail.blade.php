@@ -22,7 +22,7 @@
         <h1 class="h2" style="font-weight:bold; color:#2E2A61;">Detail Stuffing</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="mr-2">
-                <a type="button" class="btn btn-secondary" href="/home" style="font-weight: bold">
+                <a type="button" class="btn btn-secondary" href="{{ route('trader.home') }}" style="font-weight: bold">
                     Kembali
                 </a>
             </div>
@@ -77,7 +77,7 @@
 
                             <div class="form-group">
                                 <label style="font-weight: bold;">Negara</label>
-                                <input class="form-control" type="text" value="{{ $detail->negara_penerima }}" disabled>
+                                <input class="form-control" type="text" value="{{ $detail->Negara_penerima }}" disabled>
                             </div>
                         </div>
                     </div>

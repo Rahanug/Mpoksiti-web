@@ -22,7 +22,7 @@
         <h1 class="h2" style="font-weight:bold; color:#2E2A61;">Detail Stuffing</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="mr-2">
-                <a type="button" class="btn btn-secondary" href="/admin/stuffing" style="font-weight: bold">
+                <a type="button" class="btn btn-secondary" href="{{route('admin.stuffing')}}" style="font-weight: bold">
                     Kembali
                 </a>
             </div>
@@ -36,7 +36,6 @@
                     <div class="card-header">
                         <h4 class="card-title" style="font-weight: bold; font-size:large;">Detail PPK</h4>
                     </div>
-
                     <div class="card-content">
                         <div class="card-body">
                             <div class="form-group">
@@ -81,7 +80,7 @@
 
                             <div class="form-group">
                                 <label style="font-weight: bold;">Negara</label>
-                                <input class="form-control" type="text" value="{{ $detail->negara_penerima }}" disabled>
+                                <input class="form-control" type="text" value="{{ $detail->Negara_penerima }}" disabled>
                             </div>
                         </div>
                     </div>

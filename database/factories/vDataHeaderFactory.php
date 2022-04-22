@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Trader;
-
+use Illuminate\Support\Carbon;
 class vDataHeaderFactory extends Factory
 {
     /**
@@ -21,7 +21,7 @@ class vDataHeaderFactory extends Factory
             'id_trader' => $this->faker->randomElement(Trader::all())['id_trader'],
             'nm_trader' => $this->faker->name,
             'al_trader' => $this->faker->address,
-            'tgl_ppk' =>  $this->faker->date(),
+            'tgl_ppk' =>  $this->faker->dateTimeInInterval('-4 days', '+3 days'),
             'kd_kegiatan' => $this->faker->randomElement(['K', 'E']),
             'nm_penerima' => $this->faker->name,
             'alamat' => $this->faker->address,

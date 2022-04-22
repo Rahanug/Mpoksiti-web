@@ -23,7 +23,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form method="POST" action="/admin/subform/EditSubform/{{$id}}/update" enctype="multipart/form-data">
+                            <form method="POST" action="{{route('admin.updateSubform', [$id])}}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col">

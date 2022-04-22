@@ -20,17 +20,15 @@
     </div>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2" style="font-weight:bold; color:#2E2A61;">Kategori Dokumen</h1>
-    </div>
-    <div class="container">
-        <div class="d-flex justify-content-left flex-wrap flex-md-nowrap align-items-center pt-3 pb-2">
-            <div class="btn-group">
-                <button type="button" class="btn btn-sm btn btn-outline-primary" style="font-weight: bold;" onclick="location.href='/admin/kategori/TambahKategori'">Tambah Kategori</button>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="mr-2">
+                <button type="button" class="btn btn-outline-primary" style="font-weight: bold;" onclick="location.href='kategori/TambahKategori'">Tambah Kategori</button>
             </div>
         </div>
-
-        <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-            <div class="card shadow w-100 responsive" style="margin: top 10px;">
-                <div class="card-body" style="margin: top 10px;">
+    </div>
+    <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+        <div class="card shadow w-100 responsive" style="margin: top 10px;">
+            <div class="card-body" style="margin: top 10px;">
                 @if (session()->has('success'))
                 <div class="alert alert-primary alert-dismissible fade show" role="alert">
                     {{ session('success') }}
@@ -51,38 +49,37 @@
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 </div>
                 @endif
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="tableMaster">
-                            <thead>
-                                <tr>
-                                    <th scope="col">No</th>
-                                    <th scope="col">Kategori Dokumen</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Instansi</th>
-                                    <th scope="col">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $no = 0; ?>
-                                @foreach ($kategoris as $kategori)
-                                <tr>
-                                    <td>{{ ++$no; }}</td>
-                                    <td>{{ $kategori->nama_kategori }}</td>
-                                    @if($kategori->status == 1)
-                                    <td>Aktif</td>
-                                    @endif
-                                    @if($kategori->status == 0)
-                                    <td>Tidak Aktif</td>
-                                    @endif
-                                    <td>{{ $kategori->instansi_penerbit }}</td>
-                                    <td>
-                                        <a style="margin: 0 3px" class="btn btn-sm btn-secondary" href="/admin/kategori/editKategori/{{$kategori->id_kategori}}">Edit</a>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="table-responsive">
+                    <table class="table table-striped" id="tableMaster">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Kategori Dokumen</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Instansi</th>
+                                <th scope="col">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $no = 0; ?>
+                            @foreach ($kategoris as $kategori)
+                            <tr>
+                                <td>{{ ++$no; }}</td>
+                                <td>{{ $kategori->nama_kategori }}</td>
+                                @if($kategori->status == 1)
+                                <td>Aktif</td>
+                                @endif
+                                @if($kategori->status == 0)
+                                <td>Tidak Aktif</td>
+                                @endif
+                                <td>{{ $kategori->instansi_penerbit }}</td>
+                                <td>
+                                    <a style="margin: 0 3px" class="btn btn-md btn-secondary" href="{{route('admin.editKategori', [$kategori->id_kategori])}}">Edit</a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

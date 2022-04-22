@@ -14,7 +14,7 @@
   
 <div class="container">
     <div class="d-flex justify-content-left flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-        <a type="text" href="/home" style="font-weight: bold">
+        <a type="text" href="{{ route('trader.home') }}" style="font-weight: bold">
             Kembali
         </a>
   </div>  
@@ -40,7 +40,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Negara</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$ppk->negara_penerima}}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$ppk->Negara_penerima}}</div>
                         </div>
                     </div>
                 </div>
@@ -85,14 +85,12 @@
   <script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
   <script src="//cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
   <script>
-    // $(document).ready( function () {
-    //   $('#tableDokumen').DataTable({
-    //     ordering: false,
-    //     searching: false,
-    //     pagination: false,
-    //   });
-      
-    // } );
+    $(document).ready(function() {
+    $('#tableMaster').DataTable({
+      responsive: true,
+    });
+
+  });
     function chooseMaster(id_master) {
       $.ajax({
         type: "POST",

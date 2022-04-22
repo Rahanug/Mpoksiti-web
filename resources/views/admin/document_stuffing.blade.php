@@ -9,7 +9,7 @@
 <script>
   document.title = "Proses Stuffing Virtual"
 </script>
-<main class="justify-content-md-center-lg-10 px-md-2">
+<main class="col-md-9 ms-sm-auto col-lg-12 px-md-4">
   <div class="chartjs-size-monitor">
     <div class="chartjs-size-monitor-expand">
       <div class=""></div>
@@ -18,56 +18,55 @@
       <div class=""></div>
     </div>
   </div>
-  <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-    <h1 class="h2">Verifikasi Dokumen</h1>
-  </div>
-
-  <div class="container">
-    <div class="d-flex justify-content-left flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-      <a type="text" href="/admin/stuffing" style="font-weight: bold">
-        Kembali
-      </a>
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2" style="font-weight:bold; color:#2E2A61;">Verifikasi Dokumen</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="mr-2">
+        <a type="button" class="btn btn-secondary" href="{{route('admin.stuffing')}}" style="font-weight: bold">
+          Kembali
+        </a>
+      </div>
     </div>
-    <div class="row">
-      <!-- Kartu Pendapatan -->
-      <div class="col-6 col-md-4 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Penerima</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$ppk->nm_penerima}}</div>
-              </div>
+  </div>
+  <div class="row">
+    <!-- Kartu Pendapatan -->
+    <div class="col-6 col-md-4 mb-4">
+      <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Penerima</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">{{$ppk->nm_penerima}}</div>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Earnings (Monthly) Card Example -->
-      <div class="col-6 col-md-4 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Negara</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$ppk->negara_penerima}}</div>
-              </div>
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-6 col-md-4 mb-4">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Negara</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">{{$ppk->Negara_penerima}}</div>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Earnings (Monthly) Card Example -->
-      <div class="col-6 col-md-4 mb-4">
-        <div class="card border-left-info shadow h-100 py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Nomor Pengajuan</div>
-                <div class="row no-gutters align-items-center">
-                  <div class="col-auto">
-                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$ppk->no_aju_ppk}}</div>
-                  </div>
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-6 col-md-4 mb-4">
+      <div class="card border-left-info shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Nomor Pengajuan</div>
+              <div class="row no-gutters align-items-center">
+                <div class="col-auto">
+                  <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$ppk->no_aju_ppk}}</div>
                 </div>
               </div>
             </div>
@@ -76,10 +75,9 @@
       </div>
     </div>
   </div>
-  </div>
 
   <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-    <div class="card shadow w-75 responsive" style="margin: top 10px;">
+    <div class="card shadow w-100 responsive" style="margin: top 10px;">
       <div class="card-body" style="margin: top 10px;">
         @include('admin.table_document')
       </div>
@@ -114,7 +112,7 @@
                           <div class="card">
                             <div class="card-content">
                               <div class="card-body">
-                                <form method="POST" action="/admin/stuffing/{{$ppk->id_ppk}}/decline" enctype="multipart/form-data">
+                                <form method="POST" action="{{route('admin.declinestuffing', [$ppk->id_ppk])}}" enctype="multipart/form-data">
                                   @csrf
                                   <div class="row">
                                     <div class="col">
@@ -147,7 +145,7 @@
               </div>
             </div>
           </div>
-          <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="/admin/stuffing/{{$ppk->id_ppk}}/accept">Setuju</a>
+          <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="{{route('admin.acceptstuffing', [$ppk->id_ppk])}}">Setuju</a>
         </div>
       </div>
     </div>

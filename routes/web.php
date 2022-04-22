@@ -22,7 +22,7 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::post('/home/{id_ppk}/store', [App\Http\Controllers\HomeController::class, 'store'])->name('store');
         Route::get('/home/{id_ppk}/delete/{id_dokumen}', [App\Http\Controllers\HomeController::class, 'deleteDokumen'])->name('deleteDokumen');
         Route::get('/home/{id_ppk}/preview/{id_dokumen}', [App\Http\Controllers\HomeController::class, 'previewDokumen'])->name('previewDokumen');
-        Route::post('/home/ajukan/{id_ppk}', [App\Http\Controllers\HomeController::class, 'ajukanTanggal'])->name('ajukanTanggal');
+        Route::post('/home/ajukan/{id_ppk}', [App\Http\Controllers\HomeController::class, 'ajukanTanggal'])->name('trader.ajukanTanggal');
         Route::get('/home/cetakHC/{id_ppk}', [App\Http\Controllers\HomeController::class, 'cetakHC'])->name('trader.cetakHC');
         Route::get('/home/detail/{id_ppk}', [App\Http\Controllers\HomeController::class, 'detail'])->name('trader.detail');
 
@@ -33,7 +33,7 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::get('/master/addMaster', [App\Http\Controllers\MasterDokumenController::class, 'master'])->name('trader.addMaster');
         Route::post('/master/addMaster/storeMaster', [App\Http\Controllers\MasterDokumenController::class, 'storeMaster'])->name('trader.storeMaster');
         Route::get('/master/editMaster/{id_master}', [App\Http\Controllers\MasterDokumenController::class, 'editMaster'])->name('trader.editMaster');
-        Route::post('/master/editMaster/{id_master}/updateMaster', [App\Http\Controllers\MasterDokumenController::class, 'updateMaster'])->name('trader.editMaster');
+        Route::post('/master/editMaster/{id_master}/updateMaster', [App\Http\Controllers\MasterDokumenController::class, 'updateMaster'])->name('trader.updateMaster');
 
         Route::get('/home/form/{id_ppk}', [App\Http\Controllers\FormController::class, 'Hasil'])->name('trader.hasil_form');
     });
@@ -61,31 +61,31 @@ Route::group(['middleware' => 'revalidate'], function () {
         // Ekspor
         Route::get('/admin/master', [App\Http\Controllers\MasterDokumenController::class, 'indexAdmin'])->name('admin.master_dokumen_trader');
         Route::get('/admin/master/{id_trader}', [App\Http\Controllers\MasterDokumenController::class, 'verifikasi'])->name('admin.verifikasi');
-        Route::get('/admin/master/accept/{id_master}', [App\Http\Controllers\MasterDokumenController::class, 'accept'])->name('admin.verifikasi');
-        Route::get('/admin/master/decline/{id_master}', [App\Http\Controllers\MasterDokumenController::class, 'decline'])->name('admin.verifikasi');
+        Route::get('/admin/master/accept/{id_master}', [App\Http\Controllers\MasterDokumenController::class, 'accept'])->name('admin.acceptVerifikasi');
+        Route::get('/admin/master/decline/{id_master}', [App\Http\Controllers\MasterDokumenController::class, 'decline'])->name('admin.declineVerifikasi');
         Route::get('/admin/stuffing', [App\Http\Controllers\StuffingController::class, 'index'])->name('admin.stuffing');
         Route::get('/admin/stuffing/{id_ppk}', [App\Http\Controllers\StuffingController::class, 'dokumen'])->name('admin.document_stuffing');
-        Route::get('/admin/stuffing/{id_ppk}/accept', [App\Http\Controllers\StuffingController::class, 'accept'])->name('admin.stuffing');
-        Route::post('/admin/stuffing/{id_ppk}/decline', [App\Http\Controllers\StuffingController::class, 'decline'])->name('admin.stuffing');
-        Route::post('/admin/stuffing/{id_ppk}/terima', [App\Http\Controllers\StuffingController::class, 'terima'])->name('admin.stuffing');
-        Route::post('/admin/stuffing/{id_ppk}/tolak', [App\Http\Controllers\StuffingController::class, 'tolak'])->name('admin.stuffing');
+        Route::get('/admin/stuffing/{id_ppk}/accept', [App\Http\Controllers\StuffingController::class, 'accept'])->name('admin.acceptstuffing');
+        Route::post('/admin/stuffing/{id_ppk}/decline', [App\Http\Controllers\StuffingController::class, 'decline'])->name('admin.declinestuffing');
+        Route::post('/admin/stuffing/{id_ppk}/terima', [App\Http\Controllers\StuffingController::class, 'terima'])->name('admin.terimastuffing');
+        Route::post('/admin/stuffing/{id_ppk}/tolak', [App\Http\Controllers\StuffingController::class, 'tolak'])->name('admin.tolakstuffing');
         Route::get('/admin/stuffing/form/{id_ppk}', [App\Http\Controllers\FormController::class, 'index'])->name('admin.form_stuffing');
-        Route::post('/admin/stuffing/form/{id_ppk}/storeSubform', [App\Http\Controllers\FormController::class, 'storeSubform'])->name('admin.form_stuffing');
-        Route::post('/admin/stuffing/{id_ppk}/izin', [App\Http\Controllers\StuffingController::class, 'izin'])->name('admin.stuffing');
+        Route::post('/admin/stuffing/form/{id_ppk}/storeSubform', [App\Http\Controllers\FormController::class, 'storeSubform'])->name('admin.storeform_stuffing');
+        Route::post('/admin/stuffing/{id_ppk}/izin', [App\Http\Controllers\StuffingController::class, 'izin'])->name('admin.izinstuffing');
         Route::get('/admin/stuffing/detail/{id_ppk}', [App\Http\Controllers\StuffingController::class, 'detail'])->name('admin.detail');
 
         // Kategori
         Route::get('/admin/kategori', [App\Http\Controllers\KategoriController::class, 'index'])->name('admin.kategori_dokumen');
         Route::get('/admin/kategori/TambahKategori', [App\Http\Controllers\KategoriController::class, 'addKategori'])->name('admin.addKategori');
         Route::get('/admin/kategori/editKategori/{id_kategori}', [App\Http\Controllers\KategoriController::class, 'editKategori'])->name('admin.editKategori');
-        Route::post('/admin/kategori/editKategori/{id_kategori}/update', [App\Http\Controllers\KategoriController::class, 'updateKategori'])->name('admin.editKategori');
-        Route::post('/admin/kategori/TambahKategori/add', [App\Http\Controllers\KategoriController::class, 'storeKategori'])->name('admin.addKategori');
+        Route::post('/admin/kategori/editKategori/{id_kategori}/update', [App\Http\Controllers\KategoriController::class, 'updateKategori'])->name('admin.updateKategori');
+        Route::post('/admin/kategori/TambahKategori/add', [App\Http\Controllers\KategoriController::class, 'storeKategori'])->name('admin.storeKategori');
         // Form
         Route::get('/admin/subform', [App\Http\Controllers\SubformController::class, 'index'])->name('admin.master_subform');
-        Route::get('/admin/subform/TambahSubform', [App\Http\Controllers\SubformController::class, 'addSubform'])->name('admin.master_subform');
+        Route::get('/admin/subform/TambahSubform', [App\Http\Controllers\SubformController::class, 'addSubform'])->name('admin.tambahmaster_subform');
         Route::post('/admin/subform/TambahSubform/add', [App\Http\Controllers\SubformController::class, 'storeSubform'])->name('admin.addSubform');
         Route::get('/admin/subform/EditSubform/{id_masterSubform}', [App\Http\Controllers\SubformController::class, 'editSubform'])->name('admin.editSubform');
-        Route::post('/admin/subform/EditSubform/{id_masterSubform}/update', [App\Http\Controllers\SubformController::class, 'updateSubform'])->name('admin.editSubform');
+        Route::post('/admin/subform/EditSubform/{id_masterSubform}/update', [App\Http\Controllers\SubformController::class, 'updateSubform'])->name('admin.updateSubform');
 
         //Pemeriksaan Klinis
         Route::get('/admin/pemeriksaan_klinis', [App\Http\Controllers\AdminPKController::class, 'index'])->name('admin.PK-pemeriksaan_klinis');

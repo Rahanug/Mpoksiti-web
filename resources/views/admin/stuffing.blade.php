@@ -45,7 +45,7 @@
                 <td>{{ ++$no; }}</td>
                 <td>{{ $ppk->no_aju_ppk }}</td>
                 <td>{{ $ppk->nm_penerima}}</td>
-                <td>{{ $ppk->negara_penerima}}</td>
+                <td>{{ $ppk->Negara_penerima}}</td>
                 @if($ppk->jadwal_periksa != "")
                 <td>{{ date('Y-m-d H:i A', strtotime($ppk->jadwal_periksa))}}</td>
                 @else
@@ -59,7 +59,7 @@
                 <td style="font-weight: bold">{{ ucfirst($ppk->status)}}</td>
                 <td>
                   @if ($ppk->status == "verifikasi")
-                  <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="/admin/stuffing/{{$ppk->id_ppk}}">Dokumen</a>
+                  <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="{{route('admin.document_stuffing', [$ppk->id_ppk])}}">Dokumen</a>
                   @endif
                   @if ($ppk->status == "Menunggu")
                   <a style="margin: 0 3px" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#declineModal{{$ppk->id_ppk}}">Tidak Setuju</a>
@@ -89,7 +89,7 @@
                                   <div class="card">
                                     <div class="card-content">
                                       <div class="card-body">
-                                        <form method="POST" action="/admin/stuffing/{{$ppk->id_ppk}}/tolak" enctype="multipart/form-data">
+                                        <form method="POST" action="{{route('admin.tolakstuffing', [$ppk->id_ppk])}}" enctype="multipart/form-data">
                                           @csrf
                                           <div class="row">
                                             <div class="col">
@@ -149,7 +149,7 @@
                                   <div class="card">
                                     <div class="card-content">
                                       <div class="card-body">
-                                        <form method="POST" action="/admin/stuffing/{{$ppk->id_ppk}}/terima" enctype="multipart/form-data">
+                                        <form method="POST" action="{{route('admin.terimastuffing', [$ppk->id_ppk])}}" enctype="multipart/form-data">
                                           @csrf
                                           <div class="row">
                                             <div class="col">
@@ -184,7 +184,7 @@
                   </div>
                   @endif
                   @if($ppk->status == 'Stuffing')
-                  <a style="margin: 0 3px" class="btn btn-sm btn-info" href="/admin/stuffing/form/{{$ppk->id_ppk}}">Form</a>
+                  <a style="margin: 0 3px" class="btn btn-sm btn-info" href="{{route('admin.form_stuffing', [$ppk->id_ppk])}}">Form</a>
                   @endif
                   <!-- Persetujuan -->
                   @if($ppk->status == 'Persetujuan')
@@ -214,7 +214,7 @@
                                   <div class="card">
                                     <div class="card-content">
                                       <div class="card-body">
-                                        <form method="POST" action="/admin/stuffing/{{$ppk->id_ppk}}/izin" enctype="multipart/form-data">
+                                        <form method="POST" action="{{route('admin.izinstuffing', [$ppk->id_ppk])}}" enctype="multipart/form-data">
                                           @csrf
                                           <div class="row">
                                             <div class="col">
@@ -252,7 +252,7 @@
                     </div>
                   </div>
                   @endif
-                  <a style="margin: 0 3px" class="btn btn-sm btn-secondary" id="detail" href="/admin/stuffing/detail/{{$ppk->id_ppk}}">Detail</a>
+                  <a style="margin: 0 3px" class="btn btn-sm btn-secondary" id="detail" href="{{route('admin.detail',[$ppk->id_ppk])}}">Detail</a>
                 </td>
               </tr>
               @endforeach

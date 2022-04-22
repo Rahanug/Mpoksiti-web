@@ -19,11 +19,11 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="card-title" style="font-weight:bold; color:#2E2A61;">Tambah Dokumen</h2>
+                        <h2 class="card-title" style="font-weight:bold; color:#2E2A61;">Edit Dokumen</h2>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form method="POST" action="/master/editMaster/{{$id_master}}/updateMaster" enctype="multipart/form-data">
+                            <form method="POST" action="{{route('trader.updateMaster', [$id_master] )}}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col">
@@ -60,6 +60,7 @@
                                             <input type="file" id="nm_dokumen" class="form-control" name="nm_dokumen" value="{{$p->nm_dokumen}}">
                                         </div>
                                         <div class="col-12 d-flex justify-content-end">
+                                            <a type="button"style="margin: 0 5px" class="btn btn-secondary" href="{{route('trader.master_dokumen')}}">Cancel</a>
                                             <button type="submit" class="btn btn-secondary" style="background-color: #3C5C94" name="submit" value="Simpan Data">Submit</button>
                                         </div>
                                         @endforeach

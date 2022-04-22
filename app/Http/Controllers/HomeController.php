@@ -39,8 +39,9 @@ class HomeController extends Controller
             ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', "ppks.id_ppk")
             ->where('v_data_header.kd_kegiatan', 'E')
             ->where("v_data_header.id_trader", Auth::user()->id_trader)
+            ->where( 'v_data_header.tgl_ppk', '>', Carbon::now()->subDays(3))
             ->select('ppks.*', 'v_data_header.*')
-            ->orderBy('ppks.id_ppk', 'ASC')
+            ->orderBy('v_data_header.tgl_ppk', 'ASC')
             ->get();
         foreach ($viewPpk as $data) {
             $data->subform = Subform::rightJoin("ppks as ppks", "subform.id_ppk", "ppks.id_ppk")
@@ -49,16 +50,11 @@ class HomeController extends Controller
                 ->get();
         }
         foreach ($viewPpk as $image) {
-            $data->stuffing = ImageStuffing::rightJoin("$dbView2.v_data_header as v_data_header", "images_stuffing.id_ppk", "v_data_header.id_ppk")
+            $image->stuffing = ImageStuffing::rightJoin("$dbView2.v_data_header as v_data_header", "images_stuffing.id_ppk", "v_data_header.id_ppk")
                 ->select('v_data_header.*', 'images_stuffing.*')
                 ->where("images_stuffing.id_ppk", $image->id_ppk)
                 ->get();
         }
-        // $images = DB::connection('sqlsrv2')->table('v_data_header')
-        //     ->leftJoin("$dbView.images_stuffing AS images", 'v_data_header.id_ppk', '=', "images.id_ppk")
-        //     ->where("v_data_header.id_ppk", $id_ppk)
-        //     ->select('v_data_header.*', 'images.*')->get();
-
         return view('trader.home', [
             "title" => "Dashboard",
             "ppks" => $viewPpk,

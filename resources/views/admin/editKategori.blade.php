@@ -23,7 +23,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form method="POST" action="/admin/kategori/editKategori/{{$id_kategori}}/update" enctype="multipart/form-data">
+                            <form method="POST" action="{{route('admin.updateKategori', [$id_kategori])}}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col">
@@ -53,6 +53,7 @@
                                             <input type="text" id="instansi_penerbit" value="{{ $p->instansi_penerbit }}" class="form-control" placeholder="Instansi Penerbit" name="instansi_penerbit">
                                         </div>
                                         <div class="col-12 d-flex justify-content-end">
+                                            <a type="button"style="margin: 0 5px" class="btn btn-secondary" href="{{route('admin.kategori_dokumen')}}">Cancel</a>
                                             <button type="submit" class="btn btn-secondary" style="background-color: #3C5C94" name="submit" value="Simpan Data">Submit</button>
                                         </div>
                                         @endforeach

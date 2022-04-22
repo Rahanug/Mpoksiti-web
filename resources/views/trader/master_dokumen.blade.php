@@ -18,40 +18,38 @@
       <div class=""></div>
     </div>
   </div>
-  <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-    <h2 class="h2">Master Dokumen Trader</h2>
-  </div>
-  <div class="container">
-    <div class="d-flex justify-content-left flex-wrap flex-md-nowrap align-items-center pt-3 pb-2">
-      <div class="btn-group">
-        <button type="button" class="btn btn-sm btn btn-outline-primary" style="font-weight: bold;" onclick="location.href='/master/addMaster'">Tambah Dokumen</button>
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2" style="font-weight:bold; color:#2E2A61;">Master Dokumen</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="mr-2">
+        <button type="button" class="btn btn-outline-primary" style="font-weight: bold;" onclick="location.href='master/addMaster'">Tambah Dokumen</button>
       </div>
     </div>
-    <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-      <div class="card shadow w-100 responsive" style="margin: top 10px;">
-        <div class="card-body" style="margin: top 10px;">
-          @if (session()->has('success'))
-          <div class="alert alert-primary alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          </div>
-          @endif
-
-          @if (session()->has('error'))
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ session('error') }}
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          </div>
-          @endif
-
-          @if (session()->has('info'))
-          <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            {{ session('info') }}
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          </div>
-          @endif
-          @include('trader.table_master_dokumen')
+  </div>
+  <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <div class="card shadow w-100 responsive" style="margin: top 10px;">
+      <div class="card-body" style="margin: top 10px;">
+        @if (session()->has('success'))
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+          {{ session('success') }}
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         </div>
+        @endif
+
+        @if (session()->has('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          {{ session('error') }}
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        </div>
+        @endif
+
+        @if (session()->has('info'))
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          {{ session('info') }}
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        </div>
+        @endif
+        @include('trader.table_master_dokumen')
       </div>
     </div>
   </div>

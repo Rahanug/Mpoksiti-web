@@ -27,6 +27,6 @@ class LoginController extends Controller
 
     public function logout() {
         Auth::guard('trader')->logout();
-        return redirect('/');
+        return redirect('/login');
     }
 }

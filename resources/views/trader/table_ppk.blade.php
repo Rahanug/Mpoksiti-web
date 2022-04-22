@@ -20,7 +20,7 @@
         <td>{{ ++$no; }}</td>
         <td>{{ $ppk->no_aju_ppk }}</td>
         <td>{{ $ppk->nm_penerima}}</td>
-        <td>{{ $ppk->negara_penerima}}</td>
+        <td>{{ $ppk->Negara_penerima}}</td>
         @if($ppk->status == "Penjadwalan" || $ppk->status == "Ditolak")
         <td><a style="margin: 0 3px" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ajukanModal-{{$ppk->id_ppk}}">Ajukan</a></td>
         @elseif($ppk->jadwal_periksa == "")
@@ -36,7 +36,7 @@
         <td style="font-weight: bold">{{ ucfirst($ppk->status)}}</td>
         <td>
           @if ($ppk->status == "" || $ppk->status == "verifikasi")
-          <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="/home/{{$ppk->id_ppk}}">Unggah</a>
+          <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="home/{{$ppk->id_ppk}}">Unggah</a>
           @endif
           @if ($ppk->status == "Cetak HC")
           <a style="margin: 0 3px" class="btn btn-sm btn-info" data-toggle="modal" data-target="#hasilModal-{{$ppk->id_ppk}}">Cetak HC</a>
@@ -209,7 +209,7 @@
                                 @foreach($ppk->stuffing as $i)
                                 <tr>
                                   <td>
-                                    <img src='/images_stuffing/{{$i->images}}' style="max-width: 300px; max-height: 300px">
+                                    <img src='images_stuffing/{{$i->images}}' style="max-width: 300px; max-height: 300px">
                                   </td>
                                 </tr>
                                 @endforeach
@@ -232,7 +232,7 @@
 
         </td>
         <!-- Detail -->
-        <td><a style="margin: 0 3px" class="btn btn-sm btn-secondary" href="/home/detail/{{$ppk->id_ppk}}">Detail</a></td>
+        <td><a style="margin: 0 3px" class="btn btn-sm btn-secondary" href="home/detail/{{$ppk->id_ppk}}">Detail</a></td>
       </tr>
       <!-- Ajukan Tanggal Modal -->
       <div class="modal fade" id="ajukanModal-{{$ppk->id_ppk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -260,7 +260,7 @@
                       <div class="card">
                         <div class="card-content">
                           <div class="card-body">
-                            <form method="POST" action="/home/ajukan/{{$ppk->id_ppk}}" enctype="multipart/form-data">
+                            <form method="POST" action="{{route('trader.ajukanTanggal', [$ppk->id_ppk])}}" enctype="multipart/form-data">
                               @csrf
                               <div class="row">
                                 <div class="col">

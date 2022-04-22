@@ -20,7 +20,7 @@
     </div>
   </div>
   <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-    <h2 class="h2">Proses Stuffing Virtual</h2>
+    <h2 class="h2" style="font-weight:bold; color:#2E2A61;">Proses Stuffing Virtual</h2>
   </div>
   <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
     <img src="{{ public_path('img/Proses.png') }}" srcset="img/Proses.png 10000w 7000h" sizes="(min-width: 200px, min-height: 50px)">
@@ -45,7 +45,6 @@
 <script>
   $(document).ready(function() {
     $('#tablePpk').DataTable({
-      ordering: false,
       responsive: true,
     });
 
