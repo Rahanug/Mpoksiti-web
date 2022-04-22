@@ -16,20 +16,19 @@ class Dashboard extends Controller
         $command = array();
         return view('admin.tabelAdmin', [
             "title" => "Chatbot Command",
-            "command" => CommandModel::all(),
+            "command" => CommandModel::all()->sortByDesc("created_at"),
         ]);
     }
 
     public function deleteCommand($id)
     {
         CommandModel::where('id', $id)->delete();
-        return redirect('/command');
+        return redirect('/admin/command');
     }
 
     public function deleteAll()
     {
         CommandModel::truncate();
-        return redirect('/command');
+        return redirect('/admin/command');
     }
-
 }

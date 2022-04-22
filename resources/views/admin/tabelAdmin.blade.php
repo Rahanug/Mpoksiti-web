@@ -60,9 +60,10 @@
           </tr>
         </thead>
         <tbody>
+          <?php $i=1 ?> 
           @foreach ($command as $commands) 
           <tr>
-            <td>{{ $commands ->id}}</td>
+            <td>{{ $i++}}</td>
             <td>{{  $commands ->command}}</td>
             <td>{{  $commands ->no_wa }}</td>
             <td>{{  $commands ->created_at }}</td>

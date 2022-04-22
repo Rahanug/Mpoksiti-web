@@ -283,6 +283,30 @@ define("temp9", [
     ],
 ]);
 
+define("temp10", [
+    [
+        "type" => "reply",
+        "reply" => [
+            "id" => "Ulang",
+            "title" => "Menu utama"
+        ]
+    ],
+    [
+        "type" => "reply",
+        "reply" => [
+            "id" => "CS",
+            "title" => "Hubungi CS"
+        ]
+    ],
+    [
+        "type" => "reply",
+        "reply" => [
+            "id" => "Selesai",
+            "title" => "Selesai"
+        ]
+    ]
+]);
+
 class Webhookdua extends Controller
 {
     private function readMessage($event)
@@ -577,7 +601,6 @@ class Webhookdua extends Controller
             ->select('no_aju_ppk')
             ->where('no_aju_ppk', $pesan)
             ->where('kd_kegiatan', 'E')
-            ->orderByDesc('id_urut')
             ->first();
     }
 
@@ -589,7 +612,6 @@ class Webhookdua extends Controller
             ->select('no_aju_ppk')
             ->where('no_aju_ppk', $pesan)
             ->where('kd_kegiatan', 'I')
-            ->orderByDesc('id_urut')
             ->first();
     }
 
@@ -710,6 +732,25 @@ class Webhookdua extends Controller
             ->first();
     }
 
+    // public function countMaaf($from)
+    // {
+    //     return CommandModel::where('no_wa', $from)
+    //         ->where('command', 'maaf')
+    //         // ->first();
+    //         ->count();
+    //     // ->orderByDesc('created_at')
+    // }
+
+    // public function send_msg_maaf($from)
+    // {
+    //     $maaf = $this->countMaaf($from);
+    //     // echo json_encode($maaf);
+
+    //     if ($maaf >= 2) {
+    //         $this->send_msg2($from, "*Halo disana!*\\n Bagaimana pengalamanmu menggunakan layanan Halo Mpok Siti?\\n\\nAnda telah mengalami error sebanyak 2 kali atau lebih, kami mohon maaf yang sebesar-besarnya mengingat layanan ini masih dalam tahap uji coba. Kami sarankan Anda untuk menggunakan layanan Hubungi Customer Service dibawah ini untuk pengalaman yang lebih baik. Kami akan bantu Anda menyelesaikan masalah Anda sebaik yang kami bisa 🤗\\n", constant("temp10"));
+    //     }
+    // }
+
     public function index(Request $request)
     {
         $event = json_decode($request->getContent(), true);
@@ -735,14 +776,8 @@ class Webhookdua extends Controller
             }
 
             if (!isset($lastRow)) {
-                if (strpos($pesan, "halo") !== false) {
-                    //echo json_encode("halo selamat datang, pilih menu lacak info sertifikasi");
-                    $this->send_msg3($from, "Selamat Datang di layanan Halo Mpok Siti, Media Pelayanan Online Karantina Simpel dan Terintegrasi, apa yang ingin Anda ketahui ? \\n", constant("temp1"));
-                    $this->insertCommand($pesan, $from);
-                } else {
-                    // echo json_encode("Maaf");
-                    $this->send_msg($from, "Maaf, kami tidak paham pesan yang Anda masukkan, ketik halo untuk kembali ke menu utama");
-                }
+                $this->send_msg3($from, "Selamat Datang di layanan Halo Mpok Siti, Media Pelayanan Online Karantina Simpel dan Terintegrasi, apa yang ingin Anda ketahui ? \\n", constant("temp1"));
+                $this->insertCommand('halo', $from);
                 //tampil menu utama
             } else {
                 switch (true) {
@@ -822,7 +857,9 @@ class Webhookdua extends Controller
                                 break;
                             default:
                                 // echo json_encode("Maaf");
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg($from, "Maaf, Pilih sesuai menu yang Ada");
+                                // $this->insertCommand("maaf", $from);
                         }
                         break;
 
@@ -840,6 +877,7 @@ class Webhookdua extends Controller
                                 $this->send_msg($from, "Terima kasih telah menggunakan layanan chatbot Mpok Siti");
                                 break;
                             default:
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg($from, "Maaf, Pilih sesuai menu yang ada");
                         }
                         break;
@@ -858,6 +896,7 @@ class Webhookdua extends Controller
                                 $this->send_msg($from, "Terima kasih telah menggunakan layanan chatbot Mpok Siti");
                                 break;
                             default:
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg($from, "Maaf, Pilih sesuai menu yang ada");
                         }
                         break;
@@ -876,6 +915,7 @@ class Webhookdua extends Controller
                                 $this->send_msg($from, "Terima kasih telah menggunakan layanan chatbot Mpok Siti");
                                 break;
                             default:
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg($from, "Maaf, Pilih sesuai menu yang ada");
                         }
                         break;
@@ -909,6 +949,7 @@ class Webhookdua extends Controller
                                 break;
                             default:
                                 // echo json_encode("Maaf");
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg($from, "Maaf, Pilih sesuai menu yang Ada");
 
 
@@ -942,6 +983,7 @@ class Webhookdua extends Controller
                                 $this->send_msg($from, "Terima kasih telah menggunakan layanan chatbot Mpok Siti");
                                 break;
                             default:
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg($from, "Maaf, Pilih sesuai menu yang ada");
                         }
                         break;
@@ -960,6 +1002,7 @@ class Webhookdua extends Controller
                                 $this->send_msg($from, "Terima kasih telah menggunakan layanan chatbot Mpok Siti");
                                 break;
                             default:
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg($from, "Maaf, Pilih sesuai menu yang ada");
                         }
                         break;
@@ -978,6 +1021,7 @@ class Webhookdua extends Controller
                                 $this->send_msg($from, "Terima kasih telah menggunakan layanan chatbot Mpok Siti");
                                 break;
                             default:
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg($from, "Maaf, Pilih sesuai menu yang ada");
                         }
                         break;
@@ -1000,6 +1044,7 @@ class Webhookdua extends Controller
                                 $this->send_msg3($from, "Selamat Datang di layanan Halo Mpok Siti, Media Pelayanan Online Karantina Simpel dan Terintegrasi, apa yang ingin Anda ketahui ? \\n", constant("temp1"));
                                 break;
                             default:
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg($from, "Maaf, Pilih sesuai menu yang ada");
                         }
                         break;
@@ -1022,6 +1067,7 @@ class Webhookdua extends Controller
                                 $this->send_msg2($from, "Terdapat dua jenis layanan Sertifikasi, pilih sesuai dengan kebutuhan Anda\\n", constant("temp2"));
                                 break;
                             default:
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg($from, "Maaf, Pilih sesuai menu yang ada");
                         }
                         break;
@@ -1049,6 +1095,7 @@ class Webhookdua extends Controller
                                 $this->send_msg2($from, "Silahkan masukkan nomor aju PPK Anda", constant("temp7"));
                                 break;
                             default:
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg($from, "Maaf, Pilih sesuai menu yang ada");
                         }
                         break;
@@ -1070,6 +1117,7 @@ class Webhookdua extends Controller
                                 break;
                             default:
                                 // echo json_encode("Ulangi masukkan");
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg2($from, "Maaf, Nomor Aju yang Anda masukkan tidak sesuai. Periksa kembali Nomor Aju Anda dan silahkan masukkan kembali", constant("temp7"));
                         }
                         break;
@@ -1087,6 +1135,7 @@ class Webhookdua extends Controller
                                 $this->send_msg($from, "Terima kasih telah menggunakan layanan chatbot Mpok Siti");
                                 break;
                             default:
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg($from, "Maaf, Pilih sesuai menu yang ada");
                         }
                         break;
@@ -1124,6 +1173,7 @@ class Webhookdua extends Controller
                                 break;
                             default:
                                 // echo json_encode("Ulangi masukkan");
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg2($from, "Maaf, Nomor Aju yang Anda masukkan tidak sesuai. Periksa kembali Nomor Aju Anda dan silahkan masukkan kembali", constant("temp7"));
                         }
                         break;
@@ -1141,6 +1191,7 @@ class Webhookdua extends Controller
                                 $this->send_msg($from, "Terima kasih telah menggunakan layanan chatbot Mpok Siti");
                                 break;
                             default:
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg2($from, "Maaf, Silahkan masukkan kembali nomor aju PPK Anda", constant("temp7"));
                         }
                         break;
@@ -1171,6 +1222,7 @@ class Webhookdua extends Controller
                                 break;
                             default:
                                 // echo json_encode("Ulangi masukkan");
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg($from, "Maaf, Pilih sesuai menu yang ada");
                         }
                         break;
@@ -1192,6 +1244,7 @@ class Webhookdua extends Controller
                                 break;
                             default:
                                 // echo json_encode("Ulangi masukkan");
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg2($from, "Maaf, Nomor Aju yang Anda masukkan tidak sesuai. Periksa kembali Nomor Aju Anda dan silahkan masukkan kembali", constant("temp7"));
                         }
                         break;
@@ -1209,6 +1262,7 @@ class Webhookdua extends Controller
                                 $this->send_msg($from, "Terima kasih telah menggunakan layanan chatbot Mpok Siti");
                                 break;
                             default:
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg($from, "Maaf, Pilih sesuai menu yang ada");
                         }
                         break;
@@ -1246,6 +1300,7 @@ class Webhookdua extends Controller
                                 break;
                             default:
                                 // echo json_encode("Ulangi masukkan");
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg2($from, "Maaf, Nomor Aju yang Anda masukkan tidak sesuai. Periksa kembali Nomor Aju Anda dan silahkan masukkan kembali", constant("temp7"));
                         }
                         break;
@@ -1263,6 +1318,7 @@ class Webhookdua extends Controller
                                 $this->send_msg($from, "Terima kasih telah menggunakan layanan chatbot Mpok Siti");
                                 break;
                             default:
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg2($from, "Maaf, Silahkan masukkan kembali nomor aju PPK Anda", constant("temp7"));
                         }
                         break;
@@ -1293,6 +1349,7 @@ class Webhookdua extends Controller
                                 break;
                             default:
                                 // echo json_encode("Ulangi masukkan");
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg2($from, "Maaf, Nomor Aju yang Anda masukkan tidak sesuai. Periksa kembali Nomor Aju Anda dan silahkan masukkan kembali", constant("temp7"));
                         }
                         break;
@@ -1321,6 +1378,7 @@ class Webhookdua extends Controller
                                 break;
                             default:
                                 // echo json_encode("Ulangi masukkan");
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg2($from, "Maaf, Nomor Aju yang Anda masukkan tidak sesuai. Periksa kembali Nomor Aju Anda dan silahkan masukkan kembali", constant("temp7"));
                         }
                         break;
@@ -1343,6 +1401,7 @@ class Webhookdua extends Controller
                                 $this->send_msg2($from, "Terdapat dua jenis layanan Sertifikasi, pilih sesuai dengan kebutuhan Anda\\n", constant("temp2"));
                                 break;
                             default:
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg($from, "Maaf, Pilih sesuai menu yang ada");
                         }
                         break;
@@ -1372,6 +1431,7 @@ class Webhookdua extends Controller
                                 $this->send_msg2($from, "Silahkan masukkan nomor aju PPK Anda", constant("temp7"));
                                 break;
                             default:
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg($from, "Maaf, Pilih sesuai menu yang ada");
                         }
                         break;
@@ -1393,6 +1453,7 @@ class Webhookdua extends Controller
                                 break;
                             default:
                                 // echo json_encode("Ulangi masukkan");
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg2($from, "Maaf, Silahkan masukkan kembali nomor aju PPK Anda", constant("temp7"));
                         }
                         break;
@@ -1410,6 +1471,7 @@ class Webhookdua extends Controller
                                 $this->send_msg($from, "Terima kasih telah menggunakan layanan chatbot Mpok Siti");
                                 break;
                             default:
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg2($from, "Maaf, Silahkan masukkan kembali nomor aju PPK Anda", constant("temp7"));
                         }
                         break;
@@ -1447,6 +1509,7 @@ class Webhookdua extends Controller
                                 break;
                             default:
                                 // echo json_encode("Ulangi masukkan");
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg2($from, "Maaf, Nomor Aju yang Anda masukkan tidak sesuai. Periksa kembali Nomor Aju Anda dan silahkan masukkan kembali", constant("temp7"));
                         }
                         break;
@@ -1464,6 +1527,7 @@ class Webhookdua extends Controller
                                 $this->send_msg($from, "Terima kasih telah menggunakan layanan chatbot Mpok Siti");
                                 break;
                             default:
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg2($from, "Maaf, Silahkan masukkan kembali nomor aju PPK Anda", constant("temp7"));
                         }
                         break;
@@ -1495,6 +1559,7 @@ class Webhookdua extends Controller
                                 $this->send_msg2($from, "Silahkan masukkan nomor aju PPK Anda", constant("temp7"));
                                 break;
                             default:
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg($from, "Maaf, Pilih sesuai menu yang ada");
                         }
                         break;
@@ -1516,6 +1581,7 @@ class Webhookdua extends Controller
                                 break;
                             default:
                                 // echo json_encode("Ulangi masukkan");
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg2($from, "Maaf, Silahkan masukkan kembali nomor aju PPK Anda", constant("temp7"));
                         }
                         break;
@@ -1533,6 +1599,7 @@ class Webhookdua extends Controller
                                 $this->send_msg($from, "Terima kasih telah menggunakan layanan chatbot Mpok Siti");
                                 break;
                             default:
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg2($from, "Maaf, Silahkan masukkan kembali nomor aju PPK Anda", constant("temp7"));
                         }
                         break;
@@ -1570,6 +1637,7 @@ class Webhookdua extends Controller
                                 break;
                             default:
                                 // echo json_encode("Ulangi masukkan");
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg2($from, "Maaf, Nomor Aju yang Anda masukkan tidak sesuai. Periksa kembali Nomor Aju Anda dan silahkan masukkan kembali", constant("temp7"));
                         }
                         break;
@@ -1587,6 +1655,7 @@ class Webhookdua extends Controller
                                 $this->send_msg($from, "Terima kasih telah menggunakan layanan chatbot Mpok Siti");
                                 break;
                             default:
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg2($from, "Maaf, Silahkan masukkan kembali nomor aju PPK Anda", constant("temp7"));
                         }
                         break;
@@ -1617,6 +1686,7 @@ class Webhookdua extends Controller
                                 break;
                             default:
                                 // echo json_encode("Ulangi masukkan");
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg2($from, "Maaf, Nomor Aju yang Anda masukkan tidak sesuai. Periksa kembali Nomor Aju Anda dan silahkan masukkan kembali", constant("temp7"));
                         }
                         break;
@@ -1646,12 +1716,41 @@ class Webhookdua extends Controller
                                 break;
                             default:
                                 // echo json_encode("Ulangi masukkan");
+                                $this->insertCommand("maaf", $from);
                                 $this->send_msg2($from, "Maaf, Nomor Aju yang Anda masukkan tidak sesuai. Periksa kembali Nomor Aju Anda dan silahkan masukkan kembali", constant("temp7"));
                         }
                         break;
 
+                        // case str_contains($lastRow->command, "maaf"):
+                        // $this->send_msg($from, "Maaf, pilih sesuai menu yang ada");
+                        // $this->send_msg_maaf($from);
+                        // echo json_encode($this->send_msg_maaf($from));
+                        // break;
+
+
                     default:
-                        $this->send_msg($from, "Maaf, kami tidak paham pesan yang Anda masukkan, ketik halo untuk kembali ke menu utama");
+                    case str_contains($lastRow->command, "maaf"):
+                        switch (true) {
+                            case str_contains($pesan, "menu utama"):
+                                $this->insertCommand("halo", $from);
+                                // echo json_encode("Menu utama");
+                                $this->send_msg3($from, "Selamat Datang di layanan Halo Mpok Siti, Media Pelayanan Online Karantina Simpel dan Terintegrasi, apa yang ingin Anda ketahui ? \\n", constant("temp1"));
+                                break;
+                            case str_contains($pesan, "selesai"):
+                                $this->insertCommand("selesai", $from);
+                                // echo json_encode("Selesai");
+                                $this->send_msg($from, "Terima kasih telah menggunakan layanan chatbot Mpok Siti");
+                                break;
+                            case str_contains($pesan, "hubungi cs"):
+                                $this->insertCommand("selesai", $from);
+                                // echo json_encode("hubungi customer service");
+                                $this->send_msg($from, "Anda akan dihubungkan ke layanan customer support kami, mohon tunggu hingga pesan selanjutnya. Terimakasih telah menggunakan layanan chatbot mpok Siti");
+                                $this->send_msg_admin($cs, $from);
+                                break;
+                            default:
+                                $this->send_msg2($from, "*Halo disana!*\\n Bagaimana pengalamanmu menggunakan layanan Halo Mpok Siti?\\n\\nAnda telah mengalami error sebanyak 2 kali atau lebih, kami mohon maaf yang sebesar-besarnya mengingat layanan ini masih dalam tahap uji coba. Kami sarankan Anda untuk menggunakan layanan Hubungi Customer Service dibawah ini untuk pengalaman yang lebih baik. Kami akan bantu Anda menyelesaikan masalah Anda sebaik yang kami bisa\\n", constant("temp10"));
+                        }
+                        // $this->send_msg($from, "Maaf, kami tidak paham pesan yang Anda masukkan, ketik halo untuk kembali ke menu utama");
                 }
             }
         }
