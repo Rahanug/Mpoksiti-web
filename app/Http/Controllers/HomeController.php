@@ -14,7 +14,8 @@ use Illuminate\Support\Carbon;
 // use App\Models\vDataHeader;
 use App\Models\MasterSubform;
 use App\Models\Subform;
-use PDF;
+use App\Models\ImageStuffing;
+use DOMPDF;
 
 class HomeController extends Controller
 {
@@ -33,6 +34,7 @@ class HomeController extends Controller
         $ppkModel = new Ppk();
         // $vdataHeader = new vDataHeader();
         $dbView = DB::connection('sqlsrv')->getDatabaseName() . '.dbo';
+        $dbView2 = DB::connection('sqlsrv2')->getDatabaseName() . '.dbo';
         $viewPpk = DB::connection('sqlsrv2')->table('v_data_header')
             ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', "ppks.id_ppk")
             ->where('v_data_header.kd_kegiatan', 'E')
@@ -41,11 +43,22 @@ class HomeController extends Controller
             ->orderBy('ppks.id_ppk', 'ASC')
             ->get();
         foreach ($viewPpk as $data) {
-            $data->subform = Subform::rightJoin("$dbView.ppks as ppks", "subform.id_ppk", "ppks.id_ppk")
+            $data->subform = Subform::rightJoin("ppks as ppks", "subform.id_ppk", "ppks.id_ppk")
                 ->select("ppks.*", "subform.*")
                 ->where("subform.id_ppk", $data->id_ppk)
                 ->get();
         }
+        foreach ($viewPpk as $image) {
+            $data->stuffing = ImageStuffing::rightJoin("$dbView2.v_data_header as v_data_header", "images_stuffing.id_ppk", "v_data_header.id_ppk")
+                ->select('v_data_header.*', 'images_stuffing.*')
+                ->where("images_stuffing.id_ppk", $image->id_ppk)
+                ->get();
+        }
+        // $images = DB::connection('sqlsrv2')->table('v_data_header')
+        //     ->leftJoin("$dbView.images_stuffing AS images", 'v_data_header.id_ppk', '=', "images.id_ppk")
+        //     ->where("v_data_header.id_ppk", $id_ppk)
+        //     ->select('v_data_header.*', 'images.*')->get();
+
         return view('trader.home', [
             "title" => "Dashboard",
             "ppks" => $viewPpk,
@@ -338,6 +351,14 @@ class HomeController extends Controller
             ->leftJoin("$dbView.subform as subform", 'v_data_header.id_ppk', '=', "subform.id_ppk")
             ->where("v_data_header.id_ppk", $id_ppk)
             ->select('ppks.*', 'v_data_header.*', 'subform.*')->get();
+        $selectName = DB::connection('sqlsrv2')
+        ->table('v_data_header')
+        ->where("id_ppk", $id_ppk)
+        ->get("no_aju_ppk");
+        $images = DB::connection('sqlsrv2')->table('v_data_header')
+            ->leftJoin("$dbView.images_stuffing AS images", 'v_data_header.id_ppk', '=', "images.id_ppk")
+            ->where("v_data_header.id_ppk", $id_ppk)
+            ->select('v_data_header.*', 'images.*')->get();
         $data = [
             "title" => "Dashboard",
             "ppks" => $viewPpk,
@@ -346,19 +367,22 @@ class HomeController extends Controller
             "trader"=> $trader
             
         ];
-        $pdf = PDF::loadView('trader.cetakHC', [
+        $pdf = DOMPDF::loadView('trader.cetakHC', [
             "title" => "Dashboard",
             "ppks" => $viewPpk,
             "trader" => $trader,
             "master" => $master,
-            "trader"=> $trader
+            "trader"=> $trader,
+            "images"=> $images
         ])->setOptions([
             'defaultFont' => 'Times New Roman',
-            'isPhpEnabled', true
+            'isPhpEnabled' => true,
+            // 'isRemoteEnabled' => true,
         ]);
         
         $pdf->render();
-        return $pdf->stream();
+        return $pdf->stream($selectName);
+        
         // return view('trader.cetakHC', [
         //         "title" => "Dashboard",
         //         "ppks" => $viewPpk,

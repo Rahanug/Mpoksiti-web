@@ -21,11 +21,14 @@
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/styleAdmin.css') }}">
     <style>
-        .nav-item .nav-link.active {
-            /* color: #2E2A61; */
-            /* background-color: rgba(196, 196, 196, 0.3); */
-            font-weight: bold;
-            text-shadow: 0 0 1px #ffff;
+        body {
+        background-color: white !important;
+        }
+        ::-moz-selection {
+        background-color: white !important;
+        }
+        ::selection {
+        background-color: white !important;
         }
     </style>
     <style>
@@ -41,6 +44,7 @@
 </head>
 
 <body id="page-top">
+    
     <script>
         document.title = "Cetak HC"
     </script>
@@ -48,7 +52,7 @@
         <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
             <div class="row">
                 <div class="col-md-2">
-                    <img src="./img/logo_header.png" alt="logo BKIPM" width="100%" />
+                    <img src="<?php echo $_SERVER["DOCUMENT_ROOT"] . '/img/logo_header.png'; ?>" alt="logo BKIPM" width="100%" />
                 </div>
                 <div class="col-md-10" style="text-align: center; margin-left:-3rem">
                     <h6 style="color: blue;">KEMENTERIAN KELAUTAN DAN PERIKANAN</h6>
@@ -184,6 +188,22 @@
                 </div>
                 @endif
                 @endforeach
+            </div>
+            <br><br>
+            <div class="table-responsive">
+                <div class="table-responsive" id="tableHasil">
+                    <table class="table table-bordered">
+                        <tbody>
+                            @foreach($images as $i)
+                            <tr>
+                                <td>
+                                    <img src='<?php echo include(public_path() . '/images_stuffing'. "/$i->images"); ?>' srcset="img/Proses.png 10000w 7000h" sizes="(min-width: 200px, min-height: 50px)">
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </main>
