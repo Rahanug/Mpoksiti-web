@@ -30,7 +30,7 @@ class AuthController extends Controller
                 return Response([
                     'status' => false,
                     'message' => 'NPWP tidak ada',
-                ], 400);
+                ], 401);
             }
         } else {
             return Response([
@@ -70,9 +70,10 @@ class AuthController extends Controller
 
         $response = [
             'user' => $user,
+            'message' => 'Registered',
         ];
 
-        return response($response, 201);
+        return response($response, 200);
     }
 
     public function login(Request $request)
@@ -111,7 +112,8 @@ class AuthController extends Controller
         ];
     }
 
-    public function getFarmLocation(Request $request){
+    public function getFarmLocation(Request $request)
+    {
         //farm location from token
         $id = auth()->user()->id_trader;
         $trader = DB::connection('sqlsrv2')
@@ -119,12 +121,13 @@ class AuthController extends Controller
             ->select('latitude', 'longitude')
             ->where('id_trader', $id)
             ->first();
-        
-        
+
+
         return response()->json($trader);
     }
 
-    public function getUserData(Request $request){
+    public function getUserData(Request $request)
+    {
         //user from token
         $user = Trader::select('id_trader', 'npwp')->where('npwp', auth()->user()->npwp)->first();
         return response()->json($user);

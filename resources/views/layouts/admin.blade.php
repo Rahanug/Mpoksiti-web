@@ -52,24 +52,30 @@
                 <span>Management User</span></a>
         </li>
 
-        <!-- Nav Item - Menu -->
         <li class="nav-item">
-            <a class="nav-link {{ $title==='Menu'? 'active' : '' }}" href="{{ route('admin.menu') }}">
-            <i class="fas fa-fw fa-window-maximize {{ $title==='Management'? 'active' : '' }}"></i>
-                <span>Menu</span></a>
-        </li>
-
-        <!-- Nav Item - Publikasi -->
-        <li class="nav-item">
-            <a class="nav-link {{ $title==='Publikasi'? 'active' : '' }}" href="{{ route('admin.publikasi') }}" href="">
-            <i class="fas fa-fw fa-camera {{ $title==='Management'? 'active' : '' }}"></i>
-            <span>Publikasi</span></a>
+            <a class="nav-link collapsed {{ ($title==='Menu'||$title==='Publikasi')? 'active' : '' }}" href="#" data-toggle="collapse" data-target="#MobilecollapsePages" aria-expanded="false" aria-controls="MobilecollapsePages">
+                <i class="fas fa-fw fa-mobile"></i>
+                <span>Mobile</span>
+            </a>
+            <div id="MobilecollapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <style>
+                        .collapse-item.active {
+                        color: #3C5C94;
+                        /* background-color: rgba(196, 196, 196, 0.3); */
+                        font-weight: bold;
+                        }
+                        </style>
+                    <a class="collapse-item {{ $title==='Menu'? 'active' : '' }}" href="{{ route('admin.menu') }}">Menu</a>
+                    <a class="collapse-item {{ $title==='Publikasi'? 'active' : '' }}" href="{{ route('admin.publikasi') }}">Publikasi</a>
+                </div>
+            </div>
         </li>
 
         <!-- Nav Item - Pemeriksaan Klinis Virtual-->
         <li class="nav-item">
             <a class="nav-link {{ $title==='PKVirtual'? 'active' : '' }}" href="{{ route('admin.PK-pemeriksaan_klinis') }}">
-            <i class="fas fa-fw fa-mobile"></i>
+            <i class="fas fa-fw fa-file-medical"></i>
             <span>Pemeriksaan Klinis</span></a>
         </li>
 
@@ -118,15 +124,25 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {{ $title==='Chatbot Command'? 'active' : '' }}" href="/admin/command">
-            <i class="fas fa-fw fa-mobile"></i>
-            <span>Command Chatbot</span></a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link {{ $title==='Chatbot Admin'? 'active' : '' }}" href="/admin/admin-chatbot">
-            <i class="fas fa-fw fa-mobile"></i>
-            <span>Admin Chatbot</span></a>
+                <a class="nav-link collapsed {{ ($title==='Chatbot Command'||$title==='Chatbot Admin')? 'active' : '' }}" href="#" data-toggle="collapse" data-target="#chatbotCollapsePages" aria-expanded="false" aria-controls="chatbotCollapsePages">
+                    <i class="fas fa-fw fa-robot"></i>
+                    <span>Chatbot</span>
+                </a>
+                <div id="chatbotCollapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <style>
+                            .collapse-item.active {
+                            color: #3C5C94;
+                            /* background-color: rgba(196, 196, 196, 0.3); */
+                            font-weight: bold;
+                            }
+                            </style>
+                        <h6 class="collapse-header">Pengelolaan Chatbot:</h6>
+                        <a class="collapse-item {{ $title==='Chatbot Command'? 'active' : '' }}" href="/admin/command">Command Chatbot</a>
+                        <a class="collapse-item {{ $title==='Chatbot Admin'? 'active' : '' }}" href="/admin/admin-chatbot">Admin Chatbot</a>
+                        
+                    </div>
+                </div>
         </li>
 
         <div class="text-center d-none d-md-inline">
