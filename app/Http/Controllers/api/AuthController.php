@@ -19,9 +19,9 @@ class AuthController extends Controller
     {
         $npwp = $request->input('npwp');
         if (isset($npwp)) {
-            $checkNPWP = tbRTrader::where('npwp', $npwp)->get(['npwp']);
+            $id_trader = $this->getIdTraderFromNpwp($npwp);
 
-            if (count($checkNPWP) > 0) {
+            if (isset($id_trader)) {
                 return Response([
                     'status' => true,
                     'message' => 'NPWP bisa dipakai',
@@ -52,6 +52,11 @@ class AuthController extends Controller
         // ];
     }
 
+    private function getIdTraderFromNpwp($npwp){
+        $checkNPWP = tbRTrader::where('npwp', $npwp)->get(['npwp','id_trader'])->first();
+        return $checkNPWP['id_trader'] ?? null;
+    }
+
     public function register(Request $request)
     {
         $fields = $request->validate([
@@ -61,19 +66,31 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $user = Trader::create([
-            'npwp' => $fields['npwp'],
-            'no_hp' => $fields['no_hp'],
-            'email' => $fields['email'],
-            'password' => bcrypt($fields['password']),
-        ]);
+        $npwp = $request->input('npwp');
+        $id_trader = $this->getIdTraderFromNpwp($npwp);
+        if(!isset($id_trader)){
+            return Response([
+                'status' => false,
+                'message' => 'NPWP tidak ada',
+            ], 401);
+        }else{
+            $user = Trader::create([
+                'id_trader'=>$id_trader,
+                'npwp' => $fields['npwp'],
+                'no_hp' => $fields['no_hp'],
+                'email' => $fields['email'],
+                'password' => bcrypt($fields['password']),
+            ]);
+    
+            $response = [
+                'user' => $user,
+                'message' => 'Registered',
+            ];
+    
+            return response($response, 200);
+        }
 
-        $response = [
-            'user' => $user,
-            'message' => 'Registered',
-        ];
-
-        return response($response, 200);
+       
     }
 
     public function login(Request $request)
