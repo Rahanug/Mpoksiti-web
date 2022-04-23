@@ -10,11 +10,9 @@
 
 <script>document.title = "Dashboard"</script>
 <main class="justify-content-md-center-lg-10 px-md-2"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-  <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3"> 
-  <h2 class="h2">Admin</h2> 
-  </div>
-  <div class="d-flex justify-content-end flex-wrap flex-md-nowrap align-items-center"> 
-  <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="/admin/admin-chatbot/addAdmins">Tambah Admin</a>
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2" style="font-weight:bold; color:#2E2A61;">Admin Chatbot</h1>
+    <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="{{route('admin.addAdmin')}}" >Tambah Admin</a>
   </div>
   {{-- <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
     <img src="img/Proses.png"  srcset="img/Proses.png 10000w 7000h" sizes="(min-width: 200px, min-height: 50px)">
@@ -57,7 +55,7 @@
                             <div class="modal-body">Pilih "Delete" dibawah ini jika Anda yakin menghapus Admin yang dipilih.</div>
                             <div class="modal-footer">
                                 <button class="btn btn-link" type="button" data-dismiss="modal">Cancel</button>
-                                <a class="btn btn-danger" href="/admin/admin-chatbot/deleteAdmin/{{$admins->id}}" >Delete</a>
+                                <a class="btn btn-danger" href="{{route('admin.deleteAdmin', [$admins->id])}}" >Delete</a>
                                 <form id="logout-form" action="" method="POST" style="display: none;">
                                     @csrf
                                 </form>
@@ -65,7 +63,7 @@
                         </div>
                     </div>
                 </div>
-                <a style="margin: 0 3px" class="btn btn-sm btn-warning" href="/admin-chatbot/updateAdmins/{{$admins->id}}">Edit</a>
+                <a style="margin: 0 3px" class="btn btn-sm btn-secondary" href="{{route('admin.updateAdmin', [$admins->id])}}">Edit</a>
             </td>
           </tr>
           @endforeach

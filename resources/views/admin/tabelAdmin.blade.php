@@ -10,12 +10,11 @@
 
 <script>document.title = "Dashboard"</script>
 <main class="justify-content-md-center-lg-10 px-md-2"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-  <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3"> 
-  <h2 class="h2">Command</h2> 
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2" style="font-weight:bold; color:#2E2A61;">Command</h1>
+    <a style="margin: 0 3px" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteAllModal">Delete All</a>
   </div>
-  <div class="d-flex justify-content-end flex-wrap flex-md-nowrap align-items-center"> 
-  <a style="margin: 0 3px" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteAllModal">Delete All</a>
-  </div>
+
 
 {{-- Modals --}}
   {{-- <a style="margin: 0 3px" class="btn btn-sm btn-outline-dark" data-toggle="modal" data-target="#masterModal-{{$kategori->id_kategori}}">Pilih Master</a> --}}
@@ -28,10 +27,10 @@
                       <span aria-hidden="true">×</span>
                   </button>
               </div>
-              <div class="modal-body">Pilih "Delete" dibawah ini jika Anda yakin untuk menghapus <b>seluruh</b> Command yang dipilih.</div>
+              <div class="modal-body">Pilih "Delete" dibawah ini jika Anda yakin untuk menghapus <b style="color: red">seluruh</b> Command yang dipilih.</div>
               <div class="modal-footer">
                   <button class="btn btn-link" type="button" data-dismiss="modal">Cancel</button>
-                  <a class="btn btn-danger" href="/admin/command/deleteAll" >Delete</a>
+                  <a class="btn btn-danger" href="{{route('admin.deleteAllCommand')}}" >Delete</a>
                   <form id="logout-form" action="" method="POST" style="display: none;">
                       @csrf
                   </form>
@@ -85,7 +84,7 @@
                             <div class="modal-body">Pilih "Delete" dibawah ini jika Anda yakin menghapus Command yang dipilih.</div>
                             <div class="modal-footer">
                                 <button class="btn btn-link" type="button" data-dismiss="modal">Cancel</button>
-                                <a class="btn btn-danger" href="/admin/command/deleteCommand/{{$commands->id}}" >Delete</a>
+                                <a class="btn btn-danger" href="{{route('admin.deleteCommand', [$commands->id])}}" >Delete</a>
                                 <form id="logout-form" action="" method="POST" style="display: none;">
                                     @csrf
                                 </form>

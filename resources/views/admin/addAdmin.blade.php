@@ -19,7 +19,7 @@
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <form method="POST" action="/admin/admin-chatbot/addAdmins/storeAdmins" enctype="multipart/form-data">
+                                        <form method="POST" action="{{route('admin.storeAdmin')}}" enctype="multipart/form-data">
                                         @csrf
                                             <div class="row">
                                             <div class="col">
@@ -75,7 +75,7 @@
                                                 <input type="file" id="nm_dokumen" class="form-control" name="nm_dokumen">
                                             </div> --}}
                                                 <div class="col-12 d-flex justify-content-end">
-                                                    <a type="button" class="btn btn-outline-danger" style="margin-right: 1%" href="/admin/admin-chatbot">Cancel</a>
+                                                    <a type="button" class="btn btn-outline-danger" style="margin-right: 1%" href="{{route('admin.tabelDaftarAdmin')}}">Cancel</a>
                                                     <button type="submit" class="btn btn-outline-primary" name="submit" value="Simpan Data">Submit</button>
                                                 </div>
                                             </div>
