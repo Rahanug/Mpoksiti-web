@@ -14,7 +14,7 @@ class CreateTableTrader extends Migration
     public function up()
     {
         Schema::create('traders', function (Blueprint $table) {
-            $table->integer('id_trader');
+            $table->integer('id_trader')->primary();
             $table->string('nm_trader', 50)->nullable();
             $table->string('al_trader', 100)->nullable();
             $table->string('kt_trader', 100)->nullable();
