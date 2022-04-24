@@ -138,8 +138,9 @@
                             }
                             </style>
                         <h6 class="collapse-header">Pengelolaan Chatbot:</h6>
-                        <a class="collapse-item {{ $title==='Chatbot Command'? 'active' : '' }}" href="/admin/command">Command Chatbot</a>
-                        <a class="collapse-item {{ $title==='Chatbot Admin'? 'active' : '' }}" href="/admin/admin-chatbot">Admin Chatbot</a>
+                        {{-- href="{{route('admin.master_subform')}}" --}}
+                        <a class="collapse-item {{ $title==='Chatbot Command'? 'active' : '' }}" href="{{route('admin.tabelCommand')}}">Command Chatbot</a>
+                        <a class="collapse-item {{ $title==='Chatbot Admin'? 'active' : '' }}" href="{{route('admin.tabelDaftarAdmin')}}">Admin Chatbot</a>
                         
                     </div>
                 </div>
