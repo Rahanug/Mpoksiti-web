@@ -18,7 +18,7 @@ class CreateTableTrader extends Migration
             $table->string('nm_trader', 50)->nullable();
             $table->string('al_trader', 100)->nullable();
             $table->string('kt_trader', 100)->nullable();
-            $table->string('npwp', 20);
+            $table->string('npwp', 20)->unique();
             $table->string('no_ktp', 20)->nullable();
             $table->string('no_izin', 20)->nullable();
             $table->string('no_hp', 20);

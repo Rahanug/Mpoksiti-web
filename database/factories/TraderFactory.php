@@ -14,6 +14,7 @@ class TraderFactory extends Factory
     public function definition()
     {
         return [
+            'id_trader' => $this->faker->unique()->randomDigit,
             'nm_trader' => $this->faker->name,
             'al_trader' => $this->faker->address,
             'kt_trader' => $this->faker->city,
