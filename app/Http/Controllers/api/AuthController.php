@@ -149,7 +149,7 @@ class AuthController extends Controller
         //user from token
         $user = DB::connection('sqlsrv2')
             ->table('tb_r_trader')
-            ->select('id_trader', 'npwp')
+            ->select('id_trader')
             ->where('id_trader', auth()->user()->id_trader)
             ->first();
         return response()->json($user);
