@@ -102,7 +102,7 @@ class AuthController extends Controller
         ]);
 
         $user_check = Trader::where('email', $fields['email'])->first();
-        $user = Trader::select('npwp', 'id_trader')->where('email', $fields['email'])->first();
+        $user = Trader::select('id_trader')->where('email', $fields['email'])->first();
 
         if (!$user_check || !Hash::check($fields['password'], $user_check->password)) {
             return response([
@@ -147,7 +147,11 @@ class AuthController extends Controller
     public function getUserData(Request $request)
     {
         //user from token
-        $user = Trader::select('id_trader', 'npwp')->where('npwp', auth()->user()->npwp)->first();
+        $user = DB::connection('sqlsrv2')
+            ->table('tb_r_trader')
+            ->select('id_trader')
+            ->where('id_trader', auth()->user()->id_trader)
+            ->first();
         return response()->json($user);
     }
 }
