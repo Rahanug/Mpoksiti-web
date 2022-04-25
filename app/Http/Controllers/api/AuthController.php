@@ -19,9 +19,9 @@ class AuthController extends Controller
     {
         $npwp = $request->input('npwp');
         if (isset($npwp)) {
-            $id_trader = $this->getIdTraderFromNpwp($npwp);
+            $result = $this->getIDandNameTrader($npwp);
 
-            if (isset($id_trader)) {
+            if (isset($result)) {
                 return Response([
                     'status' => true,
                     'message' => 'NPWP bisa dipakai',
@@ -52,9 +52,9 @@ class AuthController extends Controller
         // ];
     }
 
-    private function getIdTraderFromNpwp($npwp){
-        $checkNPWP = tbRTrader::where('npwp', $npwp)->get(['npwp','id_trader'])->first();
-        return $checkNPWP['id_trader'] ?? null;
+    private function getIDandNameTrader($npwp){
+        $checkNPWP = tbRTrader::where('npwp', $npwp)->get(['id_trader','nm_trader'])->first();
+        return $checkNPWP ?? null;
     }
 
     public function register(Request $request)
@@ -67,15 +67,16 @@ class AuthController extends Controller
         ]);
 
         $npwp = $request->input('npwp');
-        $id_trader = $this->getIdTraderFromNpwp($npwp);
-        if(!isset($id_trader)){
+        $result = $this->getIDandNameTrader($npwp);
+        if(!isset($result)){
             return Response([
                 'status' => false,
                 'message' => 'NPWP tidak ada',
             ], 401);
         }else{
             $user = Trader::create([
-                'id_trader'=>$id_trader,
+                'id_trader'=>$result['id_trader'],
+                'nm_trader'=>$result['nm_trader'],
                 'npwp' => $fields['npwp'],
                 'no_hp' => $fields['no_hp'],
                 'email' => $fields['email'],
