@@ -14,6 +14,6 @@ class Trader extends Authenticatable
     protected $primaryKey = "id_trader";
     public $timestamps = false;
     protected $fillable = [
-        'id_trader', 'nm_trader', 'al_trader', 'kt_trader', 'npwp', 'no_ktp', 'no_izin', 'no_hp', 'email', 'password',
+        'id_trader', 'nm_trader', 'npwp',  'no_hp', 'email', 'password',
     ];
 }

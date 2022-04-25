@@ -16,11 +16,7 @@ class CreateTableTrader extends Migration
         Schema::create('traders', function (Blueprint $table) {
             $table->integer('id_trader')->primary();
             $table->string('nm_trader', 50)->nullable();
-            $table->string('al_trader', 100)->nullable();
-            $table->string('kt_trader', 100)->nullable();
             $table->string('npwp', 20)->unique();
-            $table->string('no_ktp', 20)->nullable();
-            $table->string('no_izin', 20)->nullable();
             $table->string('no_hp', 20);
             $table->string('email', 50);
             $table->string('password', 100);

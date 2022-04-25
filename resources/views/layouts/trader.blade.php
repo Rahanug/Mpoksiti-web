@@ -83,7 +83,7 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->nm_trader }}</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->email }}</span>
                                 <figure class="img-profile rounded-circle avatar font-weight-bold" data-initial="{{ Auth::user()->nm_trader[0] }}"></figure>
                             </a>
                             <!-- Dropdown - User Information -->

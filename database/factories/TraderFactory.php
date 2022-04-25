@@ -16,11 +16,7 @@ class TraderFactory extends Factory
         return [
             'id_trader' => $this->faker->unique()->numberBetween($min = 20, $max = 50),
             'nm_trader' => $this->faker->name,
-            'al_trader' => $this->faker->address,
-            'kt_trader' => $this->faker->city,
             'npwp' => $this->faker->numerify('###############'),
-            'no_ktp' => $this->faker->numerify('################'),
-            'no_izin' => $this->faker->randomDigit,
             'no_hp' => $this->faker->e164PhoneNumber,
             'email' => $this->faker->email,
             'password' => '$2y$10$yzLwDat6kIhj/9XF7TDKG.hskg8RMnOiLGoBQyJyG6Txh5SO6n5LG',
