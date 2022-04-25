@@ -102,7 +102,7 @@ class AuthController extends Controller
         ]);
 
         $user_check = Trader::where('email', $fields['email'])->first();
-        $user = Trader::select('npwp', 'id_trader')->where('email', $fields['email'])->first();
+        $user = Trader::select('id_trader')->where('email', $fields['email'])->first();
 
         if (!$user_check || !Hash::check($fields['password'], $user_check->password)) {
             return response([
