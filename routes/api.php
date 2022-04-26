@@ -26,6 +26,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/logoutuser', [App\Http\Controllers\api\AuthController::class, 'logout'])->name('mobile.logout');
     Route::post('/user', [App\Http\Controllers\api\AuthController::class, 'getUserData'])->name('mobile.checkuser');
     Route::post('/farm', [App\Http\Controllers\api\AuthController::class, 'getFarmLocation'])->name('mobile.checkfarm');
+    Route::apiResource('/pemeriksaan_klinis', 'App\Http\Controllers\api\PemeriksaanKlinisAPIController');
+    Route::apiResource('/addimage', 'App\Http\Controllers\api\ImageController');
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -33,9 +35,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::apiResource('/stuffing', 'App\Http\Controllers\api\StuffingController');
 Route::apiResource('/jpp', 'App\Http\Controllers\api\JPPController');
-Route::apiResource('/pemeriksaan_klinis', 'App\Http\Controllers\api\PemeriksaanKlinisAPIController');
 Route::apiResource('/kurirs', 'App\Http\Controllers\api\JenisKurirController');
-Route::apiResource('/addimage', 'App\Http\Controllers\api\ImageController');
 
 
 Route::get('/checkPemeriksaanKlinis', [App\Http\Controllers\api\NotifAPIController::class, 'check']);
