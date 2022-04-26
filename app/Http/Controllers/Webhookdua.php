@@ -298,13 +298,13 @@ define("temp10", [
             "title" => "Hubungi CS"
         ]
     ],
-    [
-        "type" => "reply",
-        "reply" => [
-            "id" => "Selesai",
-            "title" => "Selesai"
-        ]
-    ]
+    // [
+    //     "type" => "reply",
+    //     "reply" => [
+    //         "id" => "CL",
+    //         "title" => "Coba lagi"
+    //     ]
+    // ]
 ]);
 
 class Webhookdua extends Controller
@@ -732,6 +732,16 @@ class Webhookdua extends Controller
             ->first();
     }
 
+    public function selectLastTwo($from)
+    {
+        return CommandModel::select('command')
+            ->where('no_wa', $from)
+            ->orderByDesc('created_at')
+            ->take(2)
+            ->get();
+    }
+
+
     // public function countMaaf($from)
     // {
     //     return CommandModel::where('no_wa', $from)
@@ -764,14 +774,35 @@ class Webhookdua extends Controller
             $pesan = $this->readMessage($event);
             $pesan = strtolower($pesan);
 
-            $lastRow = CommandModel::where('no_wa', $from)
-                ->orderByDesc('created_at')
-                ->first();
+            $stackCommand = $this->selectLastTwo($from);
+
+            $top = $stackCommand[0];
+            $bottom = $stackCommand[1];
+            $isFirstError = false;
+
+            if (str_contains($top->command, "maaf") && str_contains($bottom->command, "maaf")) {
+                $isFirstError = true;
+
+                $lastRow = $bottom;
+            } elseif (str_contains($top->command, "maaf")) {
+                $isFirstError = true;
+
+                $lastRow = $bottom;
+            } else {
+                $lastRow = $top;
+            }
+
+
+
+
+            // $lastRow = CommandModel::where('no_wa', $from)
+            //     ->orderByDesc('created_at')
+            //     ->first();
 
             $cs = $this->selectAdmin();
 
             // IF kembali then deleteLastRow
-            if (strpos($pesan, "menu sebelumnya") !== false) {
+            if (str_contains($pesan, "menu sebelumnya") !== false) {
                 $this->deleteCommand($from);
             }
 
@@ -782,7 +813,7 @@ class Webhookdua extends Controller
             } else {
                 switch (true) {
                     case str_contains($lastRow->command, 'selesai'):
-                        if (strpos($pesan, "halo") !== false) {
+                        if (str_contains($pesan, "halo") !== false) {
                             // echo json_encode("halo selamat datang, pilih menu lacak info sertifikasi");
                             $this->send_msg3($from, "Selamat Datang di layanan Halo Mpok Siti, Media Pelayanan Online Karantina Simpel dan Terintegrasi, apa yang ingin Anda ketahui ? \\n", constant("temp1"));
                             $this->insertCommand($pesan, $from);
@@ -856,9 +887,14 @@ class Webhookdua extends Controller
                                 $this->send_msg3($from, "Selamat Datang di layanan Halo Mpok Siti, Media Pelayanan Online Karantina Simpel dan Terintegrasi, apa yang ingin Anda ketahui ? \\n", constant("temp1"));
                                 break;
                             default:
-                                // echo json_encode("Maaf");
+                                // echo json_encode($this->selectLastThree($from));
                                 $this->insertCommand("maaf", $from);
-                                $this->send_msg($from, "Maaf, Pilih sesuai menu yang Ada");
+                                if ($isFirstError) {
+                                    $this->send_msg2($from, "*Halo disana!*\\n Bagaimana pengalamanmu menggunakan layanan Halo Mpok Siti?\\n\\nAnda telah mengalami error sebanyak 2 kali atau lebih, kami mohon maaf yang sebesar-besarnya mengingat layanan ini masih dalam tahap uji coba. Kami sarankan Anda untuk menggunakan layanan Hubungi Customer Service dibawah ini untuk pengalaman yang lebih baik. Kami akan bantu Anda menyelesaikan masalah Anda sebaik yang kami bisa\\n", constant("temp10"));
+                                } else {
+                                    $this->send_msg($from, "Maaf, Pilih sesuai menu yang Ada");
+                                }
+
                                 // $this->insertCommand("maaf", $from);
                         }
                         break;
@@ -1736,11 +1772,12 @@ class Webhookdua extends Controller
                                 // echo json_encode("Menu utama");
                                 $this->send_msg3($from, "Selamat Datang di layanan Halo Mpok Siti, Media Pelayanan Online Karantina Simpel dan Terintegrasi, apa yang ingin Anda ketahui ? \\n", constant("temp1"));
                                 break;
-                            case str_contains($pesan, "selesai"):
-                                $this->insertCommand("selesai", $from);
-                                // echo json_encode("Selesai");
-                                $this->send_msg($from, "Terima kasih telah menggunakan layanan chatbot Mpok Siti");
-                                break;
+                            // case str_contains($pesan, "coba lagi"):
+                            //     // $this->insertCommand("selesai", $from);
+                            //     // echo json_encode("Selesai");
+                            //     $this->deleteCommand($from);
+                            //     $this->send_msg($from, "Silahkan masukkan inputan sesuai perintah sebelumnya 🤗");
+                            //     break;
                             case str_contains($pesan, "hubungi cs"):
                                 $this->insertCommand("selesai", $from);
                                 // echo json_encode("hubungi customer service");
