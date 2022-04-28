@@ -206,7 +206,7 @@ class AdminJPPController extends Controller
                 'namaKurir' => $request->nama_kurir
             ]);
         } catch (Exception){
-            return redirect('admin/kurirr_management')->withErrors(['JPP/Kurir '.$request->nama_kurir.' gagal ditambahkan']);
+            return redirect('admin/kurir_management')->withErrors(['JPP/Kurir '.$request->nama_kurir.' gagal ditambahkan']);
         }
         return redirect('admin/kurir_management')->with('success', 'JPP/Kurir '.$request->nama_kurir.' telah ditambahkan');
     }
