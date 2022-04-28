@@ -68,6 +68,7 @@
                     <th scope="col">Nama Kurir</th>
                     <!--<th scope="col">Logo Kurir</th>-->
                     <th scope="col">Aksi</th>
+                    <th scope="col">Status</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -106,6 +107,27 @@
                               </div>
                           </div>
                         </div>
+
+                        
+                        @if ($jpp->is_active == 1)
+                          <td>
+                            <form action="/admin/kurir_management/toggle_kurir" method="POST">
+                              @csrf
+                              <input type="hidden" id="id" name="id" value= <?=$jpp->id?>>
+                              <input type="hidden" id="status" name="status" value='0'>
+                              <button class="btn btn-sm btn-danger">Disable</button>       
+                            </form>
+                          </td>
+                        @else
+                          <td>
+                            <form action="/admin/kurir_management/toggle_kurir" method="POST">
+                              @csrf
+                              <input type="hidden" id="id" name="id" value= <?=$jpp->id?>>
+                              <input type="hidden" id="status" name="status" value='1'>
+                              <button class="btn btn-sm btn-outline-dark">Enable</button>       
+                            </form>
+                          </td>
+                        @endif
                     </td>
                 @endforeach
                 </tbody>
