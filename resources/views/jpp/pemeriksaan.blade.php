@@ -318,7 +318,7 @@
                             <span aria-hidden="true">×</span>
                           </button>
                         </div>
-                        <div class="modal-body">{{ $ppk->keterangan }}</div>
+                        <div class="modal-body">{{ $ppk->ket_admin }}</div>
                         <div class="modal-footer">
                           <button class="btn btn-link" type="button" data-dismiss="modal">Tutup</button>
                         </div>

@@ -98,6 +98,7 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::get('/admin/kurir_management', [App\Http\Controllers\AdminJPPController::class, 'kurir'])->name('admin.PK-kurir_management');
         Route::post('/admin/kurir_management/add_kurir', [App\Http\Controllers\AdminJPPController::class, 'addKurir']);
         Route::post('/admin/kurir_management/update_kurir', [App\Http\Controllers\AdminJPPController::class, 'updateKurir']);
+        Route::post('/admin/kurir_management/toggle_kurir', [App\Http\Controllers\AdminJPPController::class, 'toggleKurir']);
 
         // Chatbot
         Route::get('/admin/command', [App\Http\Controllers\Dashboard::class, 'index'])->name('admin.tabelCommand');

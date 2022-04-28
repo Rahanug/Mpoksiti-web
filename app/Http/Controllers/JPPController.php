@@ -31,7 +31,7 @@ class JPPController extends Controller
                 $join->on('pemeriksaan_klinis.id_ppk', '=', 'data_view.id_ppk');
             })
             ->join('traders', 'data_view.id_trader', '=', 'traders.id_trader')
-            ->select('*') //TODO dont select everything
+            ->select('*', 'pemeriksaan_klinis.keterangan as ket_admin') //TODO dont select everything
             ->where("id_jpp", Auth::user()->id)
             ->get();
         foreach($list_ppk as $data){
