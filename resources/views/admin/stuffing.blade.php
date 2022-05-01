@@ -252,6 +252,197 @@
                     </div>
                   </div>
                   @endif
+                  @if ($ppk->status == "Cetak HC")
+                  <a style="margin: 0 3px" class="btn btn-sm btn-info" data-toggle="modal" data-target="#hasilModal-{{$ppk->id_ppk}}">Cetak Verifikasi</a>
+                  <!-- <a target="_blank" style="margin: 0 3px" class="btn btn-sm btn-primary" href="/home/cetakHC/{{$ppk->id_ppk}}">Cetak HC</a> -->
+
+                  <!-- Modal Hasil -->
+                  <div class="modal fade" id="hasilModal-{{$ppk->id_ppk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle">Hasil Pemeriksaan Virtual</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body" id="tableHasil-{{$ppk->id_ppk}}">
+                          <main class="justify-content-md-center-lg-10 px-md-2">
+                            <div class="chartjs-size-monitor">
+                              <div class="chartjs-size-monitor-expand">
+                                <div class=""></div>
+                              </div>
+                              <div class="chartjs-size-monitor-shrink">
+                                <div class=""></div>
+                              </div>
+                            </div>
+                            <section id="multiple-column-form">
+                              <div class="row match-height">
+                                <div class="d-flex">
+                                  <div class="col-md-2">
+                                    <img src="./img/logo_header.png" width="100" />
+                                  </div>
+                                  <div class="col-md-10" style="text-align: center; ">
+                                    <h6 style="color: blue;">KEMENTERIAN KELAUTAN DAN PERIKANAN</h6>
+                                    <h6 style="color: blue;">BADAN KARANTINA IKAN, PENGENDALIAN MUTU,</h6>
+                                    <h6 style="color: blue;">DAN KEAMANAN HASIL PERIKANAN</h6>
+                                    <h6 style="color: blue;">BALAI BESAR KARANTINA IKAN, PENGENDALIAN MUTU DAN</h6>
+                                    <h6 style="color: blue;">KEAMANAN HASIL PERIKANAN JAKARTA I</h6>
+                                    <h6 style="font-size: small;">ALAMAT GEDUNG KARANTINA PERTANIAN BANDARA SOEKARNO – HATTA 19120</h6>
+                                    <h6 style="font-size: small;">TELEPON : (021) 5507932,5591 5059 FAKSIMILI : (021) 5506738 email : JakartaI@bkipm.kkp.go.id</h6>
+                                  </div>
+                                </div>
+                                <hr style="border: 0; clear:both; display:block; width: 100%; background-color:#000000; height: 5px;" />
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <h4 style="text-align: center;">FORM HASIL VERIFIKASI LAPANGAN</h4>
+                                    <table class='table borderless'>
+                                      @foreach ($ppk->subform as $f)
+                                      <tr>
+                                        @if(($master[$f->id_masterSubform]) == 'Tanggal verifikasi lapangan')
+                                        <td>Tanggal verifikasi lapangan</td>
+                                        <td>&nbsp;: {{date('d-m-Y H:i', strtotime($f->value))}}</td>
+                                        @endif
+                                      </tr>
+                                      <tr>
+                                        @if(($master[$f->id_masterSubform]) == 'No Agenda')
+                                        <td>No Agenda</td>
+                                        <td>&nbsp;: {{$f->value}}</td>
+                                        @endif
+                                      </tr>
+                                      <tr>
+                                        @if(($master[$f->id_masterSubform]) == 'Nama UPI')
+                                        <td>Nama UPI</td>
+                                        <td>&nbsp;: {{$f->value}}</td>
+                                        @endif
+                                      </tr>
+                                      @endforeach
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="table-responsive">
+                                <div class="table-responsive" id="tableHasil">
+                                  <table class="table table-bordered">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">Indikator</th>
+                                        <th scope="col">Hasil</th>
+                                        <th scope="col">Keterangan</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      @foreach ($ppk->subform as $f)
+                                      @if(($master[$f->id_masterSubform]) != 'Tanggal verifikasi lapangan'
+                                      && ($master[$f->id_masterSubform]) != 'No Agenda'
+                                      && ($master[$f->id_masterSubform]) != 'Nama UPI'
+                                      && ($master[$f->id_masterSubform]) != 'Nama Petugas'
+                                      && ($master[$f->id_masterSubform]) != 'Rekomendasi')
+                                      <tr>
+                                        <td>{{ $master[$f->id_masterSubform] }}</td>
+                                        <td>{{ $f->value }}</td>
+                                        <td>{{ $f->keterangan }}</td>
+                                      </tr>
+                                      @endif
+                                      @endforeach
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                              <p>Keterangan : Beri tanda √ pada kolom pilihan</p>
+                              <p>REKOMENDASI :</p>
+                              @foreach ($ppk->subform as $f)
+                              @if (($master[$f->id_masterSubform]) == 'Rekomendasi' && $f->value == 'Sesuai')
+                              <div class="row">
+                                <div class="col-sm-1"><input type="checkbox" name="rekomendasi-1" id="rekomendasi-1" class="w-100" checked></div>
+                                <div class="col-sm-11">Setelah dilakukan verifikasi atas kebenaran data, bahwa sudah
+                                  sesuai permohonan penerbitan Sertifikat Kesehatan Ikan dan Produk
+                                  Perikanan (SKIPP) Ekspor. dengan No izin <u>{{$f->no_izin}}</u> dan tanggal izin <u>{{ date('Y-m-d H:i', strtotime($f->tgl_izin))}}</u></div>
+                              </div>
+                              <div class="row">
+                                <div class="col-sm-1"><input type="checkbox" name="rekomendasi-2" id="rekomendasi-2" class="w-100" disabled></div>
+                                <div class="col-sm-11">
+                                  <p>
+                                    Tidak sesuai dengan permohonan penerbitan Sertifikat Kesehatan Ikan dan
+                                    Produk Perikanan (SKIPP) Ekspor , karena</br>
+                                  </p>
+                                  <p>
+                                    .....................................................................................................................................................
+                                  </p>
+                                </div>
+                              </div>
+                              @elseif (($master[$f->id_masterSubform]) == 'Rekomendasi' && $f->value == 'Tidak Sesuai')
+                              <div>
+                                <div style="float:left;"><input type="checkbox" name="rekomendasi-1" id="rekomendasi-1" class="w-100" disabled></div>
+                                <div style="float:right;">Setelah dilakukan verifikasi atas kebenaran data, bahwa sudah
+                                  sesuai permohonan penerbitan Sertifikat Kesehatan Ikan dan Produk
+                                  Perikanan (SKIPP) Ekspor .</div>
+                              </div>
+                              <div>
+                                <div style="float:left;"><input type="checkbox" name="rekomendasi-2" id="rekomendasi-2" class="w-100" checked></div>
+                                <div style="float:right;">
+                                  <p>
+                                    Tidak sesuai dengan permohonan penerbitan Sertifikat Kesehatan Ikan dan
+                                    Produk Perikanan (SKIPP) Ekspor , karena</br>
+                                  </p>
+                                  <p>
+                                    {{$f->keterangan}}
+                                  </p>
+                                </div>
+                              </div>
+                              @endif
+                              @endforeach
+                              <div style="margin-bottom:5rem">
+                                @foreach ($ppk->subform as $f)
+                                @if (($master[$f->id_masterSubform]) == 'Nama Petugas')
+                                <div style="float:left; text-align:center">
+                                  <p>Cap dan Tanda Tangan</p>
+                                  <p>Inspektu Mutu</p>
+                                  <br><br>
+                                  <p>{{ucfirst($f->value)}}</p>
+                                </div>
+                                @endif
+                                @if (($master[$f->id_masterSubform]) == 'Nama UPI')
+                                <div style="float:right; text-align:center">
+                                  <p>Cap dan Tanda</p>
+                                  <p>Tangan UPI</p><br><br>
+                                  <p>{{ucfirst($f->value)}}</p>
+                                </div>
+                                @endif
+                                @endforeach
+                              </div>
+                              <br><br>
+                              <div style="margin-bottom:5rem">
+                                <div class="table-responsive">
+                                  <div class="table-responsive" id="tableHasil">
+                                    <table class="table table-bordered">
+                                      <thead>
+                                        <th>Dokumentasi Stuffing Virtual</th>
+                                      </thead>
+                                      <tbody>
+                                        @foreach($ppk->stuffing as $i)
+                                        <tr>
+                                          <td>
+                                            <img src='images_stuffing/{{$i->images}}' style="max-width: 300px; max-height: 300px">
+                                          </td>
+                                        </tr>
+                                        @endforeach
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </section>
+                          </main>
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-link" type="button" data-dismiss="modal">Tutup</button>
+                          <button class="btn btn-primary" onclick=<?= 'printDiv("tableHasil-' . $ppk->id_ppk . '")' ?>>Cetak</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  @endif
                   <a style="margin: 0 3px" class="btn btn-sm btn-secondary" id="detail" href="{{route('admin.detail',[$ppk->id_ppk])}}">Detail</a>
                 </td>
               </tr>
@@ -262,6 +453,7 @@
       </div>
     </div>
   </div>
+
 </main>
 @endsection
 
@@ -278,5 +470,27 @@
     });
 
   });
+
+  function printDiv(divName) {
+    var mywindow = window.open('', 'PRINT', 'toolbar=1, scrollbars=1, location=1, statusbar=0, menubar=1, resizable=1,height=720,width=1280');
+    mywindow.document.write('<html><head><title>' + document.title + '-' + divName + '</title>');
+    //bootstrap
+    mywindow.document.write('<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" type="text/css" media="all">');
+    mywindow.document.write('<link href="public/css/sb-admin-2.min.css" rel="stylesheet">');
+    mywindow.document.write('<link href="public/css/app.css" rel="stylesheet">');
+    mywindow.document.write('<link href="public/js/sb-admin-2.min.js" rel="stylesheet">');
+    mywindow.document.write('</head><body >');
+    mywindow.document.write('<link href="public/vendor/jquery/jquery.min.js" rel="stylesheet">');
+    mywindow.document.write('<link href="public/vendor/bootstrap/js/bootstrap.min.js" rel="stylesheet">');
+    mywindow.document.write('<link href="public/vendor/jquery-easing/jquery.easing.min.js" rel="stylesheet">');
+    mywindow.document.write(document.getElementById(divName).innerHTML);
+    mywindow.document.write('</body></html>');
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10
+    mywindow.print();
+    mywindow.close();
+
+    return true;
+  }
 </script>
 @endpush
