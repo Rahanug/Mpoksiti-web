@@ -52,7 +52,7 @@
                 <td></td>
                 @endif
                 @if($ppk->url_periksa != "" && $ppk->status == "Stuffing")
-                <td><a target="_blank" style="margin: 0 3px" class="btn btn-sm btn-link" href="{{ $ppk->url_periksa}}">Link Meeting</a></td>
+                <td><a target="_blank" style="margin: 0 3px" class="btn btn-sm btn btn-success" href="{{ $ppk->url_periksa}}">Link Meeting</a></td>
                 @else
                 <td></td>
                 @endif
@@ -252,7 +252,7 @@
                     </div>
                   </div>
                   @endif
-                  @if ($ppk->status == "Cetak HC")
+                  @if ($ppk->status == "Cetak HC" || $ppk->status == "Tidak Sesuai")
                   <a style="margin: 0 3px" class="btn btn-sm btn-info" data-toggle="modal" data-target="#hasilModal-{{$ppk->id_ppk}}">Cetak Verifikasi</a>
                   <!-- <a target="_blank" style="margin: 0 3px" class="btn btn-sm btn-primary" href="/home/cetakHC/{{$ppk->id_ppk}}">Cetak HC</a> -->
 
@@ -280,7 +280,7 @@
                               <div class="row match-height">
                                 <div class="d-flex">
                                   <div class="col-md-2">
-                                    <img src="./img/logo_header.png" width="100" />
+                                    <img src="../img/logo_header.png" width="100" />
                                   </div>
                                   <div class="col-md-10" style="text-align: center; ">
                                     <h6 style="color: blue;">KEMENTERIAN KELAUTAN DAN PERIKANAN</h6>
@@ -383,10 +383,7 @@
                                 <div style="float:right;">
                                   <p>
                                     Tidak sesuai dengan permohonan penerbitan Sertifikat Kesehatan Ikan dan
-                                    Produk Perikanan (SKIPP) Ekspor , karena</br>
-                                  </p>
-                                  <p>
-                                    {{$f->keterangan}}
+                                    Produk Perikanan (SKIPP) Ekspor , karena <b>{{$f->keterangan}}</b></br>
                                   </p>
                                 </div>
                               </div>
@@ -423,7 +420,7 @@
                                         @foreach($ppk->stuffing as $i)
                                         <tr>
                                           <td>
-                                            <img src='images_stuffing/{{$i->images}}' style="max-width: 300px; max-height: 300px">
+                                            <img src='../images_stuffing/{{$i->images}}' style="max-width: 300px; max-height: 300px">
                                           </td>
                                         </tr>
                                         @endforeach

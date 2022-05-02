@@ -29,17 +29,17 @@
         <td>{{ date('Y-m-d H:i A', strtotime($ppk->jadwal_periksa))}}</td>
         @endif
         @if($ppk->url_periksa != "" && $ppk->status == "Stuffing")
-        <td><a target="_blank" style="margin: 0 3px" class="btn btn-sm btn-link" href="{{ $ppk->url_periksa}}">Link Meeting</a></td>
+        <td><a target="_blank" style="margin: 0 3px" class="btn btn-sm btn btn-success" href="{{ $ppk->url_periksa}}">Link Meeting</a></td>
         @else
         <td></td>
         @endif
         <td style="font-weight: bold">{{ ucfirst($ppk->status)}}</td>
         <td>
-          @if ($ppk->status == "" || $ppk->status == "verifikasi")
+          @if ($ppk->status == "" || $ppk->status == "verifikasi" || $ppk->status == "Gagal")
           <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="home/{{$ppk->id_ppk}}">Unggah</a>
           @endif
-          @if ($ppk->status == "Cetak HC")
-          <a style="margin: 0 3px" class="btn btn-sm btn-info" data-toggle="modal" data-target="#hasilModal-{{$ppk->id_ppk}}">Cetak HC</a>
+          @if ($ppk->status == "Cetak HC" || $ppk->status == "Tidak Sesuai")
+          <a style="margin: 0 3px" class="btn btn-sm btn-info" data-toggle="modal" data-target="#hasilModal-{{$ppk->id_ppk}}">Cetak Verifikasi</a>
           <!-- <a target="_blank" style="margin: 0 3px" class="btn btn-sm btn-primary" href="/home/cetakHC/{{$ppk->id_ppk}}">Cetak HC</a> -->
 
           <!-- Modal Hasil -->

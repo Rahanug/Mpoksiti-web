@@ -50,14 +50,14 @@ class MasterDokumenController extends Controller
             'max' => ':attribute harus diisi maksimal :max karakter !!!',
             'numeric' => ':attribute harus diisi angka !!!',
             'email' => ':attribute harus diisi dalam bentuk email !!!',
-            'nm_dokumen.mimes'=> 'Format dokumen harus berupa pdf!!!'
+            'nm_dokumen.mimes'=> 'Format dokumen harus berupa pdf, jpg, jpeg, atau png!!!'
         ];
 
         $this->validate($request,[
             "id_kategori" => 'required',
             'no_dokumen' => 'required',
             "tgl_terbit" => 'required',
-            'nm_dokumen'=> 'required|mimes:pdf,'
+            'nm_dokumen'=> 'required|mimes:pdf,jpg,jpeg,png'
         ],$messages);
 
         $nm_dokumen = $request->file('nm_dokumen');
@@ -172,14 +172,14 @@ class MasterDokumenController extends Controller
             'max' => ':attribute harus diisi maksimal :max karakter !!!',
             'numeric' => ':attribute harus diisi angka !!!',
             'email' => ':attribute harus diisi dalam bentuk email !!!',
-            'nm_dokumen.mimes'=> 'Format dokumen harus berupa pdf!!!'
+            'nm_dokumen.mimes'=> 'Format dokumen harus berupa pdf, jpg, jpeg, atau png!!!'
         ];
 
         $this->validate($request,[
             "id_kategori" => 'required',
             'no_dokumen' => 'required',
             "tgl_terbit" => 'required',
-            'nm_dokumen'=> 'required|mimes:pdf,'
+            'nm_dokumen'=> 'required|mimes:pdf,jpg,jpeg,png'
         ],$messages);
 
         $nm_dokumen = $request->file('nm_dokumen');
