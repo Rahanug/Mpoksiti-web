@@ -32,6 +32,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('/stuffing', 'App\Http\Controllers\api\StuffingController');
 Route::apiResource('/jpp', 'App\Http\Controllers\api\JPPController');
 Route::apiResource('/kurirs', 'App\Http\Controllers\api\JenisKurirController');
+Route::apiResource('/addimage', 'App\Http\Controllers\api\ImageController');
 
 Route::get('/checkPemeriksaanKlinis', [App\Http\Controllers\api\NotifAPIController::class, 'check']);
 Route::get('/checkPemeriksaanKlinisJPP/{id}', [App\Http\Controllers\api\NotifAPIController::class, 'checkJPP']);
