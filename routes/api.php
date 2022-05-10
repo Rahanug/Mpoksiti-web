@@ -17,6 +17,7 @@ Route::post('/regisuser', [App\Http\Controllers\api\AuthController::class, 'regi
 Route::post('/loginuser', [App\Http\Controllers\api\AuthController::class, 'login'])->name('mobile.login');
 Route::post('/npwp', [App\Http\Controllers\api\AuthController::class, 'checknpwp'])->name('mobile.checknpwp');
 Route::get('/menu/{id_menu}', [App\Http\Controllers\api\AuthController::class, 'getMenuUrl'])->name('mobile.getmenu');
+Route::get('/publikasi/{id_gambar}', [App\Http\Controllers\api\AuthController::class, 'getPublikasiImage'])->name('mobile.getImage');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/logoutuser', [App\Http\Controllers\api\AuthController::class, 'logout'])->name('mobile.logout');

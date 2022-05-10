@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
+use App\Models\Publikasi;
 use App\Models\tbRTrader;
 use App\Models\Trader;
 use Illuminate\Http\Request;
@@ -157,5 +158,11 @@ class AuthController extends Controller
     {
         $getMenu = Menu::where('id_menu', $id_menu)->get(['url'])->first();
         return $getMenu ?? null;
+    }
+
+    public function getPublikasiImage($id_gambar)
+    {
+        $getImage = Publikasi::where('id_gambar', $id_gambar)->get(['file_gambar'])->first();
+        return $getImage ?? null;
     }
 }
