@@ -160,9 +160,9 @@ class AuthController extends Controller
         return $getMenu ?? null;
     }
 
-    public function getPublikasiImage($id_gambar)
+    public function getPublikasiImage()
     {
-        $getImage = Publikasi::where('id_gambar', $id_gambar)->get(['file_gambar'])->first();
+        $getImage = Publikasi::select('file_gambar')->get();
         return $getImage ?? null;
     }
 }
