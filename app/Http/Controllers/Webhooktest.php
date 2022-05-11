@@ -298,13 +298,13 @@ define("temp10", [
             "title" => "Hubungi CS"
         ]
     ],
-    // [
-    //     "type" => "reply",
-    //     "reply" => [
-    //         "id" => "CL",
-    //         "title" => "Coba lagi"
-    //     ]
-    // ]
+    [
+        "type" => "reply",
+        "reply" => [
+            "id" => "Selesai",
+            "title" => "Selesai"
+        ]
+    ]
 ]);
 
 class Webhookdua extends Controller
@@ -578,7 +578,6 @@ class Webhookdua extends Controller
         $idUrut = DB::connection('sqlsrv2')
             ->table('v_for_flowguide')
             ->select('id_urut')
-            ->where('nm_dok', 'Single Certificate')
             ->where('no_aju_ppk', $no_aju)
             ->first();
 
@@ -700,12 +699,12 @@ class Webhookdua extends Controller
     }
 
     // =============================================
-
+    // Untuk mencari ID PPK sesuai dengan no_aju pesan
     public function selectIDPPKPNBP($no_aju)
     {
         // return RPTPNBPHarianModel::select('id_ppk')
         return DB::connection('sqlsrv2')
-            ->table('v_rpt_pnbp_harian')
+            ->table('tr_mst_pelaporan')
             ->select('id_ppk')
             ->where('no_aju_ppk', $no_aju)
             ->first();
@@ -716,31 +715,31 @@ class Webhookdua extends Controller
         $idPPK = $this->selectIDPPKPNBP($no_aju);
         // return RPTPNBPHarianModel::select('kel_tarif', 'total')
         return DB::connection('sqlsrv2')
-            ->table('v_rpt_pnbp_harian')
+            ->table('v_rpt_pnbp_harian_new')
             ->select('kel_tarif', 'total')
             ->where('id_ppk', $idPPK->id_ppk)
             ->get();
     }
 
+    // Ini untuk menyocokkan pesan user dengan yang ada di database
     public function selectPPKPNBP($pesan)
     {
         // return RPTPNBPHarianModel::select('no_aju_ppk')
         return DB::connection('sqlsrv2')
-            ->table('v_rpt_pnbp_harian')
+            ->table('tr_mst_pelaporan')
             ->select('no_aju_ppk')
             ->where('no_aju_ppk', $pesan)
             ->first();
     }
 
-    public function selectLastTwo($from)
+    public function selectLastThree($from)
     {
         return CommandModel::select('command')
             ->where('no_wa', $from)
             ->orderByDesc('created_at')
-            ->take(2)
+            ->take(3)
             ->get();
     }
-
 
     // public function countMaaf($from)
     // {
@@ -774,35 +773,14 @@ class Webhookdua extends Controller
             $pesan = $this->readMessage($event);
             $pesan = strtolower($pesan);
 
-            $stackCommand = $this->selectLastTwo($from);
-
-            $top = $stackCommand[0];
-            $bottom = $stackCommand[1];
-            $isFirstError = false;
-
-            if (str_contains($top->command, "maaf") && str_contains($bottom->command, "maaf")) {
-                $isFirstError = true;
-
-                $lastRow = $bottom;
-            } elseif (str_contains($top->command, "maaf")) {
-                $isFirstError = true;
-
-                $lastRow = $bottom;
-            } else {
-                $lastRow = $top;
-            }
-
-
-
-
-            // $lastRow = CommandModel::where('no_wa', $from)
-            //     ->orderByDesc('created_at')
-            //     ->first();
+            $lastRow = CommandModel::where('no_wa', $from)
+                ->orderByDesc('created_at')
+                ->first();
 
             $cs = $this->selectAdmin();
 
             // IF kembali then deleteLastRow
-            if (str_contains($pesan, "menu sebelumnya") !== false) {
+            if (strpos($pesan, "menu sebelumnya") !== false) {
                 $this->deleteCommand($from);
             }
 
@@ -813,7 +791,7 @@ class Webhookdua extends Controller
             } else {
                 switch (true) {
                     case str_contains($lastRow->command, 'selesai'):
-                        if (str_contains($pesan, "halo") !== false) {
+                        if (strpos($pesan, "halo") !== false) {
                             // echo json_encode("halo selamat datang, pilih menu lacak info sertifikasi");
                             $this->send_msg3($from, "Selamat Datang di layanan Halo Mpok Siti, Media Pelayanan Online Karantina Simpel dan Terintegrasi, apa yang ingin Anda ketahui ? \\n", constant("temp1"));
                             $this->insertCommand($pesan, $from);
@@ -887,14 +865,9 @@ class Webhookdua extends Controller
                                 $this->send_msg3($from, "Selamat Datang di layanan Halo Mpok Siti, Media Pelayanan Online Karantina Simpel dan Terintegrasi, apa yang ingin Anda ketahui ? \\n", constant("temp1"));
                                 break;
                             default:
-                                // echo json_encode($this->selectLastThree($from));
+                                // echo json_encode("Maaf");
                                 $this->insertCommand("maaf", $from);
-                                if ($isFirstError) {
-                                    $this->send_msg2($from, "*Halo disana!*\\n Bagaimana pengalamanmu menggunakan layanan Halo Mpok Siti?\\n\\nAnda telah mengalami error sebanyak 2 kali atau lebih, kami mohon maaf yang sebesar-besarnya mengingat layanan ini masih dalam tahap uji coba. Kami sarankan Anda untuk menggunakan layanan Hubungi Customer Service dibawah ini untuk pengalaman yang lebih baik. Kami akan bantu Anda menyelesaikan masalah Anda sebaik yang kami bisa\\n", constant("temp10"));
-                                } else {
-                                    $this->send_msg($from, "Maaf, Pilih sesuai menu yang Ada");
-                                }
-
+                                $this->send_msg($from, "Maaf, Pilih sesuai menu yang Ada");
                                 // $this->insertCommand("maaf", $from);
                         }
                         break;
@@ -1139,6 +1112,7 @@ class Webhookdua extends Controller
                     case str_contains($lastRow->command, "eks_aju_lacak"):
                         $selectPPK = $this->selectPPKEkspor(strtoupper($pesan));
                         $sertif = $this->lacakEkspor(strtoupper($pesan));
+                        // $test = $this->selectIDPPKPNBP($pesan);
                         switch (true) {
                             case str_contains($pesan, "menu sebelumnya"):
                                 // echo json_encode("Menu sebelumnya");
@@ -1148,6 +1122,7 @@ class Webhookdua extends Controller
                                 $this->insertCommand("nomor aju eks", $from);
                                 // echo json_encode("Anda telah memasukkan nomor aju ekspor Anda");
                                 $this->send_msg($from, "Berdasarkan tracking, proses Anda telah sampai pada " . $sertif->nm_dok);
+                                // $this->send_msg($from, "Berdasarkan tracking, proses Anda telah sampai pada " . $test->id_ppk);
                                 // db
                                 $this->send_msg2($from, "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\\n", constant("temp6"));
                                 break;
@@ -1772,12 +1747,11 @@ class Webhookdua extends Controller
                                 // echo json_encode("Menu utama");
                                 $this->send_msg3($from, "Selamat Datang di layanan Halo Mpok Siti, Media Pelayanan Online Karantina Simpel dan Terintegrasi, apa yang ingin Anda ketahui ? \\n", constant("temp1"));
                                 break;
-                            // case str_contains($pesan, "coba lagi"):
-                            //     // $this->insertCommand("selesai", $from);
-                            //     // echo json_encode("Selesai");
-                            //     $this->deleteCommand($from);
-                            //     $this->send_msg($from, "Silahkan masukkan inputan sesuai perintah sebelumnya 🤗");
-                            //     break;
+                            case str_contains($pesan, "selesai"):
+                                $this->insertCommand("selesai", $from);
+                                // echo json_encode("Selesai");
+                                $this->send_msg($from, "Terima kasih telah menggunakan layanan chatbot Mpok Siti");
+                                break;
                             case str_contains($pesan, "hubungi cs"):
                                 $this->insertCommand("selesai", $from);
                                 // echo json_encode("hubungi customer service");
