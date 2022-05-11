@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PemeriksaanKlinis;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class PemeriksaanKlinisAPIController extends Controller
 {
@@ -25,6 +26,7 @@ class PemeriksaanKlinisAPIController extends Controller
             ->select('v_data_header.id_ppk', 'v_data_header.no_aju_ppk', 'v_data_header.nm_penerima', 'pk.status', 'jpp.nama_counter')
             ->where('id_trader', $request->id_trader)
             ->where('kd_kegiatan', 'K')
+            ->where('v_data_header.tgl_ppk', '>', Carbon::now()->subDays(7))
             ->orderBy('pk.status', 'asc')
             ->get();
         foreach ($vDataHeaders as $data){

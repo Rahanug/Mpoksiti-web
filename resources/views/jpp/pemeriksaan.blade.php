@@ -53,7 +53,7 @@
 
                 @if ($ppk->status_periksa == null)
                 <td>
-                  <form action="/jpp/permohonan" method="POST">
+                  <form action="permohonan" method="POST">
                     @csrf
                     <input type="hidden" id="id_ppk" name="id_ppk" value=<?= $ppk->id_ppk ?>>
                     <button class="btn btn-sm btn-outline-dark">Ajukan Permohonan</button>
@@ -153,6 +153,7 @@
                               </div>
                             </div>
 
+                            <div class="pagebreak"> </div>
                             <div class="row">
                               <div class="col-4 col-sm-12">
                                 <div class="row">DOKUMENTASI: </div>
@@ -177,8 +178,8 @@
                                           $str = explode("-", $image->url_file);
                                           ?>
                                           @if ($str[0] == 'video')
-                                          <a href="/img/pemeriksaan_klinis/<?= $image->url_file ?>" target="_blank" style="position: relative;">
-                                            <img src="/img/pemeriksaan_klinis/<?= 'thumb-' . $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
+                                          <a href="{{ asset('img/pemeriksaan_klinis/') }}/<?= $image->url_file ?>" target="_blank" style="position: relative;">
+                                            <img src="{{ asset('img/pemeriksaan_klinis/') }}/<?= 'thumb-' . $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
                                             <div class="icon-wrap" style="
                                                 width: 100%;
                                                 height: 100%;
@@ -190,7 +191,7 @@
                                             </div>
                                           </a>
                                           @else
-                                          <img src="/img/pemeriksaan_klinis/<?= $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
+                                          <img src="{{ asset('img/pemeriksaan_klinis/') }}/<?= $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
                                           @endif
                                           <figcaption class="figure-caption">Lokasi: <?= $image->latitude . ',' . $image->longitude ?></figcaption>
                                           <figcaption class="figure-caption">Waktu Upload: <?= $image->updated_at ?></figcaption>
@@ -204,7 +205,7 @@
                               </div>
                             </div>
 
-                            <br>
+                            <div class="pagebreak"> </div>
                             <div class="row">
                               <div class="col-4 col-sm-12">
                                 <div class="row">DOKUMENTASI PEMERIKSAAN: </div>
@@ -221,7 +222,7 @@
                                     <tr>
                                       <td>{{ ++$countDokumentasi}}</td>
                                       <td>
-                                        <img src="/img/pemeriksaan_klinis/<?= $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
+                                        <img src="{{ asset('img/pemeriksaan_klinis/') }}/<?= $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
                                       </td>
                                     </tr>
                                     @endforeach
@@ -257,7 +258,7 @@
                                 {!! QrCode::size(192)->generate('https://ecert.kkp.go.id/qr.php?p='.$ppk->data_segel[0]->code_qr); !!}
                               </td>
                               <th style="border: 1px solid;">Kementerian Kelautan<br> dan Perikanan Balai<br> Besar KIPM <br>Jakarta I</th>
-                              <td style="border: 1px solid;"><img src="/img/bkipm-logo.png" height="192"></td>
+                              <td style="border: 1px solid;"><img src="{{ asset('img/bkipm-logo.png') }}" height="192"></td>
                             </tr>
                             <tr style="border: 1px solid;">
                               <td style="border: 1px solid;">
@@ -318,7 +319,7 @@
                             <span aria-hidden="true">×</span>
                           </button>
                         </div>
-                        <div class="modal-body">{{ $ppk->keterangan }}</div>
+                        <div class="modal-body">{{ $ppk->ket_admin }}</div>
                         <div class="modal-footer">
                           <button class="btn btn-link" type="button" data-dismiss="modal">Tutup</button>
                         </div>
@@ -381,6 +382,7 @@
 
   function printPPK(divName) {
     var mywindow = window.open('', 'PRINT', 'toolbar=1, scrollbars=1, location=1, statusbar=0, menubar=1, resizable=1,height=720,width=1280');
+    mywindow.document.write("<style> @media print { .pagebreak { page-break-before: always; }}</style>");
     mywindow.document.write('<html><head><title>' + document.title + '-' + divName + '</title>');
     //bootstrap
     mywindow.document.write('<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" type="text/css" media="all">');

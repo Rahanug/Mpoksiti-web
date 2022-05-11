@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Models\vDataHeader;
 use App\Models\Subform;
+use App\Models\ImageStuffing;
 
 class StuffingController extends Controller
 {
@@ -23,21 +24,40 @@ class StuffingController extends Controller
         foreach (Trader::all() as $item) {
             $trader[$item->id_trader] = $item->nm_trader;
         }
+        $master = array();
+        foreach (MasterSubform::all() as $item) {
+            $master[$item->id_masterSubform] = $item->indikator;
+        }
         $ppks = new PpkController();
         $ppkModel = new Ppk();
         // $vdataHeader = new vDataHeader();
         $dbView = DB::connection('sqlsrv')->getDatabaseName().'.dbo';
+        $dbView2 = DB::connection('sqlsrv2')->getDatabaseName() . '.dbo';
+        $ppks = DB::connection('sqlsrv2')->table('v_data_header')
+        ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', 'ppks.id_ppk')
+        ->where('v_data_header.kd_kegiatan', 'E')
+        ->whereNotNull('ppks.status')
+        ->select('ppks.*', 'v_data_header.*')
+        ->orderBy('ppks.id', 'DESC')
+        ->get();
+        foreach ($ppks as $data) {
+            $data->subform = Subform::rightJoin("ppks as ppks", "subform.id_ppk", "ppks.id_ppk")
+                ->select("ppks.*", "subform.*")
+                ->where("subform.id_ppk", $data->id_ppk)
+                ->get();
+        }
+        foreach ($ppks as $image) {
+            $image->stuffing = ImageStuffing::rightJoin("$dbView2.v_data_header as v_data_header", "images_stuffing.id_ppk", "v_data_header.id_ppk")
+                ->select('v_data_header.*', 'images_stuffing.*')
+                ->where("images_stuffing.id_ppk", $image->id_ppk)
+                ->get();
+        }
         return view('admin.stuffing', [
             "title" => "Stuffing",
             // "ppks" => $ppkModel->where("id_trader", Auth::user()->id_trader)->get(),
-            "ppks" => DB::connection('sqlsrv2')->table('v_data_header')
-                ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', 'ppks.id_ppk')
-                ->where('v_data_header.kd_kegiatan', 'E')
-                ->whereNotNull('ppks.status')
-                ->select('ppks.*', 'v_data_header.*')
-                ->orderBy('ppks.id', 'DESC')
-                ->get(),
+            "ppks" => $ppks,
             "trader" => $trader,
+            "master" => $master,
         ]);
     }
 

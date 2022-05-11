@@ -87,7 +87,7 @@
                                           <span aria-hidden="true">×</span>
                                       </button>
                                   </div>
-                                  <form id=<?= '"kirim-link-url'.$count.'"' ?> action="/admin/pemeriksaan_klinis/kirim_url" method="POST">
+                                  <form id=<?= '"kirim-link-url'.$count.'"' ?> action="pemeriksaan_klinis/kirim_url" method="POST">
                                     @csrf
                                     <div class="modal-body">
                                       <div class="form-group">
@@ -183,6 +183,7 @@
                                         </div>
                                       </div>
 
+                                      <div class="pagebreak"> </div>
                                       <div class="row">
                                         <div class="col-4 col-sm-12">
                                           <div class="row">DOKUMENTASI PENGGUNA: </div>
@@ -207,8 +208,8 @@
                                                       $str = explode("-", $image->url_file);
                                                     ?>
                                                     @if ($str[0] == 'video')
-                                                    <a href="/img/pemeriksaan_klinis/<?= $image->url_file ?>" target="_blank" style="position: relative;">
-                                                      <img src="/img/pemeriksaan_klinis/<?= 'thumb-' . $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
+                                                    <a href="{{ asset('img/pemeriksaan_klinis/') }}/<?= $image->url_file ?>" target="_blank" style="position: relative;">
+                                                      <img src="{{ asset('img/pemeriksaan_klinis/') }}/<?= 'thumb-' . $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
                                                       <div class="icon-wrap" style="
                                                           width: 100%;
                                                           height: 100%;
@@ -220,7 +221,7 @@
                                                       </div>
                                                     </a>
                                                     @else
-                                                    <img src="/img/pemeriksaan_klinis/<?= $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
+                                                    <img src="{{ asset('img/pemeriksaan_klinis/') }}/<?= $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
                                                     @endif
                                                     <figcaption class="figure-caption">Lokasi: <?= $image->latitude.','.$image->longitude ?></figcaption>
                                                     <figcaption class="figure-caption">Waktu Upload: <?= $image->updated_at ?></figcaption>
@@ -234,7 +235,7 @@
                                         </div>
                                       </div>
 
-                                      <br>
+                                      <div class="pagebreak"> </div>
                                       <div class="row">
                                         <div class="col-4 col-sm-12">
                                           <div class="row">DOKUMENTASI PEMERIKSAAN: </div>
@@ -251,7 +252,7 @@
                                               <tr>
                                                 <td>{{ ++$countDokumentasi}}</td>
                                                 <td>
-                                                  <img src="/img/pemeriksaan_klinis/<?= $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
+                                                  <img src="{{ asset('img/pemeriksaan_klinis/') }}/<?= $image->url_file ?>" class="figure-img img-fluid rounded" alt="...">
                                                 </td>
                                               </tr>
                                                @endforeach
@@ -281,7 +282,7 @@
                                           <span aria-hidden="true">×</span>
                                       </button>
                                   </div>
-                                  <form id=<?= '"action-form'.$count.'"' ?> action="/admin/pemeriksaan_klinis/action" method="POST" enctype="multipart/form-data">
+                                  <form id=<?= '"action-form'.$count.'"' ?> action="pemeriksaan_klinis/action" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="modal-body">
                                       <div class="form-group">
@@ -344,6 +345,7 @@
 
   function printDiv(divName) {
     var mywindow = window.open('', 'PRINT', 'toolbar=1, scrollbars=1, location=1, statusbar=0, menubar=1, resizable=1,height=720,width=1280');
+    mywindow.document.write("<style> @media print { .pagebreak { page-break-before: always; }}</style>");
     mywindow.document.write('<html><head><title>' + document.title + '-' + divName  + '</title>');
     //bootstrap
     mywindow.document.write('<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" type="text/css" media="all">');

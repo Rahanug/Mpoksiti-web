@@ -203,10 +203,11 @@ class AdminJPPController extends Controller
 
         try {
             JenisKurir::insert([
-                'namaKurir' => $request->nama_kurir
+                'namaKurir' => $request->nama_kurir,
+                'is_active' => 0
             ]);
         } catch (Exception){
-            return redirect('admin/kurirr_management')->withErrors(['JPP/Kurir '.$request->nama_kurir.' gagal ditambahkan']);
+            return redirect('admin/kurir_management')->withErrors(['JPP/Kurir '.$request->nama_kurir.' gagal ditambahkan']);
         }
         return redirect('admin/kurir_management')->with('success', 'JPP/Kurir '.$request->nama_kurir.' telah ditambahkan');
     }
@@ -229,11 +230,20 @@ class AdminJPPController extends Controller
             DB::table('kurir')
             ->where('id', $request->id)
             ->update([
-                'namaKurir' => $request->nama_kurir,
+                'namaKurir' => $request->nama_kurir
             ]);
         } catch (Exception){
             return redirect('admin/kurir_management')->withErrors(['JPP/Kurir gagal diubah']);
         }
         return redirect('admin/kurir_management')->with('success', 'JPP/Kurir berhasil diubah');
+    }
+
+    public function toggleKurir(Request $request){
+        DB::table('kurir')
+            ->where('id', $request->id)
+            ->update([
+                'is_active' => $request->status 
+            ]);
+        return redirect('admin/kurir_management');
     }
 }

@@ -53,7 +53,7 @@ class FormController extends Controller
                         ]);
                     }else{
                         Ppk::where('id_ppk', $id_ppk)->update([
-                            "status" => "Ditolak",
+                            "status" => "Tidak Sesuai",
                         ]);
                     }
                 }
@@ -62,7 +62,7 @@ class FormController extends Controller
             {
                 foreach($request->file('images_stuffing') as $key => $file)
                 {
-                    $path = $file->store('public/images_stuffing');
+                    // $path = $file->store('public/images_stuffing');
                     $name = $file->getClientOriginalName();
                     $insert[$key]['images'] = $name;
                     $insert[$key]['id_ppk'] = $id_ppk;
@@ -95,9 +95,11 @@ class FormController extends Controller
                 }
             }
             else if ($j->tipe_data == 'rekomendasi') {
-                if (!isset($data['keterangan'])) {
-                    throw new Exception('Semua Indikator harus diisi');
-                    break;
+                if ($data['value'] == 'Tidak Sesuai') {
+                    if (!isset($data['keterangan'])) {
+                        throw new Exception('Semua Indikator harus diisi');
+                        break;
+                    }
                 }
             } else {
                 if (!isset($data['value'])) {

@@ -19,6 +19,7 @@ class JenisKurirController extends Controller
         //
         $kurirs = DB::table('kurir')
                 ->select('*')
+                ->where('is_active', 1)
                 ->get();
 
         return response()->json($kurirs);

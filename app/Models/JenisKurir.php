@@ -12,6 +12,7 @@ class JenisKurir extends Model
     protected $primaryKey='id';
     public $timestamps = false;
     protected $fillable = [
-        'namaKurir' 
+        'namaKurir',
+        'is_active'
     ];
 }

@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Menu;
+use App\Models\Publikasi;
 use App\Models\tbRTrader;
 use App\Models\Trader;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -52,8 +52,9 @@ class AuthController extends Controller
         // ];
     }
 
-    private function getIDandNameTrader($npwp){
-        $checkNPWP = tbRTrader::where('npwp', $npwp)->get(['id_trader','nm_trader'])->first();
+    private function getIDandNameTrader($npwp)
+    {
+        $checkNPWP = tbRTrader::where('npwp', $npwp)->get(['id_trader', 'nm_trader'])->first();
         return $checkNPWP ?? null;
     }
 
@@ -68,30 +69,29 @@ class AuthController extends Controller
 
         $npwp = $request->input('npwp');
         $result = $this->getIDandNameTrader($npwp);
-        if(!isset($result)){
+        if (!isset($result)) {
             return Response([
                 'status' => false,
                 'message' => 'NPWP tidak ada',
             ], 401);
-        }else{
+        } else {
             $user = Trader::create([
-                'id_trader'=>$result['id_trader'],
-                'nm_trader'=>$result['nm_trader'],
+                'id_trader' => $result['id_trader'],
+                'nm_trader' => $result['nm_trader'],
                 'npwp' => $fields['npwp'],
                 'no_hp' => $fields['no_hp'],
                 'email' => $fields['email'],
                 'password' => bcrypt($fields['password']),
             ]);
-    
+
             $response = [
                 'user' => $user,
                 'message' => 'Registered',
             ];
-    
+
             return response($response, 200);
         }
 
-       
     }
 
     public function login(Request $request)
@@ -140,7 +140,6 @@ class AuthController extends Controller
             ->where('id_trader', $id)
             ->first();
 
-
         return response()->json($trader);
     }
 
@@ -153,5 +152,17 @@ class AuthController extends Controller
             ->where('id_trader', auth()->user()->id_trader)
             ->first();
         return response()->json($user);
+    }
+
+    public function getMenuUrl($id_menu)
+    {
+        $getMenu = Menu::where('id_menu', $id_menu)->get(['url'])->first();
+        return $getMenu ?? null;
+    }
+
+    public function getPublikasiImage($id_gambar)
+    {
+        $getImage = Publikasi::where('id_gambar', $id_gambar)->get(['file_gambar'])->first();
+        return $getImage ?? null;
     }
 }

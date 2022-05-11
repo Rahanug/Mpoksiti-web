@@ -16,10 +16,11 @@ class CreateKurirTable extends Migration
         Schema::create('kurir', function (Blueprint $table) {
             $table->id();
             $table->string('namaKurir')->unique();
+            $table->integer('is_active');
         });
     }
 
-    /**
+    /**ph
      * Reverse the migrations.
      *
      * @return void

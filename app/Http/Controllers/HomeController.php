@@ -39,7 +39,7 @@ class HomeController extends Controller
             ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', "ppks.id_ppk")
             ->where('v_data_header.kd_kegiatan', 'E')
             ->where("v_data_header.id_trader", Auth::user()->id_trader)
-            ->where( 'v_data_header.tgl_ppk', '>', Carbon::now()->subDays(3))
+            ->where( 'v_data_header.tgl_ppk', '>', Carbon::now()->subDays(4))
             ->select('ppks.*', 'v_data_header.*')
             ->orderBy('v_data_header.tgl_ppk', 'ASC')
             ->get();
@@ -169,12 +169,14 @@ class HomeController extends Controller
             'max' => ':attribute harus diisi maksimal :max karakter !!!',
             'numeric' => ':attribute harus diisi angka !!!',
             'email' => ':attribute harus diisi dalam bentuk email !!!',
+            'nm_dokumen.mimes'=> 'Format dokumen harus berupa pdf, jpg, jpeg, atau png!!!'
         ];
 
         $this->validate($request, [
             "id_kategori" => 'required',
             'no_dokumen' => 'required',
             "tgl_terbit" => 'required',
+            'nm_dokumen'=> 'required|mimes:pdf,jpg,jpeg,png',
         ], $messages);
 
         $nm_dokumen = $request->file('nm_dokumen');
@@ -196,9 +198,13 @@ class HomeController extends Controller
         Dokumen::create([
             'id_master' => $id,
             'id_ppk' => $request->input('id_ppk'),
-        ]);
-        Ppk::updateOrCreate([
-            'id_ppk' => $request->input('id_ppk'),
+        ],
+        );
+        Ppk::updateOrCreate(
+        [
+            'id_ppk' => $request->input('id_ppk')
+        ],
+        [
             'status' => 'verifikasi'
         ]);
         DB::commit();
@@ -255,10 +261,13 @@ class HomeController extends Controller
                 'id_ppk' => $id_ppk,
                 'id_master' => $id_master,
             ]);
-            Ppk::updateOrCreate([
-                'id_ppk' => $request->input('id_ppk'),
-                'status' => 'verifikasi'
-            ]);
+            Ppk::updateOrCreate(
+                [
+                    'id_ppk' => $request->input('id_ppk')
+                ],
+                [
+                    'status' => 'verifikasi'
+                ]);
             DB::commit();
             echo json_encode([
                 'error' => false
