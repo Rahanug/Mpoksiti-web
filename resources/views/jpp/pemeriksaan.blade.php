@@ -173,6 +173,7 @@
                                       <td>{{ $data_ikan->nm_lokal }}</td>
                                       <td>
                                         @foreach ($data_ikan->images as $image)
+                                        @if($image->id_ppk == $ppk->id_ppk)  
                                         <figure class="figure">
                                           <?php
                                           $str = explode("-", $image->url_file);
@@ -196,6 +197,7 @@
                                           <figcaption class="figure-caption">Lokasi: <?= $image->latitude . ',' . $image->longitude ?></figcaption>
                                           <figcaption class="figure-caption">Waktu Upload: <?= $image->updated_at ?></figcaption>
                                         </figure>
+                                        @endif
                                         @endforeach
                                       </td>
                                     </tr>
