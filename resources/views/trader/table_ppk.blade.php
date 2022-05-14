@@ -80,9 +80,9 @@
                         </div>
                         <hr style="border: 0; clear:both; display:block; width: 100%; background-color:#000000; height: 5px;" />
                         <div class="row">
-                          <div class="col-lg-12">
+                          <div class="col-lg-12" >
                             <h4 style="text-align: center;">FORM HASIL VERIFIKASI LAPANGAN</h4>
-                            <table class='table borderless'>
+                            <table class='table borderless' style="background-color:#FFFFFF;">
                               @foreach ($ppk->subform as $f)
                               <tr>
                                 @if(($master[$f->id_masterSubform]) == 'Tanggal verifikasi lapangan')

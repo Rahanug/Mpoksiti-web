@@ -36,6 +36,7 @@
                 <th scope="col">Link</th>
                 <th scope="col">Status</th>
                 <th scope="col">Aksi</th>
+                <th scope="col">Detail</th>
               </tr>
             </thead>
             <tbody>
@@ -442,6 +443,9 @@
                     </div>
                   </div>
                   @endif
+                  
+                </td>
+                <td>
                   <a style="margin: 0 3px" class="btn btn-sm btn-secondary" id="detail" href="{{route('admin.detail',[$ppk->id_ppk])}}">Detail</a>
                 </td>
               </tr>
