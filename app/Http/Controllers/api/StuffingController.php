@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Carbon;
 class StuffingController extends Controller
 {
     /**
@@ -13,14 +13,20 @@ class StuffingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $ppk = DB::table('Ppks')
-                ->select('*')
-                ->get();
+        $dbView = DB::connection('sqlsrv')->getDatabaseName().'.dbo';
+        $viewPpk = DB::connection('sqlsrv2')->table('v_data_header')
+            ->leftJoin("$dbView.ppks AS ppks", 'v_data_header.id_ppk', '=', "ppks.id_ppk")
+            ->where('v_data_header.kd_kegiatan', 'E')
+            ->where("v_data_header.id_trader", $request->id_trader)
+            ->where( 'v_data_header.tgl_ppk', '>', Carbon::now()->subDays(4))
+            ->select('ppks.*', 'v_data_header.*')
+            ->orderBy('v_data_header.tgl_ppk', 'ASC')
+            ->get();
 
-        return response()->json($ppk);
+        return response()->json($viewPpk );
     }
 
     /**

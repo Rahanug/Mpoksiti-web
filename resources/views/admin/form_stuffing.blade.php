@@ -101,12 +101,22 @@
                                                                 </td> 
                                                                 ';
                                                                 break;
+                                                                case 'gambar':
+                                                                    echo '
+                                                                    <div class="form-group">
+                                                                        <input type="file" name="gambar-' . $d->id_masterSubform . '-' . $d->id_subform . '" placeholder="Choose files"></td>
+                                                                    </div>
+                                                                    <td>
+                                                                    
+                                                                    </td> 
+                                                                    ';
+                                                                    break;
                                                         } ?>
                                                     </td>
                                                 </tbody>
                                                 @endforeach
                                             </table>
-                                            <table class="table">
+                                            <!-- <table class="table">
                                                 <thead>
                                                     <th>
                                                         Upload Gambar
@@ -115,7 +125,7 @@
                                                     <tbody>
                                                         <td><input type="file" name="images_stuffing[]" placeholder="Choose files" multiple></td>
                                                     </tbody>                                                
-                                            </table>
+                                            </table> -->
                                         </div>
                                         <br>
                                         <div class="col-12 d-flex justify-content-end">

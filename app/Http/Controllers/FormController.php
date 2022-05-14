@@ -58,18 +58,6 @@ class FormController extends Controller
                     }
                 }
             }
-            if($request->hasFile('images_stuffing'))
-            {
-                foreach($request->file('images_stuffing') as $key => $file)
-                {
-                    // $path = $file->store('public/images_stuffing');
-                    $name = $file->getClientOriginalName();
-                    $insert[$key]['images'] = $name;
-                    $insert[$key]['id_ppk'] = $id_ppk;
-                    $file->move(public_path().'/images_stuffing', $name);  
-                }
-                DB::table('images_stuffing')->insert($insert);
-            }
             DB::commit();
             return redirect('/admin/stuffing')->with('Success', 'Form telah diisi!!!!!!!!!!!');
         }
@@ -81,33 +69,53 @@ class FormController extends Controller
             ->get(['master_subform.id_masterSubform', 'master_subform.indikator', 'master_subform.tipe_data', 'subform.id_subform']);
         $input = array();
         foreach ($join as $j) {
-            $data['value'] = $request->input("input-$j->id_masterSubform-$j->id_subform");
-            $data['keterangan'] = $request->input("keterangan-$j->id_masterSubform-$j->id_subform", null);
-            $data['idsubform'] = $j->id_subform;
-            $data['tipe_data'] = $j->tipe_data;
-
-            if ($j->tipe_data == 'kondisi') {
-                if ($data['value'] == 'Tidak Sesuai') {
-                    if (!isset($data['keterangan'])) {
-                        throw new Exception('Semua Indikator harus diisi');
-                        break;
-                    }
-                }
-            }
-            else if ($j->tipe_data == 'rekomendasi') {
-                if ($data['value'] == 'Tidak Sesuai') {
-                    if (!isset($data['keterangan'])) {
-                        throw new Exception('Semua Indikator harus diisi');
-                        break;
-                    }
-                }
-            } else {
-                if (!isset($data['value'])) {
-                    throw new Exception('Semua Indikator harus diisi');
+            if($j->tipe_data == 'gambar'){
+                if(!$request->hasFile("gambar-$j->id_masterSubform-$j->id_subform")){
+                    throw new Exception('Gambar harus diunggah');
                     break;
                 }
+                $file_gambar = $request->file("gambar-$j->id_masterSubform-$j->id_subform");
+                $nama_file = $file_gambar->getClientOriginalName();
+                $tujuan_upload = public_path().'/images_stuffing';
+                $file_gambar->move($tujuan_upload, $nama_file);
+                $data['value'] = $nama_file;
+                $data['keterangan'] = null;
+                $data['idsubform'] = $j->id_subform;
+                $data['tipe_data'] = $j->tipe_data;
+
+            }else{
+                $data['value'] = $request->input("input-$j->id_masterSubform-$j->id_subform");
+                $data['keterangan'] = $request->input("keterangan-$j->id_masterSubform-$j->id_subform", null);
+                $data['idsubform'] = $j->id_subform;
+                $data['tipe_data'] = $j->tipe_data;
+
+                switch ($j->tipe_data){
+                    case "kondisi":
+                        if ($data['value'] == 'Tidak Sesuai') {
+                            if (!isset($data['keterangan'])) {
+                                throw new Exception('Semua Indikator harus diisi');
+                                break;
+                            }
+                        }
+                        break;
+                    case "rekomendasi":
+                        if ($data['value'] == 'Tidak Sesuai') {
+                            if (!isset($data['keterangan'])) {
+                                throw new Exception('Semua Indikator harus diisi');
+                                break;
+                            }
+                        }
+                        break;
+                    default:
+                        if (!isset($data['value'])) {
+                            throw new Exception('Semua Indikator harus diisi');
+                            break;
+                        }
+                }
+                
             }
             $input[] = $data;
+            
         }
         return $input;
     }

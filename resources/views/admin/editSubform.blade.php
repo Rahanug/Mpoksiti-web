@@ -47,7 +47,8 @@
                                                 <option value='datetime' {{ strcmp($p->tipe_data, "datetime")==0? 'selected':''; }}>tanggal dan waktu</option>
                                                 <option value='kondisi' {{ strcmp($p->tipe_data, "kondisi")==0? 'selected':''; }}>sesuai/tidak sesuai</option>
                                                 <option value='text' {{ strcmp($p->tipe_data, "text")==0? 'selected':''; }}>text</option>
-                                                <option value='rekomendasi' {{ strcmp($p->tipe_data, "rekomendasi")==0? 'selected':''; }}>boolean</option>
+                                                <option value='rekomendasi' {{ strcmp($p->tipe_data, "rekomendasi")==0? 'selected':''; }}>rekomendasi</option>
+                                                <option value='gambar' {{ strcmp($p->tipe_data, "gambar")==0? 'selected':''; }}>gambar</option>
                                             </select>
                                         </div>
                                         @endforeach

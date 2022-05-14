@@ -77,7 +77,10 @@
                                         break;    
                                     case 'rekomendasi' : 
                                         echo '<td>rekomendasi</td>';
-                                        break;    
+                                        break;
+                                    case 'gambar' : 
+                                        echo '<td>gambar</td>';
+                                    break;     
                                 } ?>
                                 <td>
                                     <a style="margin: 0 3px" class="btn btn-sm btn-secondary" href="{{route('admin.editSubform', [$master->id_masterSubform])}}">Edit</a>

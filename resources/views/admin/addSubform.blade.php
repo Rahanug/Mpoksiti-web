@@ -48,6 +48,7 @@
                                                 <option value='kondisi'>sesuai/tidak sesuai</option>
                                                 <option value='text'>text</option>
                                                 <option value='rekomendasi'>rekomendasi</option>
+                                                <option value='gambar'>gambar</option>
                                             </select>
                                         </div>
                                         <div class="col-12 d-flex justify-content-end">
