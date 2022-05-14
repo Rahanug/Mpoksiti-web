@@ -206,12 +206,14 @@
                                 <th>Dokumentasi Stuffing Virtual</th>
                               </thead>
                               <tbody>
-                                @foreach($ppk->stuffing as $i)
+                                @foreach ($ppk->subform as $f)
+                                @if (($tipe[$f->id_masterSubform]) == 'gambar')
                                 <tr>
                                   <td>
-                                    <img src='images_stuffing/{{$i->images}}' style="max-width: 300px; max-height: 300px">
+                                    <img src='../images_stuffing/{{$f->value}}' style="max-width: 300px; max-height: 300px">
                                   </td>
                                 </tr>
+                                @endif
                                 @endforeach
                               </tbody>
                             </table>

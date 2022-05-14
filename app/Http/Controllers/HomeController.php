@@ -30,6 +30,10 @@ class HomeController extends Controller
         foreach (Trader::all() as $item) {
             $trader[$item->id_trader] = $item->nm_trader;
         }
+        $tipe_data = array();
+        foreach (MasterSubform::all() as $item) {
+            $tipe_data[$item->id_masterSubform] = $item->tipe_data;
+        }
         $ppks = new PpkController();
         $ppkModel = new Ppk();
         // $vdataHeader = new vDataHeader();
@@ -60,6 +64,7 @@ class HomeController extends Controller
             "ppks" => $viewPpk,
             "trader" => $trader,
             "master" => $master,
+            "tipe"=> $tipe_data,
         ]);
     }
 

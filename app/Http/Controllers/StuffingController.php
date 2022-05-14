@@ -28,6 +28,10 @@ class StuffingController extends Controller
         foreach (MasterSubform::all() as $item) {
             $master[$item->id_masterSubform] = $item->indikator;
         }
+        $tipe_data = array();
+        foreach (MasterSubform::all() as $item) {
+            $tipe_data[$item->id_masterSubform] = $item->tipe_data;
+        }
         $ppks = new PpkController();
         $ppkModel = new Ppk();
         // $vdataHeader = new vDataHeader();
@@ -58,6 +62,7 @@ class StuffingController extends Controller
             "ppks" => $ppks,
             "trader" => $trader,
             "master" => $master,
+            "tipe"=> $tipe_data,
         ]);
     }
 
