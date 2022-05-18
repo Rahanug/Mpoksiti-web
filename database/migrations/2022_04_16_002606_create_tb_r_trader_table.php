@@ -20,7 +20,7 @@ class CreateTbRTraderTable extends Migration
             $table->string('al_trader');
             $table->string('kt_trader');
             $table->string('kd_negara');
-            $table->bigInteger('npwp');
+            $table->string('npwp');
             $table->string('no_ktp');
             $table->string('no_izin');
             $table->string('email');

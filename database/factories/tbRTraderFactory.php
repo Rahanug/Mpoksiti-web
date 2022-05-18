@@ -20,7 +20,7 @@ class tbRTraderFactory extends Factory
             'al_trader' => $this->faker->address,
             'kt_trader' => $this->faker->numerify('####'),
             'kd_negara' => $this->faker->randomElement(['ID', 'US']),
-            'npwp' => $this->faker->numerify('################'),
+            'npwp' => $this->faker->numerify('##.###.###.#-###.###'),
             'no_ktp' => $this->faker->numerify('################'),
             'no_izin' => $this->faker->numerify('###/##/II/####-PM'),
             'email' => $this->faker->email,

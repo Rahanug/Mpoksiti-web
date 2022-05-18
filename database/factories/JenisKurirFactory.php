@@ -14,7 +14,8 @@ class JenisKurirFactory extends Factory
     public function definition()
     {
         return [
-            'namaKurir' => $this->faker->unique()->randomElement(['JNE', 'JNT', 'TIKI', 'SiCepat'])
+            'namaKurir' => $this->faker->unique()->randomElement(['JNE', 'JNT', 'TIKI', 'SiCepat']),
+            'is_active' => 0
         ];
     }
 }
