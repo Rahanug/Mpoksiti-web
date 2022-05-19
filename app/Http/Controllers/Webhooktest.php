@@ -732,12 +732,12 @@ class Webhookdua extends Controller
             ->first();
     }
 
-    public function selectLastThree($from)
+    public function selectLastTwo($from)
     {
         return CommandModel::select('command')
             ->where('no_wa', $from)
             ->orderByDesc('created_at')
-            ->take(3)
+            ->take(2)
             ->get();
     }
 

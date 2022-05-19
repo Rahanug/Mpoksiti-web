@@ -130,5 +130,6 @@ Route::group(['middleware' => 'revalidate'], function () {
     Route::post('/loginjpp', [\App\Http\Controllers\LoginJPPController::class, 'login'])->name('loginjpp');
     Route::get('/logoutjpp', [\App\Http\Controllers\LoginJPPController::class, 'logout'])->name('logoutjpp');
 
-    Route::post('/webhook', [App\Http\Controllers\Webhookdua::class, 'index'])->name('Webhook');
+    Route::post('/webhook', [App\Http\Controllers\webhook\IndexController::class, 'index'])->name('Webhook');
+    Route::get('/', [App\Http\Controllers\LandingController::class, 'index'])->name('Landing');
 });
