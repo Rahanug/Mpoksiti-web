@@ -21,7 +21,9 @@ class FormController extends Controller
 {
     public function index(Request $request, $id_ppk)
     {
-        $join = Subform::join('master_subform', 'subform.id_masterSubform', '=', 'master_subform.id_masterSubform')->where('subform.id_ppk', $id_ppk)
+        $join = Subform::join('master_subform', 'subform.id_masterSubform', '=', 'master_subform.id_masterSubform')
+            ->where('subform.id_ppk', $id_ppk)
+            ->orderby('subform.urutan')
             ->get(['master_subform.id_masterSubform', 'master_subform.indikator', 'master_subform.tipe_data', 'subform.id_subform']);
         return view('admin.form_stuffing', [
             "title" => 'Form Hasil Stuffing',

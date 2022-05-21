@@ -70,6 +70,8 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::post('/admin/stuffing/{id_ppk}/terima', [App\Http\Controllers\StuffingController::class, 'terima'])->name('admin.terimastuffing');
         Route::post('/admin/stuffing/{id_ppk}/tolak', [App\Http\Controllers\StuffingController::class, 'tolak'])->name('admin.tolakstuffing');
         Route::get('/admin/stuffing/form/{id_ppk}', [App\Http\Controllers\FormController::class, 'index'])->name('admin.form_stuffing');
+        Route::get('/admin/stuffing/form/edit/{id_ppk}', [App\Http\Controllers\EditFormController::class, 'index'])->name('admin.editForm_stuffing');
+        Route::post('/admin/stuffing/form/edit', [App\Http\Controllers\EditFormController::class, 'simpanUrutan'])->name('admin.simpanUrutan_stuffing');
         Route::post('/admin/stuffing/form/{id_ppk}/storeSubform', [App\Http\Controllers\FormController::class, 'storeSubform'])->name('admin.storeform_stuffing');
         Route::post('/admin/stuffing/{id_ppk}/izin', [App\Http\Controllers\StuffingController::class, 'izin'])->name('admin.izinstuffing');
         Route::get('/admin/stuffing/detail/{id_ppk}', [App\Http\Controllers\StuffingController::class, 'detail'])->name('admin.detail');
