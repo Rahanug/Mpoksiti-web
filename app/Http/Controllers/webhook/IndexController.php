@@ -35,6 +35,13 @@ class IndexController extends AbstractWebhookController
         $this->lacakInfoNonDomestikController = new LacakInfoSertifikasiNonDomestikController();
     }
 
+    private function clearUserSession($from)
+    {
+        CommandModel::where('no_wa', $from)
+            ->whereRaw('DATEDIFF(MINUTE, created_at, GETDATE()) > 14')
+            ->delete();
+    }
+
     private function readMessage($event)
     {
         if (isset($event['messages'][0]['text'])) {
@@ -48,6 +55,7 @@ class IndexController extends AbstractWebhookController
         }
         return $msg;
     }
+
 
     private function dispatchHandler(HandlerCommandInterface $handler, $command, $pesan, $isFirstError)
     {
@@ -63,10 +71,9 @@ class IndexController extends AbstractWebhookController
     {
         foreach ($admin as $a) {
             parent::sendMsg(
-                $a,
-                "Kepada Admin, dibutuhkan pelayanan pelanggan di nomor $mobile, berikan tanggapan sesuai dengan SOP yang berlaku. Terimakasih.\n",
+                $a->no_wa,
+                "Kepada Admin, dibutuhkan pelayanan pelanggan di nomor $mobile berikan tanggapan sesuai dengan SOP yang berlaku. Terimakasih.\n",
                 [],
-
             );
         }
     }
@@ -94,6 +101,8 @@ class IndexController extends AbstractWebhookController
             $pesan = $this->readMessage($event);
 
             $pesan = strtolower($pesan);
+
+            $this->clearUserSession($this->from);
 
             $stackCommand = $this->selectLastTwo($this->from);
 
@@ -207,6 +216,7 @@ class IndexController extends AbstractWebhookController
                                     WebhookConfig::MESSAGE_TYPE_POPUP
                                 );
                                 break;
+
                             case str_contains($pesan, "lacak info sertifikasi"):
                                 parent::insertCommand($pesan, $this->from);
                                 parent::sendMsg(
@@ -226,6 +236,7 @@ class IndexController extends AbstractWebhookController
                             case str_contains($pesan, "hubungi customer service"):
 
                                 $cs = $this->selectAdmin();
+                                // echo json_encode($cs);
 
                                 parent::insertCommand("selesai", $this->from);
                                 parent::sendMsg(
@@ -236,6 +247,7 @@ class IndexController extends AbstractWebhookController
                                 );
                                 $this->broadcastMsgAdmin($cs, $this->from);
                                 break;
+
                             case str_contains($pesan, "batal"):
                             case str_contains($pesan, "selesai"):
                                 parent::insertCommand("selesai", $this->from);
@@ -247,6 +259,8 @@ class IndexController extends AbstractWebhookController
                                 );
                                 break;
                             default:
+                                parent::insertCommand("maaf", $this->from);
+                                parent::sendSorryMessage($this->from, $isFirstError);
                         }
                         break;
 
@@ -331,6 +345,8 @@ class IndexController extends AbstractWebhookController
                                 );
                                 break;
                             default:
+                                parent::insertCommand("maaf", $this->from);
+                                parent::sendSorryMessage($this->from, $isFirstError);
                         }
                         break;
 
@@ -386,6 +402,8 @@ class IndexController extends AbstractWebhookController
 
                     default:
                     case str_contains($lastRow->command, "maaf"):
+                        parent::insertCommand("maaf", $this->from);
+                        parent::sendSorryMessage($this->from, $isFirstError);
                         break;
                 }
             }

@@ -38,8 +38,8 @@ abstract class AbstractWebhookController extends Controller
                 $mobile,
                 "*Halo disana!*\n Bagaimana pengalamanmu menggunakan layanan Halo Mpok Siti?\n\nAnda telah mengalami error sebanyak 2 kali atau lebih, kami mohon maaf yang sebesar-besarnya mengingat layanan ini masih dalam tahap uji coba. Kami sarankan Anda untuk menggunakan layanan Hubungi Customer Service dibawah ini untuk pengalaman yang lebih baik. Kami akan bantu Anda menyelesaikan masalah Anda sebaik yang kami bisa\n",
                 [
-                    parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
-                    parent::getSingleButtonReply("reply", "CS", "Hubungi CS")
+                    $this->getSingleButtonReply("reply", "Ulang", "Menu Utama"),
+                    $this->getSingleButtonReply("reply", "CS", "Hubungi CS")
                 ],
                 WebhookConfig::MESSAGE_TYPE_BUTTON
 
