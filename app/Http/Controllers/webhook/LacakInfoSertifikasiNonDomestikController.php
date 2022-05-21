@@ -123,6 +123,7 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                         break;
                     default:
                         parent::insertCommand("maaf", $mobile);
+                        $this->sendSorryMessage($mobile, $isFirstError);
                 }
                 break;
             case str_contains($command, "ekspor"):
@@ -177,7 +178,9 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                             WebhookConfig::MESSAGE_TYPE_BUTTON
                         );
                         break;
+                    default:
                         parent::insertCommand("maaf", $mobile);
+                        parent::sendSorryMessage($mobile, $isFirstError);
                 }
                 break;
             case str_contains($command, "eks_aju_lacak"):
@@ -201,6 +204,27 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                             WebhookConfig::MESSAGE_TYPE_POPUP
                         );
                         break;
+
+                    case $selectPPK == null:
+                        parent::insertCommand("nomor aju eks", $mobile);
+                        parent::sendMsg(
+                            $mobile,
+                            "*Nomor Aju yang Anda masukkan tidak terdaftar di database!*\n\n Pastikan nomor Aju yang Anda masukkan telah terdaftar",
+                            [],
+                        );
+                        parent::sendMsg(
+                            $mobile,
+                            "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
+                            [
+                                parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
+
+                                parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
+                            ],
+                            WebhookConfig::MESSAGE_TYPE_BUTTON
+                        );
+
+                        break;
+
                     case str_contains(strtoupper($pesan), $selectPPK->no_aju_ppk):
                         parent::insertCommand("nomor aju eks", $mobile);
                         parent::sendMsg(
@@ -222,6 +246,7 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                         break;
                     default:
                         parent::insertCommand("maaf", $mobile);
+                        $this->sendSorryMessage($mobile, $isFirstError);
                 }
                 break;
             case str_contains($command, "nomor aju eks"):
@@ -254,6 +279,7 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                         break;
                     default:
                         parent::insertCommand("maaf", $mobile);
+                        $this->sendSorryMessage($mobile, $isFirstError);
                 }
                 break;
             case str_contains($command, "eks_no_sertif"):
@@ -276,6 +302,27 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                             WebhookConfig::MESSAGE_TYPE_POPUP
                         );
                         break;
+
+                    case $selectPPK == null:
+                        parent::insertCommand("nomor aju eks", $mobile);
+                        parent::sendMsg(
+                            $mobile,
+                            "*Nomor Aju yang Anda masukkan tidak terdaftar di database!*\n\n Pastikan nomor Aju yang Anda masukkan telah terdaftar",
+                            [],
+                        );
+                        parent::sendMsg(
+                            $mobile,
+                            "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
+                            [
+                                parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
+
+                                parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
+                            ],
+                            WebhookConfig::MESSAGE_TYPE_BUTTON
+                        );
+
+                        break;
+
                     case str_contains(strtoupper($pesan), $selectPPK->no_aju_ppk):
                         $nomorSertif = $this->getNoIjin(strtoupper($pesan));
                         if ($nomorSertif == false) {
@@ -314,7 +361,9 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                             );
                         }
                         break;
-                    default;
+                    default:
+                        parent::insertCommand("maaf", $mobile);
+                        $this->sendSorryMessage($mobile, $isFirstError);
                 }
                 break;
             case str_contains($command, "biaya pnbp eks"):
@@ -337,6 +386,27 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                             WebhookConfig::MESSAGE_TYPE_POPUP
                         );
                         break;
+
+                    case $selectPPK == null:
+                        parent::insertCommand("pnbp eks", $mobile);
+                        parent::sendMsg(
+                            $mobile,
+                            "*Nomor Aju yang Anda masukkan tidak terdaftar di database!*\n\n Pastikan nomor Aju yang Anda masukkan telah terdaftar",
+                            [],
+                        );
+                        parent::sendMsg(
+                            $mobile,
+                            "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
+                            [
+                                parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
+
+                                parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
+                            ],
+                            WebhookConfig::MESSAGE_TYPE_BUTTON
+                        );
+
+                        break;
+
                     case str_contains(strtoupper($pesan), $selectPPK->no_aju_ppk):
                         $kelTarif = $this->selectTarif(strtoupper($pesan));
                         $tarifText = "";
@@ -386,6 +456,7 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                         break;
                     default:
                         parent::insertCommand("maaf", $mobile);
+                        $this->sendSorryMessage($mobile, $isFirstError);
                 }
                 break;
             case str_contains($command, "pnbp eks"):
@@ -417,6 +488,8 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                         );
                         break;
                     default:
+                        parent::insertCommand("maaf", $mobile);
+                        $this->sendSorryMessage($mobile, $isFirstError);
                 }
                 break;
 
@@ -472,6 +545,8 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                         );
                         break;
                     default:
+                        parent::insertCommand("maaf", $mobile);
+                        $this->sendSorryMessage($mobile, $isFirstError);
                 }
                 break;
             case str_contains($command, "imp_aju_lacak"):
@@ -495,6 +570,27 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                             WebhookConfig::MESSAGE_TYPE_POPUP
                         );
                         break;
+
+                    case $selectPPK == null:
+                        parent::insertCommand("nomor aju imp", $mobile);
+                        parent::sendMsg(
+                            $mobile,
+                            "*Nomor Aju yang Anda masukkan tidak terdaftar di database!*\n\n Pastikan nomor Aju yang Anda masukkan telah terdaftar",
+                            [],
+                        );
+                        parent::sendMsg(
+                            $mobile,
+                            "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
+                            [
+                                parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
+
+                                parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
+                            ],
+                            WebhookConfig::MESSAGE_TYPE_BUTTON
+                        );
+
+                        break;
+
                     case str_contains(strtoupper($pesan), $selectPPK->no_aju_ppk):
                         parent::insertCommand("nomor aju imp", $mobile);
                         parent::sendMsg(
@@ -515,6 +611,7 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                         break;
                     default:
                         parent::insertCommand("maaf", $mobile);
+                        $this->sendSorryMessage($mobile, $isFirstError);
                 }
                 break;
             case str_contains($command, "nomor aju imp"):
@@ -547,6 +644,7 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                         break;
                     default:
                         parent::insertCommand("maaf", $mobile);
+                        $this->sendSorryMessage($mobile, $isFirstError);
                 }
                 break;
             case str_contains($command, "imp_no_sertif"):
@@ -568,6 +666,26 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                             ],
                             WebhookConfig::MESSAGE_TYPE_POPUP
                         );
+                        break;
+
+                    case $selectPPK == null:
+                        parent::insertCommand("nomor aju imp", $mobile);
+                        parent::sendMsg(
+                            $mobile,
+                            "*Nomor Aju yang Anda masukkan tidak terdaftar di database!*\n\n Pastikan nomor Aju yang Anda masukkan telah terdaftar",
+                            [],
+                        );
+                        parent::sendMsg(
+                            $mobile,
+                            "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
+                            [
+                                parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
+
+                                parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
+                            ],
+                            WebhookConfig::MESSAGE_TYPE_BUTTON
+                        );
+
                         break;
 
                     case str_contains(strtoupper($pesan), $selectPPK->no_aju_ppk):
@@ -611,6 +729,7 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
 
                     default:
                         parent::insertCommand("maaf", $mobile);
+                        $this->sendSorryMessage($mobile, $isFirstError);
                 }
                 break;
 
@@ -633,6 +752,26 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                             ],
                             WebhookConfig::MESSAGE_TYPE_POPUP
                         );
+                        break;
+
+                    case $selectPPK == null:
+                        parent::insertCommand("pnbp imp", $mobile);
+                        parent::sendMsg(
+                            $mobile,
+                            "*Nomor Aju yang Anda masukkan tidak terdaftar di database!*\n\n Pastikan nomor Aju yang Anda masukkan telah terdaftar",
+                            [],
+                        );
+                        parent::sendMsg(
+                            $mobile,
+                            "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
+                            [
+                                parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
+
+                                parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
+                            ],
+                            WebhookConfig::MESSAGE_TYPE_BUTTON
+                        );
+
                         break;
                     case str_contains(strtoupper($pesan), $selectPPK->no_aju_ppk):
                         $kelTarif = $this->selectTarif(strtoupper($pesan));
@@ -683,6 +822,7 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                         break;
                     default:
                         parent::insertCommand("maaf", $mobile);
+                        $this->sendSorryMessage($mobile, $isFirstError);
                 }
                 break;
 
@@ -716,6 +856,7 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                         break;
                     default:
                         parent::insertCommand("maaf", $mobile);
+                        $this->sendSorryMessage($mobile, $isFirstError);
                 }
                 // $this->dispatchHandler(
                 //     $this->lacakInfoNonDomestikController,
@@ -724,6 +865,7 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                 // );
                 break;
             default:
+                parent::insertCommand("maaf", $mobile);
                 parent::sendSorryMessage($mobile, $isFirstError);
         }
     }

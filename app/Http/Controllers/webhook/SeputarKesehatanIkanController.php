@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers\webhook;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
 use App\Http\Controllers\webhook\HandlerCommandInterface;
 
 use App\Http\Controllers\webhook\AbstractWebhookController;
@@ -100,6 +97,8 @@ class SeputarKesehatanIkanController extends AbstractWebhookController implement
                         break;
 
                     default:
+                        parent::insertCommand("maaf", $mobile);
+                        parent::sendSorryMessage($mobile, $isFirstError);
                 }
                 break;
 
@@ -135,6 +134,7 @@ class SeputarKesehatanIkanController extends AbstractWebhookController implement
                         break;
                     default:
                         parent::insertCommand("maaf", $mobile);
+                        parent::sendSorryMessage($mobile, $isFirstError);
                 }
 
                 break;
