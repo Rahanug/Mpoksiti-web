@@ -56,6 +56,7 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::post('/admin/menu/update', [App\Http\Controllers\AdminController::class, 'updateMenu'])->name('admin.updateMenu');
         Route::post('/admin/publikasi/addGambar/sukses', [App\Http\Controllers\AdminController::class, 'storeGambar'])->name('admin.storeGambar');
         Route::post('/admin/manage/addUser/sukses', [App\Http\Controllers\AdminController::class, 'storeUser'])->name('admin.storeUser');
+        Route::post('/admin/manage/addUser/checkNpwp', [App\Http\Controllers\AdminController::class, 'checkNpwp'])->name('admin.checkNpwp');
         Route::post('/admin/search/gambar', [App\Http\Controllers\AdminController::class, 'searchGambar'])->name('admin.searchGambar');
 
         // Ekspor
@@ -106,7 +107,6 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::get('/admin/command', [App\Http\Controllers\Dashboard::class, 'index'])->name('admin.tabelCommand');
         Route::get('/admin/command/deleteCommand/{id}', [App\Http\Controllers\Dashboard::class, 'deleteCommand'])->name('admin.deleteCommand');
         Route::get('/admin/command/deleteAll', [App\Http\Controllers\Dashboard::class, 'deleteAll'])->name('admin.deleteAllCommand');
-
 
         Route::get('/admin/admin-chatbot', [App\Http\Controllers\ChatbotAdminController::class, 'index'])->name('admin.tabelDaftarAdmin');
 

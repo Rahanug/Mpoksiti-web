@@ -95,7 +95,7 @@ trait ButtonTrait
         // curl_exec($curl);
 
         curl_close($curl);
-        echo $response;
+        echo $response . "\n\n\n";
         echo json_encode($data);
     }
 }

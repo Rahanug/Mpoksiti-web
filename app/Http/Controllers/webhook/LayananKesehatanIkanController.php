@@ -99,6 +99,7 @@ class LayananKesehatanIkanController extends AbstractWebhookController implement
                         break;
                     default:
                         parent::insertCommand("maaf", $mobile);
+                        parent::sendSorryMessage($mobile, $isFirstError);
                 }
                 break;
             case str_contains($command, "sertif_haccp"):
@@ -133,6 +134,7 @@ class LayananKesehatanIkanController extends AbstractWebhookController implement
                         break;
                     default:
                         parent::insertCommand("maaf", $mobile);
+                        parent::sendSorryMessage($mobile, $isFirstError);
                 }
                 break;
         }
