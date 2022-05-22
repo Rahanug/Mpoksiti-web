@@ -10,8 +10,7 @@ use App\Http\Controllers\webhook\WebhookConfig;
 
 abstract class AbstractWebhookController extends Controller
 {
-    use ButtonTrait;
-    use QueryTrait;
+    use ButtonTrait, QueryTrait;
 
     public function insertCommand($pesan, $from)
     {
@@ -47,5 +46,21 @@ abstract class AbstractWebhookController extends Controller
         } else {
             $this->sendMsg($mobile, "Maaf pilih sesuai dengan menu yang ada", []);
         }
+    }
+
+    function endMenu($mobile)
+    {
+        $this->insertCommand("dialog end", $mobile);
+
+        $this->sendMsg(
+            $mobile,
+            "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
+            [
+                $this->getSingleButtonReply("reply", "Ulang", "Menu Utama"),
+
+                $this->getSingleButtonReply("reply", "Selesai", "Selesai"),
+            ],
+            WebhookConfig::MESSAGE_TYPE_BUTTON
+        );
     }
 }

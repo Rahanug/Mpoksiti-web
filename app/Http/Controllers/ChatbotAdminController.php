@@ -38,7 +38,7 @@ class ChatbotAdminController extends Controller
     public function deleteAdmin($id)
     {
         chatbotAdminModel::where('id', $id)->delete();
-        return redirect('/admin/admin-chatbot');
+        return redirect('/admin/admin-chatbot')->with("success", "Berhasil menghapus Admin");
     }
 
     public function storeAdmin(Request $request)
@@ -80,7 +80,7 @@ class ChatbotAdminController extends Controller
         // $master->id_kategori = $request->nm_dokumen;
         // $master->id_trader = Auth::user()->id_trader;
 
-        return redirect('/admin/admin-chatbot');
+        return redirect('/admin/admin-chatbot')->with("success", "Sukses menambahkan admin");
     }
 
     public function updateAdmin(Request $request, $id)
@@ -102,6 +102,6 @@ class ChatbotAdminController extends Controller
             'username' => $request->username
         ]);
 
-        return redirect('/admin/admin-chatbot');
+        return redirect('/admin/admin-chatbot')->with("success", "Sukses mengubah data admin");
     }
 }

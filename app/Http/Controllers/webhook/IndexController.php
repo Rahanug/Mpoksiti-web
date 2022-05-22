@@ -35,11 +35,34 @@ class IndexController extends AbstractWebhookController
         $this->lacakInfoNonDomestikController = new LacakInfoSertifikasiNonDomestikController();
     }
 
-    private function clearUserSession($from)
+    private function invalidateUserSession($from)
     {
-        CommandModel::where('no_wa', $from)
+        $affectedRows = CommandModel::where('no_wa', $from)
             ->whereRaw('DATEDIFF(MINUTE, created_at, GETDATE()) > 14')
             ->delete();
+
+        if ($affectedRows > 0) {
+            parent::sendMsg(
+                $this->from,
+                "*Anda dapat mengabaikan pesan ini*\n\nDengan adanya pesan ini, dinyatakan sesi terakhir Anda telah habis. Siklus Anda akan diulang dari pesan pertama.",
+                [],
+
+            );
+        }
+    }
+
+    private function clearNowUserSession($from)
+    {
+
+        CommandModel::where('no_wa', $from)
+            ->delete();
+
+        parent::sendMsg(
+            $this->from,
+            "*Anda dapat mengabaikan pesan ini*\n\nDengan adanya pesan ini, dinyatakan sesi terakhir Anda telah habis. Siklus Anda akan diulang dari pesan pertama.",
+            [],
+
+        );
     }
 
     private function readMessage($event)
@@ -62,7 +85,7 @@ class IndexController extends AbstractWebhookController
         $handler->handleMessage($this->from, $command, $pesan, $isFirstError);
     }
 
-    public function selectAdmin()
+    private function selectAdmin()
     {
         return chatbotAdminModel::get('no_wa');
     }
@@ -94,6 +117,7 @@ class IndexController extends AbstractWebhookController
         if (isset($event)) {
             //Here, you now have event and can process them how you like e.g Add to the database or generate a response
             $file = 'log.txt';
+
             $data = json_encode($event) . "\n";
 
             $this->from = $event['contacts'][0]['wa_id'];
@@ -102,7 +126,7 @@ class IndexController extends AbstractWebhookController
 
             $pesan = strtolower($pesan);
 
-            $this->clearUserSession($this->from);
+            $this->invalidateUserSession($this->from);
 
             $stackCommand = $this->selectLastTwo($this->from);
 
@@ -154,29 +178,6 @@ class IndexController extends AbstractWebhookController
                 //tampil menu utama
             } else {
                 switch (true) {
-                    case str_contains($lastRow->command, 'selesai'):
-                        if (str_contains($pesan, "halo") !== false) {
-                            parent::insertCommand('halo', $this->from);
-                            parent::sendMsg(
-                                $this->from,
-                                "Selamat Datang di layanan Halo Mpok Siti, Media Pelayanan Online Karantina Simpel dan Terintegrasi, apa yang ingin Anda ketahui?",
-                                [
-                                    parent::getSingleButton("Seputar Kesehatan Ikan", "IPKI", ""),
-
-                                    parent::getSingleButton("Layanan Sertifikasi Mutu", "PSPM", ""),
-
-                                    parent::getSingleButton("Lacak Info Sertifikasi", "TILS", ""),
-
-                                    parent::getSingleButton("Hubungi Customer Service", "CS", ""),
-
-                                ],
-                                WebhookConfig::MESSAGE_TYPE_POPUP
-                            );
-                        } else {
-                            parent::sendSorryMessage($this->from, $isFirstError);
-                        }
-
-                        break;
                     case str_contains($lastRow->command, 'halo'):
                         switch (true) {
                             case str_contains($pesan, "seputar kesehatan ikan"):
@@ -208,9 +209,9 @@ class IndexController extends AbstractWebhookController
 
                                         parent::getSingleButton("Negara Mitra", "Mitra", ""),
 
-                                        parent::getSingleButton("Domestik", "Domestik", ""),
-
                                         parent::getSingleButton("Surveilance", "Surveilance", ""),
+
+                                        parent::getSingleButton("Menu Utama", "Domestik", ""),
 
                                     ],
                                     WebhookConfig::MESSAGE_TYPE_POPUP
@@ -246,6 +247,7 @@ class IndexController extends AbstractWebhookController
 
                                 );
                                 $this->broadcastMsgAdmin($cs, $this->from);
+                                $this->clearNowUserSession($this->from);
                                 break;
 
                             case str_contains($pesan, "batal"):
@@ -399,11 +401,79 @@ class IndexController extends AbstractWebhookController
                             $isFirstError
                         );
                         break;
+                    case str_contains($lastRow->command, "dialog end"):
+                        switch (true) {
+                            case str_contains($pesan, "selesai"):
+                                parent::sendMsg(
+                                    $this->from,
+                                    "Terima kasih telah menggunakan layanan chatbot Mpok Siti",
+                                    [],
+                                );
+
+                                $this->clearNowUserSession($this->from);
+
+                                break;
+
+                            case str_contains($pesan, "menu utama"):
+                                parent::insertCommand("halo", $this->from);
+                                parent::sendMsg(
+                                    $this->from,
+                                    "Selamat Datang di layanan Halo Mpok Siti, Media Pelayanan Online Karantina Simpel dan Terintegrasi, apa yang ingin Anda ketahui ? \n",
+                                    [
+                                        parent::getSingleButton("Seputar Kesehatan Ikan", "IPKI", ""),
+
+                                        parent::getSingleButton("Layanan Sertifikasi Mutu", "PSPM", ""),
+
+                                        parent::getSingleButton("Lacak Info Sertifikasi", "TILS", ""),
+
+                                        parent::getSingleButton("Hubungi Customer Service", "CS", ""),
+
+                                    ],
+                                    WebhookConfig::MESSAGE_TYPE_POPUP
+                                );
+                                break;
+                        }
+                        break;
 
                     default:
-                    case str_contains($lastRow->command, "maaf"):
-                        parent::insertCommand("maaf", $this->from);
-                        parent::sendSorryMessage($this->from, $isFirstError);
+                        switch (true) {
+                            case str_contains($pesan, "menu utama"):
+                                parent::insertCommand("halo", $this->from);
+                                parent::sendMsg(
+                                    $this->from,
+                                    "Selamat Datang di layanan Halo Mpok Siti, Media Pelayanan Online Karantina Simpel dan Terintegrasi, apa yang ingin Anda ketahui ? \n",
+                                    [
+                                        parent::getSingleButton("Seputar Kesehatan Ikan", "IPKI", ""),
+
+                                        parent::getSingleButton("Layanan Sertifikasi Mutu", "PSPM", ""),
+
+                                        parent::getSingleButton("Lacak Info Sertifikasi", "TILS", ""),
+
+                                        parent::getSingleButton("Hubungi Customer Service", "CS", ""),
+
+                                    ],
+                                    WebhookConfig::MESSAGE_TYPE_POPUP
+                                );
+                                break;
+                            case str_contains($pesan, "hubungi cs"):
+                                $cs = $this->selectAdmin();
+                                // echo json_encode($cs);
+
+                                parent::insertCommand("selesai", $this->from);
+                                parent::sendMsg(
+                                    $this->from,
+                                    "Anda akan dihubungkan ke layanan customer support kami, mohon tunggu hingga pesan selanjutnya. Terimakasih telah menggunakan layanan chatbot mpok Siti\n",
+                                    [],
+
+                                );
+                                $this->broadcastMsgAdmin($cs, $this->from);
+                                $this->clearNowUserSession($this->from);
+                                break;
+                            default:
+                                parent::insertCommand("maaf", $this->from);
+                                parent::sendSorryMessage($this->from, $isFirstError);
+                        }
+
                         break;
                 }
             }
