@@ -39,26 +39,7 @@
                                                 <label for="npwp" style="font-weight:500; color:#2E2A61; font-size: 18px;">NPWP</label>
                                                 <input type="text" id="npwp" class="form-control"
                                                     placeholder="NPWP" name="npwp">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="no_ktp" style="font-weight:500; color:#2E2A61; font-size: 18px;">NIK</label>
-                                                <input type="text" id="no_ktp" class="form-control"
-                                                    placeholder="Nomor Induk Kependudukan" name="no_ktp">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="nm_trader" style="font-weight:500; color:#2E2A61; font-size: 18px;">Nama</label>
-                                                <input type="text" id="nm_trader" class="form-control"
-                                                    placeholder="Nama" name="nm_trader">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="al_trader" style="font-weight:500; color:#2E2A61; font-size: 18px;">Alamat</label>
-                                                <input type="text" id="al_trader" class="form-control"
-                                                    placeholder="Alamat" name="al_trader">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="kt_trader" style="font-weight:500; color:#2E2A61; font-size: 18px;">Kota</label>
-                                                <input type="text" id="kt_trader" class="form-control"
-                                                    placeholder="Kota" name="kt_trader">
+                                                    <span id="error_npwp"></span>
                                             </div>
                                             <div class="form-group">
                                                 <label for="no_hp" style="font-weight:500; color:#2E2A61; font-size: 18px;">Nomor Handphone</label>
@@ -77,8 +58,9 @@
                                             </div>
                                             <br>
                                                 <div class="col-12 d-flex justify-content-end">
-                                                    <button type="submit" class="btn btn-secondary" style="background-color: #3C5C94" name="submit" value="Simpan Data">Submit</button>
+                                                    <button type="submit" class="btn btn-secondary" style="background-color: #3C5C94" name="register" id="register" >Submit</button>
                                                 </div>
+                                                {{ csrf_field() }}
                                             </div>
                                         </form>
                                     </div>
@@ -89,3 +71,38 @@
                 </section>
   </main>
 @endsection
+
+@push('scripts')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+
+<script>
+    $(document).ready(function($){
+        $('#npwp').mask("00.000.000.0-000.000");
+        $('#npwp').blur(function(){
+            var npwp = $('#npwp').val();
+            $.ajax({
+                url:"{{ route('admin.checkNpwp') }}",
+                method:"POST",
+                data:{
+                    npwp:npwp, _token: $('input[name="_token"]').val()
+                },
+                success: function(result){
+                    if(result == 'unique')
+                    {
+                        $('#error_npwp').html('<label class="text-success">NPWP Available</label>');
+                        $('#npwp').removeClass('has-error');
+                        $('#register').attr('disabled', false);
+                    }
+                    else
+                    {
+                        $('#error_npwp').html('<label class="text-danger">NPWP not Available</label>');
+                        $('#npwp').addClass('has-error');
+                        $('#register').attr('disabled', 'disabled');
+                    }
+                }
+            })
+        })
+    });
+</script>
+@endpush
