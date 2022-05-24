@@ -63,13 +63,11 @@
                 <td style="font-weight:regular; color:#2E2A61;"> Sudah diajukan </td>
                 @endif
 
-                <?php
-                $url_pemeriksaan = "Belum diberikan";
-                if ($ppk->url_periksa != null) {
-                  $url_pemeriksaan = $ppk->url_periksa;
-                }
-                ?>
-                <td style="font-weight:regular; color:#2E2A61;"> {{ $url_pemeriksaan }}</td>
+                @if ($ppk->url_periksa != null)
+                  <td><a target="_blank" style="margin: 0 3px" class="btn btn-sm btn-link" href="{{ $ppk->url_periksa}}">Link Meeting</a></td>
+                @else
+                  <td style="font-weight:regular; color:#2E2A61;"> Belum diberikan </td>
+                @endif
 
                 <?php
                 $jadwal_string = "";
