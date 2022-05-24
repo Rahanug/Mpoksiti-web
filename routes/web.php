@@ -56,6 +56,7 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::post('/admin/menu/update', [App\Http\Controllers\AdminController::class, 'updateMenu'])->name('admin.updateMenu');
         Route::post('/admin/publikasi/addGambar/sukses', [App\Http\Controllers\AdminController::class, 'storeGambar'])->name('admin.storeGambar');
         Route::post('/admin/manage/addUser/sukses', [App\Http\Controllers\AdminController::class, 'storeUser'])->name('admin.storeUser');
+        Route::post('/admin/manage/addUser/checkNpwp', [App\Http\Controllers\AdminController::class, 'checkNpwp'])->name('admin.checkNpwp');
         Route::post('/admin/search/gambar', [App\Http\Controllers\AdminController::class, 'searchGambar'])->name('admin.searchGambar');
 
         // Ekspor
@@ -70,6 +71,8 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::post('/admin/stuffing/{id_ppk}/terima', [App\Http\Controllers\StuffingController::class, 'terima'])->name('admin.terimastuffing');
         Route::post('/admin/stuffing/{id_ppk}/tolak', [App\Http\Controllers\StuffingController::class, 'tolak'])->name('admin.tolakstuffing');
         Route::get('/admin/stuffing/form/{id_ppk}', [App\Http\Controllers\FormController::class, 'index'])->name('admin.form_stuffing');
+        Route::get('/admin/stuffing/form/edit/{id_ppk}', [App\Http\Controllers\EditFormController::class, 'index'])->name('admin.editForm_stuffing');
+        Route::post('/admin/stuffing/form/edit', [App\Http\Controllers\EditFormController::class, 'simpanUrutan'])->name('admin.simpanUrutan_stuffing');
         Route::post('/admin/stuffing/form/{id_ppk}/storeSubform', [App\Http\Controllers\FormController::class, 'storeSubform'])->name('admin.storeform_stuffing');
         Route::post('/admin/stuffing/{id_ppk}/izin', [App\Http\Controllers\StuffingController::class, 'izin'])->name('admin.izinstuffing');
         Route::get('/admin/stuffing/detail/{id_ppk}', [App\Http\Controllers\StuffingController::class, 'detail'])->name('admin.detail');
@@ -105,7 +108,6 @@ Route::group(['middleware' => 'revalidate'], function () {
         Route::get('/admin/command/deleteCommand/{id}', [App\Http\Controllers\Dashboard::class, 'deleteCommand'])->name('admin.deleteCommand');
         Route::get('/admin/command/deleteAll', [App\Http\Controllers\Dashboard::class, 'deleteAll'])->name('admin.deleteAllCommand');
 
-
         Route::get('/admin/admin-chatbot', [App\Http\Controllers\ChatbotAdminController::class, 'index'])->name('admin.tabelDaftarAdmin');
 
         Route::get('/admin/admin-chatbot/deleteAdmin/{id}', [App\Http\Controllers\ChatbotAdminController::class, 'deleteAdmin'])->name('admin.deleteAdmin');
@@ -130,5 +132,6 @@ Route::group(['middleware' => 'revalidate'], function () {
     Route::post('/loginjpp', [\App\Http\Controllers\LoginJPPController::class, 'login'])->name('loginjpp');
     Route::get('/logoutjpp', [\App\Http\Controllers\LoginJPPController::class, 'logout'])->name('logoutjpp');
 
-    Route::post('/webhook', [App\Http\Controllers\Webhookdua::class, 'index'])->name('Webhook');
+    Route::post('/webhook', [App\Http\Controllers\webhook\IndexController::class, 'index'])->name('Webhook');
+    Route::get('/', [App\Http\Controllers\LandingController::class, 'index'])->name('Landing');
 });

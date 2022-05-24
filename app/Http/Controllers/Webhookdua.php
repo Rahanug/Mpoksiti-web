@@ -578,7 +578,7 @@ class Webhookdua extends Controller
         $idUrut = DB::connection('sqlsrv2')
             ->table('v_for_flowguide')
             ->select('id_urut')
-            ->where('nm_dok', 'Single Certificate')
+            // ->where('nm_dok', 'Single Certificate')
             ->where('no_aju_ppk', $no_aju)
             ->first();
 
@@ -705,7 +705,7 @@ class Webhookdua extends Controller
     {
         // return RPTPNBPHarianModel::select('id_ppk')
         return DB::connection('sqlsrv2')
-            ->table('v_rpt_pnbp_harian')
+            ->table('tr_mst_pelaporan')
             ->select('id_ppk')
             ->where('no_aju_ppk', $no_aju)
             ->first();
@@ -716,7 +716,7 @@ class Webhookdua extends Controller
         $idPPK = $this->selectIDPPKPNBP($no_aju);
         // return RPTPNBPHarianModel::select('kel_tarif', 'total')
         return DB::connection('sqlsrv2')
-            ->table('v_rpt_pnbp_harian')
+            ->table('v_rpt_pnbp_harian_new')
             ->select('kel_tarif', 'total')
             ->where('id_ppk', $idPPK->id_ppk)
             ->get();
@@ -726,7 +726,7 @@ class Webhookdua extends Controller
     {
         // return RPTPNBPHarianModel::select('no_aju_ppk')
         return DB::connection('sqlsrv2')
-            ->table('v_rpt_pnbp_harian')
+            ->table('tr_mst_pelaporan')
             ->select('no_aju_ppk')
             ->where('no_aju_ppk', $pesan)
             ->first();
@@ -791,9 +791,6 @@ class Webhookdua extends Controller
             } else {
                 $lastRow = $top;
             }
-
-
-
 
             // $lastRow = CommandModel::where('no_wa', $from)
             //     ->orderByDesc('created_at')
@@ -1772,12 +1769,12 @@ class Webhookdua extends Controller
                                 // echo json_encode("Menu utama");
                                 $this->send_msg3($from, "Selamat Datang di layanan Halo Mpok Siti, Media Pelayanan Online Karantina Simpel dan Terintegrasi, apa yang ingin Anda ketahui ? \\n", constant("temp1"));
                                 break;
-                            // case str_contains($pesan, "coba lagi"):
-                            //     // $this->insertCommand("selesai", $from);
-                            //     // echo json_encode("Selesai");
-                            //     $this->deleteCommand($from);
-                            //     $this->send_msg($from, "Silahkan masukkan inputan sesuai perintah sebelumnya 🤗");
-                            //     break;
+                                // case str_contains($pesan, "coba lagi"):
+                                //     // $this->insertCommand("selesai", $from);
+                                //     // echo json_encode("Selesai");
+                                //     $this->deleteCommand($from);
+                                //     $this->send_msg($from, "Silahkan masukkan inputan sesuai perintah sebelumnya 🤗");
+                                //     break;
                             case str_contains($pesan, "hubungi cs"):
                                 $this->insertCommand("selesai", $from);
                                 // echo json_encode("hubungi customer service");

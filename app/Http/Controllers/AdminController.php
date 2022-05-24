@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\ManagementUserController;
 use App\Models\Menu;
 use App\Models\Publikasi;
+use App\Models\tbRTrader;
 use App\Models\Trader;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -20,6 +21,26 @@ class AdminController extends Controller
             "title" => "Management",
             "traders" => $manages->all(),
         ]);
+    }
+
+    public function checkNpwp(Request $request)
+    {
+        $npwp = $request->get('npwp');
+        if (isset($npwp)) {
+            $result = $this->getIDandNameTrader($npwp);
+
+            if (isset($result)) {
+                echo 'unique';
+            } else {
+                echo 'not_unique';
+            }
+        }
+    }
+
+    private function getIDandNameTrader($npwp)
+    {
+        $checkNPWP = tbRTrader::where('npwp', $npwp)->get(['id_trader', 'nm_trader'])->first();
+        return $checkNPWP ?? null;
     }
 
     public function searchUser(Request $request)
@@ -47,30 +68,28 @@ class AdminController extends Controller
         ];
 
         $this->validate($request, [
-            'nm_trader' => 'required',
-            'al_trader' => 'required',
-            'kt_trader' => 'required',
             'npwp' => 'required',
-            'no_ktp' => 'required',
-            'no_izin' => 'required',
             'no_hp' => 'required',
             'email' => 'required',
             'password' => 'required',
         ], $messages);
 
-        Trader::insert([
-            'nm_trader' => $request->nm_trader,
-            'al_trader' => $request->al_trader,
-            'kt_trader' => $request->kt_trader,
-            'npwp' => $request->npwp,
-            'no_ktp' => $request->no_ktp,
-            // 'no_izin' => $request->no_izin,
-            'no_hp' => $request->no_hp,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $npwp = $request->input('npwp');
+        $result = $this->getIDandNameTrader($npwp);
+        if (!isset($result)) {
+            return redirect('/admin/manage')->with('error', 'NPWP Tidak Ada');
+        } else {
+            Trader::insert([
+                'id_trader' => $result['id_trader'],
+                'nm_trader' => $result['nm_trader'],
+                'npwp' => $request->npwp,
+                'no_hp' => $request->no_hp,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
 
-        return redirect('/admin/manage')->with('success', 'New user has been added');
+            return redirect('/admin/manage')->with('success', 'New user has been added');
+        }
     }
 
     public function deleteUser($id_trader)
