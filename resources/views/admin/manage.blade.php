@@ -123,6 +123,7 @@
             <td style="font-weight:regular; color:#2E2A61;">`+ res.traders[i].no_hp +`</td>
             <td>
               <a href="/admin/manage/delete/${res.traders[i].id_trader}" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Delete</a>
+              <a href="/admin/manage/editUser/${res.traders[i].id_trader}" style="margin: 0 3px; " class="btn btn-sm btn-outline-dark">Edit</a>
             </td>
           </tr>`;
       }
