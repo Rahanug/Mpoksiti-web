@@ -100,11 +100,11 @@ class AdminJPPController extends Controller
         $adaPerubahan = false;
         $suksesMsg = "";
         if ($currentJpp->nama_counter != $request->nama_counter ){
-            $suksesMsg .= "- Nama counter = ".$request->nama_counter."\n";
+            $suksesMsg .= "- Nama Konter = ".$request->nama_counter."\n";
             $adaPerubahan=true;
         }
         if ($currentJpp->alamat_counter != $request->alamat_counter ){
-            $suksesMsg .= "- Alamat counter = ".$request->alamat_counter."\n";
+            $suksesMsg .= "- Alamat Konter = ".$request->alamat_counter."\n";
             $adaPerubahan=true;
         }
         if ($currentJpp->latitude != $request->latitude){

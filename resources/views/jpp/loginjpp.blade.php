@@ -28,7 +28,7 @@
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-admin" name="kode_counter" placeholder="{{ __('Kode Counter') }}" value="{{ old('kode_counter') }}" required autofocus>
+                                        <input type="text" class="form-control form-control-admin" name="kode_counter" placeholder="{{ __('Kode Konter') }}" value="{{ old('kode_counter') }}" required autofocus>
                                     </div>
 
                                     <div class="form-group">

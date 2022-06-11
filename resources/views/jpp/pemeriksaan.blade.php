@@ -34,7 +34,7 @@
                 <th scope="col" style="font-weight:semibold; color:#2E2A61;">Trader</th>
                 <th scope="col" style="font-weight:semibold; color:#2E2A61;">Penerima/Tujuan</th>
                 <th scope="col" style="font-weight:semibold; color:#2E2A61;">Permohonan Pemeriksaan Virtual</th>
-                <th scope="col" style="font-weight:semibold; color:#2E2A61;">Link Pemeriksaan Virtual</th>
+                <th scope="col" style="font-weight:semibold; color:#2E2A61;">Link Meet Virtual</th>
                 <th scope="col" style="font-weight:semibold; color:#2E2A61;">Jadwal Pemeriksaan</th>
                 <th scope="col" style="font-weight:semibold; color:#2E2A61;">No Sertifikat</th>
                 <th scope="col" style="font-weight:semibold; color:#2E2A61;">Aksi</th>
@@ -118,7 +118,7 @@
                               <div class="col-4 col-sm-12">
                                 <div class="row">JASA PENYELENGGARA POS: </div>
                                 <div class="row">JPP: {{ $kurir->namaKurir }} </div>
-                                <div class="row">Counter: {{ Auth::user()->nama_counter }}</div>
+                                <div class="row">Konter: {{ Auth::user()->nama_counter }}</div>
                                 <div class="row">Alamat: {{ Auth::user()->alamat_counter }}</div>
                               </div>
                             </div>

@@ -22,7 +22,7 @@ class LoginJPPController extends Controller
         if(Auth::guard('jpp')->attempt(['kode_counter'=>$request->kode_counter, "password" => $request->password])) {
             return redirect()->intended(route('jpp.home'));
         }
-        return back()->with('error', 'Kode Counter atau Password salah!');
+        return back()->with('error', 'Kode Konter atau Password salah!');
     }
 
     public function logout() {

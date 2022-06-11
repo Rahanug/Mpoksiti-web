@@ -6,10 +6,10 @@
 @endsection
 
 @section('content')
-<script>document.title = "Managemen Jasper - Mpok Siti"</script>
+<script>document.title = "Manajemen Jasper - Mpok Siti"</script>
 <main class="col-md-9 ms-sm-auto col-lg-12 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2" style="font-weight:bold; color:#2E2A61;">Managemen Jasa Pengiriman</h1>
+    <h1 class="h2" style="font-weight:bold; color:#2E2A61;">Manajemen Jasa Pengiriman</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
       <div class="btn-group me-2">
         <!--Here is spot for put the button -->
@@ -28,9 +28,9 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="kode_counter" class="col-form-label">Kode Counter (digunakan untuk login): </label>
+                                <label for="kode_counter" class="col-form-label">Kode Konter (digunakan untuk login): </label>
                                 <input type="text" id="kode_counter" name="kode_counter" class="form-control">
-                                <label for="nama_counter" class="col-form-label">Nama Counter: </label>
+                                <label for="nama_counter" class="col-form-label">Nama Konter: </label>
                                 <input type="text" id="nama_counter" name="nama_counter" class="form-control">
                                 <label for="alamat" class="col-form-label">Alamat: </label>
                                 <input type="text" id="alamat_counter" name="alamat_counter" class="form-control">
@@ -84,8 +84,8 @@
                 <thead>
                 <tr>
                     <th scope="col">ID JPP</th>
-                    <th scope="col">Kode Counter</th>
-                    <th scope="col">Nama Counter</th>
+                    <th scope="col">Kode Konter</th>
+                    <th scope="col">Nama Konter</th>
                     <th scope="col">Penanggung Jawab</th>
                     <th scope="col">Latitude</th>
                     <th scope="col">Longitude</th>
@@ -123,9 +123,9 @@
                                   <div class="modal-body">
                                       <div class="form-group">
                                           <input type="hidden" id="id" name="id" value=<?= $jpp->id ?>>
-                                          <label for="kode_counter" class="col-form-label">Kode Counter (digunakan untuk login): </label>
+                                          <label for="kode_counter" class="col-form-label">Kode Konter (digunakan untuk login): </label>
                                           <input type="text" id="kode_counter" name="kode_counter" class="form-control" value=<?= $jpp->kode_counter?> disabled readonly>
-                                          <label for="nama_counter" class="col-form-label">Nama Counter: </label>
+                                          <label for="nama_counter" class="col-form-label">Nama Konter: </label>
                                           <input type="text" id="nama_counter" name="nama_counter" class="form-control" value=<?= '"'.$jpp->nama_counter.'"'?>>
                                           <label for="alamat" class="col-form-label">Alamat: </label>
                                           <input type="text" id="alamat_counter" name="alamat_counter" class="form-control" value=<?= '"'.$jpp->alamat_counter.'"'?>>

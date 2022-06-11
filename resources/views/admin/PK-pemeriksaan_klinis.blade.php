@@ -43,8 +43,8 @@
                     <th scope="col">ID PPK</th>
                     <th scope="col">No PPK</th>
                     <th scope="col">No Aju PPK</th>
-                    <th scope="col">Kode Counter</th>
-                    <th scope="col">Nama Counter</th>
+                    <th scope="col">Kode Konter</th>
+                    <th scope="col">Nama Konter</th>
                     <th scope="col">Nama Trader</th>
                     <th scope="col">Nama Penerima/Tujuan</th>
                     <th scope="col">Jadwal Pemeriksaan</th>
@@ -150,7 +150,7 @@
                                         <div class="col-4 col-sm-12">
                                           <div class="row">JASA PENYELENGGARA POS: </div>
                                           <div class="row">JPP: {{ $ppk->namaKurir }} </div>
-                                          <div class="row">Counter: {{ $ppk->nama_counter }}</div>
+                                          <div class="row">Konter: {{ $ppk->nama_counter }}</div>
                                           <div class="row">Alamat: {{ $ppk->alamat_counter }}</div>
                                         </div>
                                       </div>
