@@ -92,6 +92,50 @@ class AdminController extends Controller
         }
     }
 
+    public function editUser($id_trader)
+    {
+        $edit = Trader::where('id_trader', $id_trader)->get();
+        return view('admin.editUser', [
+            "title" => "Edit User",
+            "edit" => $edit,
+            "id_trader" => $id_trader,
+        ]);
+    }
+
+    public function updateUser(Request $request, $id_trader)
+    {
+        $messages = [
+            'required' => ':attribute wajib diisi',
+        ];
+
+        $this->validate($request, [
+            'no_hp' => 'required',
+            'email' => 'required',
+        ], $messages);
+
+        if (isset($request->password)) {
+            Trader::where('id_trader', $id_trader)->update([
+                'nm_trader' => $request->nm_trader,
+                'npwp' => $request->npwp,
+                'no_hp' => $request->no_hp,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+
+            return redirect('/admin/manage')->with('success', 'User has been Edited');
+        } else {
+            Trader::where('id_trader', $id_trader)->update([
+                'nm_trader' => $request->nm_trader,
+                'npwp' => $request->npwp,
+                'no_hp' => $request->no_hp,
+                'email' => $request->email,
+            ]);
+
+            return redirect('/admin/manage')->with('success', 'User has been Edited');
+        }
+
+    }
+
     public function deleteUser($id_trader)
     {
         Trader::where('id_trader', $id_trader)->delete();
