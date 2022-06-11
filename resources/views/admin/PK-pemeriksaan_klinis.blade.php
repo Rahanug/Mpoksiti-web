@@ -72,7 +72,7 @@
                     ?>
                     <td>{{ $jadwal_string }}</td>
                     @if ($ppk->url_periksa)
-                      <td>{{ $ppk->url_periksa }} </td>
+                      <td><a target="_blank" style="margin: 0 3px" class="btn btn-sm btn-link" href="{{ $ppk->url_periksa}}">Link Meeting</a></td>
                     @else
                       <td>
                         <a href="" style="margin: 0 3px; " class="btn btn-sm btn-primary" data-toggle="modal" data-target=<?= '"#linkModal'.$count.'"' ?>>Kirim Link</a>
