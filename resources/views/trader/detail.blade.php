@@ -36,7 +36,6 @@
                     <div class="card-header">
                         <h4 class="card-title" style="font-weight: bold; font-size:large;">Detail PPK</h4>
                     </div>
-
                     <div class="card-content">
                         <div class="card-body">
                             <div class="form-group">

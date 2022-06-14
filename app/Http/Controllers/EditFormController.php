@@ -20,6 +20,7 @@ class EditFormController extends Controller
         $join = DB::connection('sqlsrv')->table('master_subform')
             ->leftJoin('subform as subform', 'master_subform.id_masterSubform', '=', 'subform.id_masterSubform')
             ->where('subform.id_ppk', $id_ppk)
+            ->OrderBy('subform.urutan')
             ->get(['master_subform.id_masterSubform', 'master_subform.indikator', 'master_subform.tipe_data', 'subform.id_subform', 'subform.urutan']);
 
         // $list = DB::connection('sqlsrv')->table("master_subform")
@@ -44,10 +45,11 @@ class EditFormController extends Controller
             ->select('master_subform.indikator', 'master_subform.id_masterSubform', 's.urutan', 's.id_ppk', 'master_subform.tipe_data')
             ->leftJoin(DB::raw(
                 '(SELECT urutan, id_masterSubform, id_ppk FROM subform
-            WHERE id_ppk = ' . $id_ppk . ') s'
+            WHERE id_ppk = ' . $id_ppk . '  ) s'
             ), function ($join) {
                 $join->on('master_subform.id_masterSubform', '=', 's.id_masterSubform');
             })
+            ->orderBy('s.urutan')
             ->get();
 
         // $list = DB::connection('sqlsrv')->table('master_subform')

@@ -33,7 +33,11 @@
         @else
         <td></td>
         @endif
+        @if($ppk->status!=null)
         <td style="font-weight: bold">{{ ucfirst($ppk->status)}}</td>
+        @else
+        <td style="font-weight: bold">Belum diproses</td>
+        @endif
         <td>
           @if ($ppk->status == "" || $ppk->status == "verifikasi" || $ppk->status == "Gagal")
           <a style="margin: 0 3px" class="btn btn-sm btn-primary" href="home/{{$ppk->id_ppk}}">Unggah</a>

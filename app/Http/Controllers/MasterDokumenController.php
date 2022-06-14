@@ -167,18 +167,42 @@ class MasterDokumenController extends Controller
             'id_kategori.required' => 'Kategori wajib dipilih',
             'no_dokumen.required' => 'Nomor dokumen wajib diisi',
             'tgl_terbit.required' => 'Tanggal terbit diisi',
-            'nm_dokumen.required' => 'Dokumen wajib diunggah',
+            // 'nm_dokumen.required' => 'Dokumen wajib diunggah',
             'min' => ':attribute harus diisi minimal :min karakter !!!',
             'max' => ':attribute harus diisi maksimal :max karakter !!!',
             'numeric' => ':attribute harus diisi angka !!!',
             'email' => ':attribute harus diisi dalam bentuk email !!!',
-            'nm_dokumen.mimes'=> 'Format dokumen harus berupa pdf, jpg, jpeg, atau png!!!'
+            // 'nm_dokumen.mimes'=> 'Format dokumen harus berupa pdf, jpg, jpeg, atau png!!!'
         ];
 
         $this->validate($request,[
             "id_kategori" => 'required',
             'no_dokumen' => 'required',
             "tgl_terbit" => 'required',
+            // 'nm_dokumen'=> 'required|mimes:pdf,jpg,jpeg,png'
+        ],$messages);
+
+        // $nm_dokumen = $request->file('nm_dokumen');
+        // $name = $nm_dokumen->getClientOriginalName();
+        // $path = 'files';
+        // $nm_dokumen->move($path, $name);
+                
+        MasterDokumen::where('id_master', $id_master)->update([
+            'no_dokumen' => $request->no_dokumen,
+            // 'nm_dokumen'=> $name,
+            "tgl_terbit" => $request->tgl_terbit,
+            "id_kategori" => $request->id_kategori,
+        ]);
+        
+        return redirect("/master/detail/$id_master")->with("info", "Master dokumen $request->no_dokumen telah terganti!!!");
+    }
+
+    public function updateFiles(Request $request, $id_master){
+        $messages = [
+            'nm_dokumen.required' => 'Dokumen wajib diunggah',
+            'nm_dokumen.mimes'=> 'Format dokumen harus berupa pdf, jpg, jpeg, atau png!!!'
+        ];
+        $this->validate($request,[
             'nm_dokumen'=> 'required|mimes:pdf,jpg,jpeg,png'
         ],$messages);
 
@@ -186,20 +210,26 @@ class MasterDokumenController extends Controller
         $name = $nm_dokumen->getClientOriginalName();
         $path = 'files';
         $nm_dokumen->move($path, $name);
-                
-        MasterDokumen::where('id_master', $id_master)->update([
-            'no_dokumen' => $request->no_dokumen,
-            'nm_dokumen'=> $name,
-            "tgl_terbit" => $request->tgl_terbit,
-            "id_kategori" => $request->id_kategori,
-        ]);
-        
-        // $master = new MasterDokumen();
-        // $master->no_dokumen = $request->no_dokumen;
-        // $master->tgl_terbit = $request->tgl_terbit;
-        // $master->id_kategori = $request->nm_dokumen;
-        // $master->id_trader = Auth::user()->id_trader;
 
-        return redirect('/master')->with('info', 'Master dokumen telah terganti!!!');
+        MasterDokumen::where('id_master', $id_master)->update([
+            'nm_dokumen'=> $name,
+        ]);
+        return redirect("/master/detail/$id_master")->with("info", "File telah Reupload!!!");
+    }
+
+    public function detailMaster(Request $request, $id_master){
+        $kategori = array();
+        foreach (KategoriDokumen::all() as $item) {
+            $kategori[$item->id_kategori] = $item->nama_kategori;
+        }
+        return view('trader.detailMaster', [
+            "title" => 'Detail Master',
+            "id_master"=> $id_master,
+            "details"=>MasterDokumen::where("id_master", $id_master)->get(),
+            "kategori"=>$kategori,
+            "items"=>KategoriDokumen::all(),
+            "editMasters"=> $this->getIf($id_master)
+
+        ]);
     }
 }

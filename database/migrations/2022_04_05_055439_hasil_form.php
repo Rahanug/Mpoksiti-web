@@ -15,12 +15,12 @@ class HasilForm extends Migration
     {
         Schema::create('subform', function (Blueprint $table) {
             $table->increments('id_subform');
-            $table->string('urutan');
+            $table->integer('urutan');
             $table->string('value');
             $table->string('keterangan')->nullable();
             $table->string('visibility');
             $table->integer('id_masterSubform')->unsigned();
-            $table->foreign('id_masterSubform')->references('id_masterSubform')->on('master_subform');
+            // $table->foreign('id_masterSubform')->references('id_masterSubform')->on('master_subform');
             $table->integer('id_ppk')->unsigned();
             //$table->foreign('id_ppk')->references('id_ppk')->on('v_data_header');
         });
