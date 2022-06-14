@@ -23,12 +23,12 @@ class Dashboard extends Controller
     public function deleteCommand($id)
     {
         CommandModel::where('id', $id)->delete();
-        return redirect('/admin/command');
+        return redirect('/admin/command')->with("success", "Sukses menghapus data");
     }
 
     public function deleteAll()
     {
         CommandModel::truncate();
-        return redirect('/admin/command');
+        return redirect('/admin/command')->with("success", "Sukses menghapus data");
     }
 }

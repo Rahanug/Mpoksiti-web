@@ -84,14 +84,19 @@ trait QueryTrait
     {
         $idPPK = $this->selectIDPPKPNBP($no_aju);
         // return RPTPNBPHarianModel::select('kel_tarif', 'total')
-        return DB::connection('sqlsrv2')
-            ->table('v_rpt_pnbp_harian_new')
-            ->select('kel_tarif', 'total')
-            ->where(
-                'id_ppk',
-                $idPPK->id_ppk
-            )
-            ->get();
+
+        if (isset($idPPK)) {
+            return DB::connection('sqlsrv2')
+                ->table('v_rpt_pnbp_harian_new')
+                ->select('kel_tarif', 'total')
+                ->where(
+                    'id_ppk',
+                    $idPPK->id_ppk
+                )
+                ->get();
+        } else {
+            return null;
+        }
     }
 
     public function selectPPKPNBP($pesan)

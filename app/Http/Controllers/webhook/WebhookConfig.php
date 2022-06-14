@@ -5,6 +5,8 @@ namespace App\Http\Controllers\webhook;
 
 class WebhookConfig
 {
+    const DEBUG_COMMAND = true;
+
     const BASE_URL = 'https://multichannel.qiscus.com/whatsapp/v1/teslu-h7a83pux7kepxqs/2167/messages';
 
     const MESSAGE_CONFIG = array(

@@ -12,7 +12,7 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
 {
     // LACAK EKSPOR
 
-    public function selectPPKEkspor($pesan)
+    private function selectPPKEkspor($pesan)
     {
         // return FlowguideModel::select('no_aju_ppk')
         return DB::connection('sqlsrv2')
@@ -23,7 +23,7 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
             ->first();
     }
 
-    public function lacakEkspor($pesan)
+    private function lacakEkspor($pesan)
     {
         // return FlowguideModel::select('nm_dok')
         return DB::connection('sqlsrv2')
@@ -37,7 +37,7 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
 
     // LACAK IMPOR
 
-    public function selectPPKImpor($pesan)
+    private function selectPPKImpor($pesan)
     {
         // return FlowguideModel::select('no_aju_ppk')
         return DB::connection('sqlsrv2')
@@ -48,7 +48,7 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
             ->first();
     }
 
-    public function lacakImpor($pesan)
+    private function lacakImpor($pesan)
     {
         // return FlowguideModel::select('nm_dok')
         return DB::connection('sqlsrv2')
@@ -206,76 +206,27 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                         break;
 
                     case $selectPPK == null:
-                        parent::insertCommand("nomor aju eks", $mobile);
+                        // parent::insertCommand("pnbp dk", $mobile);
+                        parent::insertCommand("maaf", $mobile);
+
                         parent::sendMsg(
                             $mobile,
-                            "*Nomor Aju yang Anda masukkan tidak terdaftar di database!*\n\n Pastikan nomor Aju yang Anda masukkan telah terdaftar",
+                            "*Nomor Aju yang Anda masukkan tidak terdaftar di database!*\n\n Pastikan nomor Aju yang Anda masukkan telah terdaftar. Jika Anda merasa ini adalah sebuah kesalahan, silahkan masukkan kembali nomor Aju Anda",
                             [],
                         );
-                        parent::sendMsg(
-                            $mobile,
-                            "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
-                            [
-                                parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
+                        // parent::endMenu($mobile);
 
-                                parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
-                            ],
-                            WebhookConfig::MESSAGE_TYPE_BUTTON
-                        );
 
                         break;
 
                     case str_contains(strtoupper($pesan), $selectPPK->no_aju_ppk):
-                        parent::insertCommand("nomor aju eks", $mobile);
+                        // parent::insertCommand("nomor aju eks", $mobile);
                         parent::sendMsg(
                             $mobile,
                             "Berdasarkan tracking, proses Anda telah sampai pada $sertif->nm_dok",
                             [],
                         );
-                        parent::sendMsg(
-                            $mobile,
-                            "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
-                            [
-                                parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
-
-                                parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
-                            ],
-                            WebhookConfig::MESSAGE_TYPE_BUTTON
-                        );
-
-                        break;
-                    default:
-                        parent::insertCommand("maaf", $mobile);
-                        $this->sendSorryMessage($mobile, $isFirstError);
-                }
-                break;
-            case str_contains($command, "nomor aju eks"):
-                switch (true) {
-                    case str_contains($pesan, "menu utama"):
-                        parent::insertCommand("halo", $mobile);
-                        parent::sendMsg(
-                            $mobile,
-                            "Selamat Datang di layanan Halo Mpok Siti, Media Pelayanan Online Karantina Simpel dan Terintegrasi, apa yang ingin Anda ketahui ? \n",
-                            [
-                                parent::getSingleButton("Seputar Kesehatan Ikan", "IPKI", ""),
-
-                                parent::getSingleButton("Layanan Sertifikasi Mutu", "PSPM", ""),
-
-                                parent::getSingleButton("Lacak Info Sertifikasi", "TILS", ""),
-
-                                parent::getSingleButton("Hubungi Customer Service", "CS", ""),
-
-                            ],
-                            WebhookConfig::MESSAGE_TYPE_POPUP
-                        );
-                        break;
-                    case str_contains($pesan, "selesai"):
-                        parent::insertCommand("selesai", $mobile);
-                        parent::sendMsg(
-                            $mobile,
-                            "Terima kasih telah menggunakan layanan chatbot Mpok Siti",
-                            [],
-                        );
+                        parent::endMenu($mobile);
                         break;
                     default:
                         parent::insertCommand("maaf", $mobile);
@@ -304,62 +255,37 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                         break;
 
                     case $selectPPK == null:
-                        parent::insertCommand("nomor aju eks", $mobile);
+                        // parent::insertCommand("pnbp dk", $mobile);
+                        parent::insertCommand("maaf", $mobile);
+
                         parent::sendMsg(
                             $mobile,
-                            "*Nomor Aju yang Anda masukkan tidak terdaftar di database!*\n\n Pastikan nomor Aju yang Anda masukkan telah terdaftar",
+                            "*Nomor Aju yang Anda masukkan tidak terdaftar di database!*\n\n Pastikan nomor Aju yang Anda masukkan telah terdaftar. Jika Anda merasa ini adalah sebuah kesalahan, silahkan masukkan kembali nomor Aju Anda",
                             [],
                         );
-                        parent::sendMsg(
-                            $mobile,
-                            "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
-                            [
-                                parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
+                        // parent::endMenu($mobile);
 
-                                parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
-                            ],
-                            WebhookConfig::MESSAGE_TYPE_BUTTON
-                        );
 
                         break;
 
                     case str_contains(strtoupper($pesan), $selectPPK->no_aju_ppk):
                         $nomorSertif = $this->getNoIjin(strtoupper($pesan));
                         if ($nomorSertif == false) {
-                            parent::insertCommand("selesai", $mobile);
+                            // parent::insertCommand("selesai", $mobile);
                             parent::sendMsg(
                                 $mobile,
                                 "Data yang Anda cari berdasarkan nomor Aju tidak ditemukan. Periksa kembali status pengajuan Anda di menu lacak informasi dan pastikan Anda telah sampai pada proses Single Certificate",
                                 [],
                             );
-                            parent::sendMsg(
-                                $mobile,
-                                "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
-                                [
-                                    parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
-
-                                    parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
-                                ],
-                                WebhookConfig::MESSAGE_TYPE_BUTTON
-                            );
                         } else {
-                            parent::insertCommand("nomor aju eks", $mobile);
+                            // parent::insertCommand("nomor aju eks", $mobile);
                             parent::sendMsg(
                                 $mobile,
                                 "Berdasarkan nomor Aju Ekspor yang Anda masukkan, berikut adalah nomor sertifikat Anda $nomorSertif->no_sertifikat",
                                 [],
                             );
-                            parent::sendMsg(
-                                $mobile,
-                                "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
-                                [
-                                    parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
-
-                                    parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
-                                ],
-                                WebhookConfig::MESSAGE_TYPE_BUTTON
-                            );
                         }
+                        parent::endMenu($mobile);
                         break;
                     default:
                         parent::insertCommand("maaf", $mobile);
@@ -388,108 +314,49 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                         break;
 
                     case $selectPPK == null:
-                        parent::insertCommand("pnbp eks", $mobile);
+                        // parent::insertCommand("pnbp dk", $mobile);
+                        parent::insertCommand("maaf", $mobile);
+
                         parent::sendMsg(
                             $mobile,
-                            "*Nomor Aju yang Anda masukkan tidak terdaftar di database!*\n\n Pastikan nomor Aju yang Anda masukkan telah terdaftar",
+                            "*Nomor Aju yang Anda masukkan tidak terdaftar di database!*\n\n Pastikan nomor Aju yang Anda masukkan telah terdaftar. Jika Anda merasa ini adalah sebuah kesalahan, silahkan masukkan kembali nomor Aju Anda",
                             [],
                         );
-                        parent::sendMsg(
-                            $mobile,
-                            "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
-                            [
-                                parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
+                        // parent::endMenu($mobile);
 
-                                parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
-                            ],
-                            WebhookConfig::MESSAGE_TYPE_BUTTON
-                        );
 
                         break;
 
-                    case str_contains(strtoupper($pesan), $selectPPK->no_aju_ppk):
-                        $kelTarif = $this->selectTarif(strtoupper($pesan));
+                    case $selectPPK != null:
+                        $kelTarif = $this->selectTarif($selectPPK->no_aju_ppk);
                         $tarifText = "";
                         $total = 0;
-                        foreach ($kelTarif as $tarif) {
-                            $kel_tarif = $tarif->kel_tarif;
 
-                            $harga = $tarif->total;
-                            $tarifText .=  "$kel_tarif Rp $harga \n";
-                            $total += $harga;
-                        }
                         if ($kelTarif == null) {
-                            parent::insertCommand("selesai", $mobile);
+                            // parent::insertCommand("selesai", $mobile);
+                            parent::insertCommand("maaf", $mobile);
                             parent::sendMsg(
                                 $mobile,
                                 "Data yang Anda cari berdasarkan nomor Aju tidak ditemukan. Periksa kembali status pengajuan Anda di menu lacak informasi dan pastikan Anda telah sampai pada proses PNBP",
                                 [],
                             );
-                            parent::sendMsg(
-                                $mobile,
-                                "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
-                                [
-                                    parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
-
-                                    parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
-                                ],
-                                WebhookConfig::MESSAGE_TYPE_BUTTON
-                            );
                         } else {
-                            parent::insertCommand("pnbp eks", $mobile);
+                            foreach ($kelTarif as $tarif) {
+                                $kel_tarif = $tarif->kel_tarif;
+
+                                $harga = $tarif->total;
+                                $tarifText .=  "$kel_tarif Rp $harga \n";
+                                $total += $harga;
+                            }
+                            // parent::insertCommand("pnbp dk", $mobile);
                             parent::sendMsg(
                                 $mobile,
                                 "Berdasarkan nomor Aju Ekspor yang Anda masukkan, berikut adalah pnbp Anda \n$tarifText \n total: Rp $total",
                                 [],
                             );
-                            parent::sendMsg(
-                                $mobile,
-                                "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
-                                [
-                                    parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
-
-                                    parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
-                                ],
-                                WebhookConfig::MESSAGE_TYPE_BUTTON
-                            );
+                            parent::endMenu($mobile);
                         }
                         break;
-                    default:
-                        parent::insertCommand("maaf", $mobile);
-                        $this->sendSorryMessage($mobile, $isFirstError);
-                }
-                break;
-            case str_contains($command, "pnbp eks"):
-                switch (true) {
-                    case str_contains($pesan, "menu utama"):
-                        parent::insertCommand("halo", $mobile);
-                        parent::sendMsg(
-                            $mobile,
-                            "Selamat Datang di layanan Halo Mpok Siti, Media Pelayanan Online Karantina Simpel dan Terintegrasi, apa yang ingin Anda ketahui ? \n",
-                            [
-                                parent::getSingleButton("Seputar Kesehatan Ikan", "IPKI", ""),
-
-                                parent::getSingleButton("Layanan Sertifikasi Mutu", "PSPM", ""),
-
-                                parent::getSingleButton("Lacak Info Sertifikasi", "TILS", ""),
-
-                                parent::getSingleButton("Hubungi Customer Service", "CS", ""),
-
-                            ],
-                            WebhookConfig::MESSAGE_TYPE_POPUP
-                        );
-                        break;
-                    case str_contains($pesan, "selesai"):
-                        parent::insertCommand("selesai", $mobile);
-                        parent::sendMsg(
-                            $mobile,
-                            "Terima kasih telah menggunakan layanan chatbot Mpok Siti",
-                            [],
-                        );
-                        break;
-                    default:
-                        parent::insertCommand("maaf", $mobile);
-                        $this->sendSorryMessage($mobile, $isFirstError);
                 }
                 break;
 
@@ -572,75 +439,26 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                         break;
 
                     case $selectPPK == null:
-                        parent::insertCommand("nomor aju imp", $mobile);
+                        // parent::insertCommand("nomor aju imp", $mobile);
+                        parent::insertCommand("maaf", $mobile);
+
                         parent::sendMsg(
                             $mobile,
-                            "*Nomor Aju yang Anda masukkan tidak terdaftar di database!*\n\n Pastikan nomor Aju yang Anda masukkan telah terdaftar",
+                            "*Nomor Aju yang Anda masukkan tidak terdaftar di database!*\n\n Pastikan nomor Aju yang Anda masukkan telah terdaftar. Jika Anda merasa ini adalah sebuah kesalahan, silahkan masukkan kembali nomor Aju Anda",
                             [],
                         );
-                        parent::sendMsg(
-                            $mobile,
-                            "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
-                            [
-                                parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
-
-                                parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
-                            ],
-                            WebhookConfig::MESSAGE_TYPE_BUTTON
-                        );
+                        // parent::endMenu($mobile);
 
                         break;
 
                     case str_contains(strtoupper($pesan), $selectPPK->no_aju_ppk):
-                        parent::insertCommand("nomor aju imp", $mobile);
+                        // parent::insertCommand("nomor aju imp", $mobile);
                         parent::sendMsg(
                             $mobile,
                             "Berdasarkan tracking, proses Anda telah sampai pada $sertif->nm_dok",
                             [],
                         );
-                        parent::sendMsg(
-                            $mobile,
-                            "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
-                            [
-                                parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
-
-                                parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
-                            ],
-                            WebhookConfig::MESSAGE_TYPE_BUTTON
-                        );
-                        break;
-                    default:
-                        parent::insertCommand("maaf", $mobile);
-                        $this->sendSorryMessage($mobile, $isFirstError);
-                }
-                break;
-            case str_contains($command, "nomor aju imp"):
-                switch (true) {
-                    case str_contains($pesan, "menu utama"):
-                        parent::insertCommand("halo", $mobile);
-                        parent::sendMsg(
-                            $mobile,
-                            "Selamat Datang di layanan Halo Mpok Siti, Media Pelayanan Online Karantina Simpel dan Terintegrasi, apa yang ingin Anda ketahui ? \n",
-                            [
-                                parent::getSingleButton("Seputar Kesehatan Ikan", "IPKI", ""),
-
-                                parent::getSingleButton("Layanan Sertifikasi Mutu", "PSPM", ""),
-
-                                parent::getSingleButton("Lacak Info Sertifikasi", "TILS", ""),
-
-                                parent::getSingleButton("Hubungi Customer Service", "CS", ""),
-
-                            ],
-                            WebhookConfig::MESSAGE_TYPE_POPUP
-                        );
-                        break;
-                    case str_contains($pesan, "selesai"):
-                        parent::insertCommand("selesai", $mobile);
-                        parent::sendMsg(
-                            $mobile,
-                            "Terima kasih telah menggunakan layanan chatbot Mpok Siti",
-                            [],
-                        );
+                        parent::endMenu($mobile);
                         break;
                     default:
                         parent::insertCommand("maaf", $mobile);
@@ -669,62 +487,36 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                         break;
 
                     case $selectPPK == null:
-                        parent::insertCommand("nomor aju imp", $mobile);
+                        // parent::insertCommand("nomor aju imp", $mobile);
+                        parent::insertCommand("maaf", $mobile);
+
                         parent::sendMsg(
                             $mobile,
-                            "*Nomor Aju yang Anda masukkan tidak terdaftar di database!*\n\n Pastikan nomor Aju yang Anda masukkan telah terdaftar",
+                            "*Nomor Aju yang Anda masukkan tidak terdaftar di database!*\n\n Pastikan nomor Aju yang Anda masukkan telah terdaftar. Jika Anda merasa ini adalah sebuah kesalahan, silahkan masukkan kembali nomor Aju Anda",
                             [],
                         );
-                        parent::sendMsg(
-                            $mobile,
-                            "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
-                            [
-                                parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
-
-                                parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
-                            ],
-                            WebhookConfig::MESSAGE_TYPE_BUTTON
-                        );
+                        // parent::endMenu($mobile);
 
                         break;
 
                     case str_contains(strtoupper($pesan), $selectPPK->no_aju_ppk):
                         $nomorSertif = $this->getNoIjin(strtoupper($pesan));
                         if ($nomorSertif == false) {
-                            parent::insertCommand("selesai", $mobile);
+                            // parent::insertCommand("selesai", $mobile);
                             parent::sendMsg(
                                 $mobile,
                                 "Data yang Anda cari berdasarkan nomor Aju tidak ditemukan. Periksa kembali status pengajuan Anda di menu lacak informasi dan pastikan Anda telah sampai pada proses Single Certificate",
                                 [],
                             );
-                            parent::sendMsg(
-                                $mobile,
-                                "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
-                                [
-                                    parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
-
-                                    parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
-                                ],
-                                WebhookConfig::MESSAGE_TYPE_BUTTON
-                            );
                         } else {
-                            parent::insertCommand("nomor aju imp", $mobile);
+                            // parent::insertCommand("nomor aju imp", $mobile);
                             parent::sendMsg(
                                 $mobile,
                                 "Berdasarkan nomor Aju Ekspor yang Anda masukkan, berikut adalah nomor sertifikat Anda $nomorSertif->no_sertifikat",
                                 [],
                             );
-                            parent::sendMsg(
-                                $mobile,
-                                "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
-                                [
-                                    parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
-
-                                    parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
-                                ],
-                                WebhookConfig::MESSAGE_TYPE_BUTTON
-                            );
                         }
+                        parent::endMenu($mobile);
                         break;
 
                     default:
@@ -755,118 +547,50 @@ class LacakInfoSertifikasiNonDomestikController extends AbstractWebhookControlle
                         break;
 
                     case $selectPPK == null:
-                        parent::insertCommand("pnbp imp", $mobile);
+                        // parent::insertCommand("pnbp imp", $mobile);
+                        parent::insertCommand("maaf", $mobile);
+
                         parent::sendMsg(
                             $mobile,
-                            "*Nomor Aju yang Anda masukkan tidak terdaftar di database!*\n\n Pastikan nomor Aju yang Anda masukkan telah terdaftar",
+                            "*Nomor Aju yang Anda masukkan tidak terdaftar di database!*\n\n Pastikan nomor Aju yang Anda masukkan telah terdaftar. Jika Anda merasa ini adalah sebuah kesalahan, silahkan masukkan kembali nomor Aju Anda",
                             [],
                         );
-                        parent::sendMsg(
-                            $mobile,
-                            "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
-                            [
-                                parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
-
-                                parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
-                            ],
-                            WebhookConfig::MESSAGE_TYPE_BUTTON
-                        );
+                        // parent::endMenu($mobile);
 
                         break;
-                    case str_contains(strtoupper($pesan), $selectPPK->no_aju_ppk):
-                        $kelTarif = $this->selectTarif(strtoupper($pesan));
+
+                    case $selectPPK != null:
+                        $kelTarif = $this->selectTarif($selectPPK->no_aju_ppk);
                         $tarifText = "";
                         $total = 0;
-                        foreach ($kelTarif as $tarif) {
-                            $kel_tarif = $tarif->kel_tarif;
 
-                            $harga = $tarif->total;
-                            $tarifText .=  "$kel_tarif Rp $harga \n";
-                            $total += $harga;
-                        }
                         if ($kelTarif == null) {
-                            parent::insertCommand("selesai", $mobile);
+                            // parent::insertCommand("selesai", $mobile);
+                            parent::insertCommand("maaf", $mobile);
                             parent::sendMsg(
                                 $mobile,
                                 "Data yang Anda cari berdasarkan nomor Aju tidak ditemukan. Periksa kembali status pengajuan Anda di menu lacak informasi dan pastikan Anda telah sampai pada proses PNBP",
                                 [],
                             );
-                            parent::sendMsg(
-                                $mobile,
-                                "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
-                                [
-                                    parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
-
-                                    parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
-                                ],
-                                WebhookConfig::MESSAGE_TYPE_BUTTON
-                            );
                         } else {
-                            parent::insertCommand("pnbp imp", $mobile);
+                            foreach ($kelTarif as $tarif) {
+                                $kel_tarif = $tarif->kel_tarif;
+
+                                $harga = $tarif->total;
+                                $tarifText .=  "$kel_tarif Rp $harga \n";
+                                $total += $harga;
+                            }
+                            // parent::insertCommand("pnbp dk", $mobile);
                             parent::sendMsg(
                                 $mobile,
                                 "Berdasarkan nomor Aju Impor yang Anda masukkan, berikut adalah pnbp Anda \n$tarifText \n total: Rp $total",
                                 [],
                             );
-                            parent::sendMsg(
-                                $mobile,
-                                "Anda telah sampai pada akhir sesi ini. Apa yang ingin Anda lakukan?\n",
-                                [
-                                    parent::getSingleButtonReply("reply", "Ulang", "Menu Utama"),
-
-                                    parent::getSingleButtonReply("reply", "Selesai", "Selesai"),
-                                ],
-                                WebhookConfig::MESSAGE_TYPE_BUTTON
-                            );
+                            parent::endMenu($mobile);
                         }
                         break;
-                    default:
-                        parent::insertCommand("maaf", $mobile);
-                        $this->sendSorryMessage($mobile, $isFirstError);
                 }
                 break;
-
-            case str_contains($command, "pnbp imp"):
-                switch (true) {
-                    case str_contains($pesan, "menu utama"):
-                        parent::insertCommand("halo", $mobile);
-                        parent::sendMsg(
-                            $mobile,
-                            "Selamat Datang di layanan Halo Mpok Siti, Media Pelayanan Online Karantina Simpel dan Terintegrasi, apa yang ingin Anda ketahui ? \n",
-                            [
-                                parent::getSingleButton("Seputar Kesehatan Ikan", "IPKI", ""),
-
-                                parent::getSingleButton("Layanan Sertifikasi Mutu", "PSPM", ""),
-
-                                parent::getSingleButton("Lacak Info Sertifikasi", "TILS", ""),
-
-                                parent::getSingleButton("Hubungi Customer Service", "CS", ""),
-
-                            ],
-                            WebhookConfig::MESSAGE_TYPE_POPUP
-                        );
-                        break;
-                    case str_contains($pesan, "selesai"):
-                        parent::insertCommand("selesai", $mobile);
-                        parent::sendMsg(
-                            $mobile,
-                            "Terima kasih telah menggunakan layanan chatbot Mpok Siti",
-                            [],
-                        );
-                        break;
-                    default:
-                        parent::insertCommand("maaf", $mobile);
-                        $this->sendSorryMessage($mobile, $isFirstError);
-                }
-                // $this->dispatchHandler(
-                //     $this->lacakInfoNonDomestikController,
-                //     $command,
-                //     $isFirstError
-                // );
-                break;
-            default:
-                parent::insertCommand("maaf", $mobile);
-                parent::sendSorryMessage($mobile, $isFirstError);
         }
     }
 }

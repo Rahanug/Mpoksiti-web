@@ -4,7 +4,6 @@ namespace App\Http\Controllers\webhook;
 
 use App\Http\Controllers\webhook\WebhookConfig;
 
-
 trait ButtonTrait
 {
 
@@ -90,12 +89,17 @@ trait ButtonTrait
 
         curl_setopt_array($curl, $arrayConfig);
 
-        $response = curl_exec($curl);
+        if (WebhookConfig::DEBUG_COMMAND) {
+            $response = curl_exec($curl);
 
-        // curl_exec($curl);
+            echo $response . "\n\n\n";
+
+            echo json_encode($data);
+        } else {
+
+            curl_exec($curl);
+        }
 
         curl_close($curl);
-        echo $response . "\n\n\n";
-        echo json_encode($data);
     }
 }
