@@ -137,4 +137,8 @@ Route::group(['middleware' => 'revalidate'], function () {
 
     Route::post('/webhook', [App\Http\Controllers\webhook\IndexController::class, 'index'])->name('Webhook');
     Route::get('/', [App\Http\Controllers\LandingController::class, 'index'])->name('Landing');
+
+    //CPIB
+    Route::get('/logincpib', [\App\Http\Controllers\CPIB\AuthController::class, 'loginCPIB'])->name('logincpib');
+    Route::get('/regiscpib', [\App\Http\Controllers\CPIB\AuthController::class, 'regisCPIB'])->name('regiscpib');
 });
