@@ -76,7 +76,7 @@
         <li class="nav-item">
             <a class="nav-link {{ $title==='PKVirtual'? 'active' : '' }}" href="{{ route('admin.PK-pemeriksaan_klinis') }}">
             <i class="fas fa-fw fa-file-medical"></i>
-            <span>Pemeriksaan Klinis</span></a>
+            <span>Pemeriksaan Klinis Virtual</span></a>
         </li>
 
 

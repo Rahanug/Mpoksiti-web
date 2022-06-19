@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 justify-content-center align-items-center position-relative" style="z-index:-1">
-                    <img src="img/undraw_fish_bowl_uu88-edited-2.png" style="max-width: 100%; transform:scale(1.15); z-index:"/>
+                    <img src="img/undraw_fish_bowl_uu88-edited-2.png" style="max-width: 100%; transform:scale(1.15);"/>
                 </div>
             </div>    
         </div>
