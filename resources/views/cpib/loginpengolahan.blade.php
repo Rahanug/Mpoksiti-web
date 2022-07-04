@@ -19,12 +19,12 @@
                             <div class="p-4">
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Media Pelayanan Online Karantina Simple Terintegrasi</h1>
-                                    <h1 class="h4 text-gray-900 mb-4">Login User</h1>
+                                    <h1 class="h4 text-gray-900 mb-4">Login User Pengolahan</h1>
                                 </div>
                                 @if ($message = Session::get('error'))
                                     <div style="color: rgb(136, 25, 25); font-weight: bold; padding: 3px 3px"> {{ $message }}</div>
                                 @endif
-                                <form method="POST" action="{{}}" class="admin">
+                                <form method="POST" action="" class="admin">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                                     <div class="form-group">

@@ -114,6 +114,7 @@
                                     style="height: 400px; display: block; object-fit: cover;" src="/img/${res.publikasi[i].file_gambar}" data-holder-rendered="true">
                                     <div class="card-body">
                                         <p class="card-text"><b>${res.publikasi[i].nm_gambar}</b></p>
+                                        <p class="card-text">${res.publikasi[i].deskripsi}</p>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-sm btn-outline-primary" onclick="location.href='/admin/publikasi/delete/${res.publikasi[i].id_gambar}'">Delete</button>

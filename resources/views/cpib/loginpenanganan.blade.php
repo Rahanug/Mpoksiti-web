@@ -10,45 +10,36 @@
                         <div class="col mr-auto">
                             <style>
                                 .center{
-                                    margin-top : 15px;
+                                    margin-top : 35px;
                                 }
                             </style>
-                            <center class="center"><img src="..img/mpoksiti.png"></center>
+                            <center class="center"><img src="img/mpoksiti.png"></center>
                         </div>
                         <div class="col">
                             <div class="p-4">
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Media Pelayanan Online Karantina Simple Terintegrasi</h1>
-                                    <h2 class="h4 text-gray-900 mb-4">Login Jasa Pengiriman Barang</h2>
+                                    <h1 class="h4 text-gray-900 mb-4">Login User Penanganan</h1>
                                 </div>
                                 @if ($message = Session::get('error'))
                                     <div style="color: rgb(136, 25, 25); font-weight: bold; padding: 3px 3px"> {{ $message }}</div>
                                 @endif
-                                <form method="POST" action="{{ route('loginjpp') }}" class="admin">
+                                <form method="POST" action="" class="admin">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-admin" name="kode_counter" placeholder="{{ __('Kode Konter') }}" value="{{ old('kode_counter') }}" required autofocus>
+                                        <input type="email" class="form-control form-control-admin" name="email" placeholder="{{ __('E-Mail Address') }}" value="{{ old('email') }}" required autofocus>
                                     </div>
 
                                     <div class="form-group">
                                         <input type="password" class="form-control form-control-admin" name="password" placeholder="{{ __('Password') }}" required>
                                     </div>
-
-                                    <div class="form-group">
-                                        <div class="custom-control custom-checkbox small">
-                                            <input type="checkbox" class="custom-control-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                            <label class="custom-control-label" for="remember">Remember Me</label>
-                                        </div>
-                                    </div>
-
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary btn-admin btn-block">
                                             Login
                                         </button>
                                     </div>
                                 </form>
-
                                 @if (Route::has('password.request'))
                                     <div class="text-center">
                                         <a class="small" href="{{ route('password.request') }}">
@@ -57,9 +48,9 @@
                                     </div>
                                 @endif
 
-                                @if (Route::has('register'))
+                                @if (Route::has('regiscpib'))
                                     <div class="text-center">
-                                        <a class="small" href="{{ route('register') }}">Create An Account</a>
+                                        <a class="small" href="{{ route('regiscpib') }}">Create An Account</a>
                                     </div>
                                 @endif
                             </div>

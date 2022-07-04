@@ -139,6 +139,9 @@ Route::group(['middleware' => 'revalidate'], function () {
     Route::get('/', [App\Http\Controllers\LandingController::class, 'index'])->name('Landing');
 
     //CPIB
-    Route::get('/logincpib', [\App\Http\Controllers\CPIB\AuthController::class, 'loginCPIB'])->name('logincpib');
+    Route::get('/loginpenanganan', [\App\Http\Controllers\CPIB\AuthController::class, 'index_penanganan'])->name('login.penanganan');
+    Route::get('/loginpengolahan', [\App\Http\Controllers\CPIB\AuthController::class, 'index_pengolahan'])->name('login.pengolahan');
     Route::get('/regiscpib', [\App\Http\Controllers\CPIB\AuthController::class, 'regisCPIB'])->name('regiscpib');
+    Route::post('/regiscpib/penanganan', [\App\Http\Controllers\CPIB\AuthController::class, 'regisPenanganan'])->name('register.penanganan');
+    Route::post('/regiscpib/pengolahan', [\App\Http\Controllers\CPIB\AuthController::class, 'regisPengolahan'])->name('register.pengolahan');
 });

@@ -52,6 +52,14 @@ return [
             'driver' => 'session',
             'provider' => 'jpp',
         ],
+        'penanganan' => [
+            'driver' => 'session',
+            'provider' => 'penanganan',
+        ],
+        'pengolahan' => [
+            'driver' => 'session',
+            'provider' => 'pengolahan',
+        ],
     ],
 
     /*
@@ -89,6 +97,14 @@ return [
         'jpp' => [
             'driver' => 'eloquent',
             'model' => App\Models\Jpp::class,
+        ],
+        'penanganan' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Penanganan::class,
+        ],
+        'pengolahan' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Pengolahan::class,
         ],
         // 'users' => [
         //     'driver' => 'database',

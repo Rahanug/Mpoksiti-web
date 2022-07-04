@@ -34,6 +34,16 @@ class RedirectIfAuthenticated
                     return redirect()->route('jpp.home'); //TODO
                 }
                 break;
+            case "penanganan":
+                if (Auth::guard("penanganan")->check()) {
+                    return redirect()->route('penanganan.dashboard');
+                }
+                break;
+            case "pengolahan":
+                if (Auth::guard("pengolahan")->check()) {
+                    return redirect()->route('pengolahan.dashboard');
+                }
+                break;
             default:
                 if (Auth::guard($guard)->check()) {
                     return redirect('/');

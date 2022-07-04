@@ -16,6 +16,7 @@ class CreateTablePublikasi extends Migration
         Schema::create('publikasi', function (Blueprint $table) {
             $table->increments('id_gambar');
             $table->string('nm_gambar');
+            $table->string('deskripsi');
             $table->string('file_gambar')->nullable();
         });
     }

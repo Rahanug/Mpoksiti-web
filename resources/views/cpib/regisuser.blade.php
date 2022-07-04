@@ -59,8 +59,8 @@
                         @if ($message = Session::get('error'))
                             <div style="color: rgb(136, 25, 25); font-weight: bold; padding: 3px 3px"> {{ $message }}</div>
                         @endif
-                        <form method="POST" action="" class="user">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <form class="user" id="FormCPIB">
+                            @csrf
                             <div class="form-group row radiobuttons">
                                 <div class="col-sm-4 mb-3 mb-sm-0">
                                     <label><input type="radio" id="role_cpib" name="cpib_role" value="1"/><span>Penanganan</span></label>
@@ -74,19 +74,19 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="text" class="form-control form-control-user" name="nama lengkap" placeholder="Nama Lengkap" required>
+                                    <input type="text" class="form-control form-control-user" id="nm_user" name="nm_user" placeholder="Nama Lengkap" required>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-user" name="nik" placeholder="NPWP / NIK" required>
+                                    <input type="text" class="form-control form-control-user" id="npwp" name="npwp" placeholder="NPWP / NIK" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input type="number" class="form-control form-control-user" name="nomor handphone" placeholder="Nomor Handphone" required>
+                                <input type="number" class="form-control form-control-user" id="no_hp" name="no_hp" placeholder="Nomor Handphone" required>
                             </div>
 
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="email" class="form-control form-control-user" name="email" placeholder="{{ __('E-Mail Address') }}" value="{{ old('email') }}" required autofocus>
+                                    <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="{{ __('E-Mail Address') }}" value="{{ old('email') }}" required autofocus>
                                 </div>
                                 <div class="col-sm-6">
                                     <input type="password" class="form-control form-control-user" id="passInput" name="password" placeholder="{{ __('Password') }}" required>
@@ -103,6 +103,7 @@
                                     Register
                                 </button>
                             </div>
+                            {{ csrf_field() }}
                         </form>
                         @if (Route::has('password.request'))
                             <div class="text-center">
@@ -127,6 +128,7 @@
 
 @push('scripts')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.9/sweetalert2.all.min.js" integrity="sha512-IZ95TbsPTDl3eT5GwqTJH/14xZ2feLEGJRbII6bRKtE/HC6x3N4cHye7yyikadgAsuiddCY2+6gMntpVHL1gHw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     function myFunction() {
         var x = document.getElementById("passInput");
@@ -144,6 +146,99 @@
         } else {
             $('#error_radio').empty();
             $('#role_cpib').removeClass('has-error');
+            var buttonValue = $('input[name="cpib_role"]:checked').val();
+
+            if(buttonValue == 1){
+                $('#FormCPIB').on('submit', function(e){
+                    e.preventDefault();
+                    var nm_user = $("#nm_user").val();
+                    var npwp = $("#npwp").val();
+                    var no_hp = $("#no_hp").val();
+                    var email = $("#email").val();
+                    var password = $("#passInput").val();
+
+                    $.ajax({
+                    url: "{{route('register.penanganan')}}",
+                    type: "POST",
+                    data: {
+                        nm_user:nm_user,
+                        npwp:npwp,
+                        no_hp:no_hp,
+                        email:email,
+                        password:password,
+                        _token: $('input[name="_token"]').val()
+                    },
+                    success:function(response){
+                            if(response.success){
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Register Berhasil!',
+                                    text: 'Mohon Tunggu Sebentar!',
+                                    timer: '2000',
+                                    timerProgressBar: true,
+                                    didOpen: () => {
+                                        Swal.showLoading()
+                                    }
+                                }).then(function(){
+                                    window.location.href = "{{ route('login.penanganan') }}";
+                                });
+
+                            }else{
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Register Gagal!',
+                                    text: 'silahkan coba lagi!'
+                                });
+                            }
+                        }
+                    });
+                });
+            }else{
+                $('#FormCPIB').on('submit', function(e){
+                    e.preventDefault();
+                    var nm_user = $("#nm_user").val();
+                    var npwp = $("#npwp").val();
+                    var no_hp = $("#no_hp").val();
+                    var email = $("#email").val();
+                    var password = $("#passInput").val();
+
+                    $.ajax({
+                    url: "{{route('register.pengolahan')}}",
+                    type: "POST",
+                    data: {
+                        nm_user:nm_user,
+                        npwp:npwp,
+                        no_hp:no_hp,
+                        email:email,
+                        password:password,
+                        _token: $('input[name="_token"]').val()
+                    },
+                    success:function(response){
+                            if(response.success){
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Register Berhasil!',
+                                    text: 'Mohon Tunggu Sebentar!',
+                                    timer: '2000',
+                                    timerProgressBar: true,
+                                    didOpen: () => {
+                                        Swal.showLoading()
+                                    }
+                                }).then(function(){
+                                    window.location.href = "{{ route('login.pengolahan') }}";
+                                });
+
+                            }else{
+                                Swal.fire({
+                                    type: 'error',
+                                    title: 'Register Gagal!',
+                                    text: 'silahkan coba lagi!'
+                                });
+                            }
+                        }
+                    });
+                });
+            }
             return true;
        }
        return false;

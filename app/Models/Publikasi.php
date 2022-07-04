@@ -13,6 +13,6 @@ class Publikasi extends Authenticatable
     protected $primaryKey = "id_gambar";
     public $timestamps = false;
     protected $fillable = [
-        'nm_gambar', 'file_gambar',
+        'nm_gambar', 'file_gambar', 'deskripsi',
     ];
 }
