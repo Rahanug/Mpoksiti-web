@@ -41,6 +41,11 @@
                                                     placeholder="Nama Gambar" name="nm_gambar">
                                             </div>
                                             <div class="form-group">
+                                                <label for="deskripsi" style="font-weight:500; color:#2E2A61; font-size: 18px;">Deskripsi Gambar</label>
+                                                <input type="text" id="deskripsi" class="form-control"
+                                                    placeholder="Deskripsi Gambar" name="deskripsi">
+                                            </div>
+                                            <div class="form-group">
                                                 <label for="file_gambar" style="font-weight:500; color:#2E2A61; font-size: 18px;">File Gambar</label>
                                                 <input type="file" id="file_gambar" class="form-control" name="file_gambar">
                                             </div>

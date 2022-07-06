@@ -205,6 +205,7 @@ class AdminController extends Controller
 
         Publikasi::create([
             'nm_gambar' => $request->nm_gambar,
+            'deskripsi' => $request->deskripsi,
             'file_gambar' => $nama_file,
         ]);
 
